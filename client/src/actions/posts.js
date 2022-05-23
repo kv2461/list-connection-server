@@ -1,12 +1,12 @@
-// import { FETCH_ALL, CREATE } from '../constants/actionTypes';
-import { FETCH_ALL } from '../reducers/posts';
+import { getPosts } from '../reducers/posts';
+
 import * as api from '../api';
 
-export const getPosts = () => async (dispatch) => {
+export const GetPosts = () => async (dispatch) => {
     try {
         const { data } = await api.fetchPosts();
 
-        dispatch({ type: FETCH_ALL, payload: data});
+        dispatch(getPosts(data));
     } catch (error) {
         console.log(error)
     }

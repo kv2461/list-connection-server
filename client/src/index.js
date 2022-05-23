@@ -8,7 +8,7 @@ import { configureStore } from '@reduxjs/toolkit';
 // import thunk from 'redux-thunk'; - already imoprted from new configureStore @reduxjs.toolkit
 
 // import { postsSlice } from './reducers/posts';
-import reducers from './reducers';
+import postsSlice from './reducers/posts';
 
 import App from './App';
 import {theme} from './Theme';
@@ -18,7 +18,9 @@ import './index.css';
 
 
 const store = configureStore({
-  reducer:reducers,
+  reducer:{
+    postsSlice:postsSlice
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
