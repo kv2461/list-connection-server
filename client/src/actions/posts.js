@@ -1,4 +1,5 @@
-import { FETCH_ALL, CREATE } from '../constants/actionTypes';
+// import { FETCH_ALL, CREATE } from '../constants/actionTypes';
+import { FETCH_ALL } from '../reducers/posts';
 import * as api from '../api';
 
 export const getPosts = () => async (dispatch) => {
@@ -11,12 +12,12 @@ export const getPosts = () => async (dispatch) => {
     }
 }
 
-export const createPost = (post) = async (dispatch) => {
-    try {
-        const { data } = await api.createPost(post);
+// export const createPost = (post) = async (dispatch) => {
+//     try {
+//         const { data } = await api.createPost(post);
 
-        dispatch({ type:CREATE, payload:data});
-    } catch(error) {
-        console.log(error);
-    }
-}
+//         dispatch({ type:CREATE, payload:data});
+//     } catch(error) {
+//         console.log(error);
+//     }
+// }

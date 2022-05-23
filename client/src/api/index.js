@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL = 'http://localhost:4001' });
+const API = axios.create({ baseURL : 'http://localhost:4001' });
 
 export const fetchPosts = () => API.get('/posts');
 
