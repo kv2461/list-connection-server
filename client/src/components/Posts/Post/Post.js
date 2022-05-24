@@ -6,22 +6,22 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import moment from 'moment'
 
-const Post = ({post}) => {
+const Post = ({post, setCurrentId}) => {
     
   return (
     <StyledCard>
       <StyledCardMedia image={post.selectedFile} title={post.title}/>
       <StyledOverlay>
-        <Typography variant='h6'>{post.creator}</Typography>
+        <Typography variant='h6'>{post.username}</Typography>
         <Typography variant='body2'>{moment(post.createdAt).fromNow()}</Typography>
       </StyledOverlay>
       <StyledOverlay2>
-        <Button style={{color:'white'}} size='small' onClick={()=>{}}>
+        <Button style={{color:'white'}} size='small' onClick={(e)=>{e.stopPropagation();setCurrentId(post._id)}}>
           <MoreHorizIcon fontSize='default'/>
         </Button>
       </StyledOverlay2>
       <StyledDetails>
-        <Typography variant='body2' sx={{color:'secondary.main'}}>{post.tags.map((tag)=>`#${tag} `)}</Typography>
+        <Typography variant='body2' sx={{color:'text.secondary'}}>{post.tags.map((tag)=>`#${tag} `)}</Typography>
       </StyledDetails>
       <StyledTypography gutterBottom variant='h5' component='h2'>{post.title}</StyledTypography>
       <CardContent>
