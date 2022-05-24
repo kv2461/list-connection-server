@@ -21,7 +21,7 @@ const Navbar = () => {
                     <StyledLogoutButton variant='contained' sx={{color:'secondary.main'}}>Logout</StyledLogoutButton>
                 </StyledProfile>
             ) : (
-                <Button  variant='contianed' sx={{color:'primary.main'}} onClick={()=>{}}>Sign In</Button>
+                <Button  variant='contianed' sx={{color:'primary.main'}} onClick={()=>navigate('/auth')}>Sign In</Button>
             )}
         </StyledToolbar>
     </StyledAppBar>

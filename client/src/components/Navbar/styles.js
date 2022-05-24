@@ -15,6 +15,10 @@ export const StyledAppBar = styled(AppBar, {})({
   export const StyledTypography = styled(Typography,{})({
     color: 'rgba(0,183,255, 1)',
     textDecoration: 'none',
+    '&:hover':{
+        cursor:'pointer',
+        backgroundColor: 'rgba(128,128,128,0.1)'
+    }
   })
 
   export const StyledToolbar = styled(Toolbar,{})({
