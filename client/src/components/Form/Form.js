@@ -25,16 +25,18 @@ const Form = ({currentId,setCurrentId}) => {
       } else {
       dispatch(CreatePost(postData));
       }
+      clear();
     }
 
     const clear = () => {
-      
+      setCurrentId(0);
+      setPostData({username:'',title:'',description:'',tags:'',selectedFile:''});
     }
     
   return (
     <StyledPaper>
       <StyledForm autoComplete='off' noValidate onSubmit={handleSubmit}>
-        <Typography variant='h6'>Make a List</Typography>
+        <Typography variant='h6'>{currentId?'Edit':'Make'} a List</Typography>
         <TextField name='username' variant='outlined' label='Username' fullWidth value={postData.username} onChange={(e) =>setPostData({...postData, username:e.target.value})}/>
         <TextField name='title' variant='outlined' label='Title' fullWidth value={postData.title} onChange={(e) =>setPostData({...postData, title:e.target.value})}/>
         <TextField name='description' variant='outlined' label='Description' fullWidth value={postData.description} onChange={(e) =>setPostData({...postData, description:e.target.value})}/>

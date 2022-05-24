@@ -13,11 +13,14 @@ export const postsSlice = createSlice({
         },
         UPDATE: (posts,action)=> {
             return posts.map((post)=>post._id===action.payload._id ? action.payload : post)
+        },
+        DELETE:(posts,action)=> {
+            return posts.filter((post)=>post._id!==action.payload);
         }
     }
 })
 
 
-export const {FETCH_ALL, CREATE, UPDATE} = postsSlice.actions;
+export const {FETCH_ALL, CREATE, UPDATE, DELETE} = postsSlice.actions;
 
 export default postsSlice.reducer;
