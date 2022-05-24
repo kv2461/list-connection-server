@@ -16,11 +16,14 @@ export const postsSlice = createSlice({
         },
         DELETE:(posts,action)=> {
             return posts.filter((post)=>post._id!==action.payload);
-        }
+        },
+        LIKE:(posts,action)=> {
+            return posts.map((post)=>post._id===action.payload._id ? action.payload : post)
+        },
     }
 })
 
 
-export const {FETCH_ALL, CREATE, UPDATE, DELETE} = postsSlice.actions;
+export const {FETCH_ALL, CREATE, UPDATE, DELETE,LIKE} = postsSlice.actions;
 
 export default postsSlice.reducer;

@@ -1,4 +1,4 @@
-import { FETCH_ALL,CREATE,UPDATE,DELETE } from '../reducers/posts';
+import { FETCH_ALL,CREATE,UPDATE,DELETE,LIKE } from '../reducers/posts';
 
 import * as api from '../api';
 
@@ -39,5 +39,15 @@ export const DeletePost = (id) => async (dispatch) => {
         dispatch(DELETE(id))
     } catch (error) {
         console.log(error);
+    }
+}
+
+export const LikePost = (id) => async (dispatch) => {
+    try {
+        const {data} = await api.likePost(id);
+
+        dispatch(LIKE(data));
+    } catch (error) {
+        console.log(error)
     }
 }
