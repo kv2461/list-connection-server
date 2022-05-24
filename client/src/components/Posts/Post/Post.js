@@ -25,7 +25,7 @@ const Post = ({post}) => {
       </StyledDetails>
       <StyledTypography gutterBottom variant='h5' component='h2'>{post.title}</StyledTypography>
       <CardContent>
-        <Typography variant='h5' gutterBottom>{post.description}</Typography>
+        <Typography variant='body2' gutterBottom component='p'>{post.description}</Typography>
       </CardContent>
       <StyledCardActions>
         <Button size='small' sx={{color:'primary.main'}} onClick={()=>{}}>
