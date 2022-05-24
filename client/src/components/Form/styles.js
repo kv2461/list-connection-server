@@ -1,24 +1,32 @@
-import { makeStyles } from '@mui/styles';
+import { Button, Paper } from '@mui/material';
+import { styled } from '@mui/system';
+import { theme } from '../../Theme';
 
-export default makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-    },
-  },
-  paper: {
-    padding: theme.spacing(2),
-  },
-  form: {
+const StyledPaper = styled(Paper, {})({
+  padding: theme.spacing(2)
+});
+
+const StyledForm = styled('form',{})({
+  '& .MuiTextField-root': {
+    margin: theme.spacing(1),},
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
-  },
-  fileInput: {
+})
+
+const StyledFileInput = styled('div',{})({
     width: '97%',
     margin: '10px 0',
-  },
-  buttonSubmit: {
-    marginBottom: 10,
-  },
-}));
+})
+
+const StyledButton = styled(Button,{})({
+  marginBottom: 10,
+})
+
+// const StyledClear = styled(Button,{})({
+//   backgroundColor:theme.palette.secondary.main
+// })
+
+
+
+export {StyledPaper,StyledForm,StyledFileInput,StyledButton}

@@ -31,7 +31,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
-      <App />
+      <App defaultChecked />
     </ThemeProvider>
   </Provider>
 );
