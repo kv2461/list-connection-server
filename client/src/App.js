@@ -16,7 +16,7 @@ const App = () => {
           <Routes>
             <Route path='/' element={<Navigate to='/posts/'/>}/>
             <Route path='/posts' element={<Home />}/>
-            <Route path='/auth' element={!user?<Auth />:<Navigate to='/posts/'/>} />
+            <Route path='/auth' element={(user===null)?<Auth />:<Navigate to='/posts/'/>} />
           </Routes>
         </Container>
       </BrowserRouter>
