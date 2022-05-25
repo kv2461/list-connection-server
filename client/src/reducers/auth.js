@@ -7,12 +7,12 @@ export const authSlice = createSlice({
     reducers: {
         AUTH: (state,action) => {
             localStorage.setItem('profile',JSON.stringify({...action?.payload?.data }));
-            return {...state,authData:action?.payload?.data};
+            return {authData:action?.payload?.data};
         },
         LOGOUT: (state,action) => {
             localStorage.clear();
 
-            return {...state,authData:null};
+            return {authData:null};
         }
     }
 })
