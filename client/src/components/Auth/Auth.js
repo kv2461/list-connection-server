@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import LockedOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {Container,Typography,Grid,Button} from '@mui/material';
 import { StyledAvatar,StyledForm,StyledPaper,StyledSubmitButton } from './styles';
+import {useDispatch} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 import Input from './Input';
-
+import { SignIn, SignUp } from '../../actions/auth';
 
 const initialState = {firstName:'',lastName:'',username:'',email:'',password:'',confirmPassword:''};
 
@@ -11,6 +13,8 @@ const Auth = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [isSignup, setIsSignup] = useState(false);
     const [formData,setFormData] = useState(initialState);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -18,6 +22,11 @@ const Auth = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (isSignup) {
+            dispatch(SignUp(formData,navigate))
+        } else {
+            dispatch(SignIn(formData,navigate))
+        }
     }
 
     const handleChange = (e) => {
@@ -35,7 +44,7 @@ const Auth = () => {
             <StyledAvatar>
                 <LockedOutlinedIcon />
             </StyledAvatar>
-        <Typography component='h1' variant='h5'>Signed up logic</Typography>
+        <Typography component='h1' variant='h5'>{isSignup? 'Sign Up' : 'Sign In'}</Typography>
         <StyledForm onSubmit={handleSubmit}>
             <Grid container spacing={2}>
                 {isSignup && (
