@@ -1,39 +1,25 @@
-import React, {useState, useEffect} from 'react';
-import { Container, Grow, Grid } from '@mui/material';
-import {StyledAppBar,StyledTypography} from './styles';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { Container } from '@mui/material';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import { GetPosts } from './actions/posts';
-import Posts from './components/Posts/Posts';
-import Form from './components/Form/Form'
+import NavBar from './components/Navbar/Navbar';
+import Home from './components/Home/Home';
+import Auth from './components/Auth/Auth';
 
-function App() {
-  const [currentId,setCurrentId] = useState(null);
-  const dispatch = useDispatch();
-
-  useEffect(()=> {
-    dispatch(GetPosts())
-  },[dispatch])
+const App = () => {
+  const user = JSON.parse(localStorage.getItem('profile'));
 
   return (
-      <Container maxWidth='lg'>
-        <StyledAppBar position='static' color='inherit'>
-          <StyledTypography variant='h2' align='center'>List Connection</StyledTypography>
-        </StyledAppBar>
-        <Grow in>
-          <Container>
-            <Grid container justify='space-between' alignItems='stretch' spacing={3} >
-                <Grid item xs={12} sm={7}>
-                  <Posts setCurrentId={setCurrentId} />
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <Form currentId={currentId} setCurrentId={setCurrentId} />
-                </Grid>
-            </Grid>
-          </Container>
-        </Grow>
-      </Container>
+      <BrowserRouter>
+        <Container maxWidth='lg'>
+          <NavBar />
+          <Routes>
+            <Route path='/' element={<Navigate to='/posts/'/>}/>
+            <Route path='/posts' element={<Home />}/>
+            <Route path='/auth' element={!user?<Auth />:<Navigate to='/posts/'/>} />
+          </Routes>
+        </Container>
+      </BrowserRouter>
   );
 }
 
