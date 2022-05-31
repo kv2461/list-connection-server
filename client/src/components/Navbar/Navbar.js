@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import { StyledAppBar,StyledTypography, StyledAvatar, StyledContainer, StyledLogoutButton, StyledProfile, StyledToolbar, StyledUsername } from './styles';
+import { StyledAppBar,StyledTypography, StyledAvatar, StyledContainer, StyledLogoutButton, StyledProfile, StyledToolbar, StyledUsername, StyledCreatePost } from './styles';
 import {Button} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add'
 import {useLocation} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {useNavigate} from 'react-router';
@@ -40,6 +41,7 @@ const Navbar = () => {
         <StyledToolbar>
             {user ? (
                 <StyledProfile>
+                    <StyledCreatePost variant='h2' align='center' onClick={()=>navigate('/createPost')}><AddIcon/></StyledCreatePost>
                     <StyledAvatar alt={user.result.username} src={user.result.imageUrl}>{user.result.username.charAt(0)}</StyledAvatar>
                     <StyledUsername variant='h6'>{user.result.username}</StyledUsername>
                     <StyledLogoutButton variant='contained' sx={{backgroundColor:'secondary.main'}} onClick={logout} >Logout</StyledLogoutButton>

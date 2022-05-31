@@ -52,3 +52,11 @@ export const StyledAppBar = styled(AppBar, {})({
       marginLeft:'20px',
   })
 
+  export const StyledCreatePost = styled(Button,{})({
+    color: 'rgba(0,183,255, 1)',
+    textDecoration: 'none',
+    '&:hover':{
+        cursor:'pointer',
+        backgroundColor: 'rgba(128,128,128,0.1)'
+    }
+  })
