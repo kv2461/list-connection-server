@@ -4,6 +4,7 @@ import FileBase from 'react-file-base64';
 import {StyledForm, StyledButton, StyledPaper, StyledFileInput } from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {CreatePost, UpdatePost} from '../../actions/posts';
+import { useNavigate } from 'react-router';
 
 const PostCreation = ({currentId,setCurrentId}) => {
     const [postData,setPostData] = useState({
@@ -12,6 +13,7 @@ const PostCreation = ({currentId,setCurrentId}) => {
     const post = useSelector((state)=>currentId?state.postsSlice.find((p)=>p._id===currentId):null);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(()=>{
@@ -27,6 +29,7 @@ const PostCreation = ({currentId,setCurrentId}) => {
       dispatch(UpdatePost(currentId, {...postData, username: user?.result?.username}));
       }
       clear();
+      navigate('/posts');
     }
 
     if(!user?.result?.name) {

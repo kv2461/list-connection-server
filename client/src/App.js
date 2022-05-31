@@ -22,8 +22,7 @@ const App = () => {
             <Route path='/' element={<Navigate to='/posts/'/>}/>
             <Route path='/posts' element={<Home currentId={currentId} setCurrentId={setCurrentId}/>}/>
             <Route path='/auth' element={(user===null)?<Auth />:<Navigate to='/posts/'/>} />
-            <Route path='/createPost' element={(user!==null)?<PostCreation currentId={currentId} setCurrentId={setCurrentId}/>:<Navigate to='/posts'/>} />
-         
+            <Route path='/createPost' element={<PostCreation currentId={currentId} setCurrentId={setCurrentId}/>} />
           </Routes>
         </Container>
       </BrowserRouter>
