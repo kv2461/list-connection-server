@@ -11,7 +11,6 @@ import { DeletePost,LikePost } from '../../../actions/posts';
 
 const Post = ({post, setCurrentId}) => {
   const dispatch = useDispatch();
-  console.log(post);
 
   return (
     <StyledCard>
