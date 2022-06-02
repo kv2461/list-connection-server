@@ -7,6 +7,7 @@ const Suggestions = ({ img, trackName, artistName, handleClick}) => {
         <StyledCard onClick={handleClick}>
             <Box component='img' sx={{m:2,p:2}} src={img}/>
             <Typography>{trackName}</Typography>
+            <p>by</p>
             <Typography>{artistName}</Typography>
         </StyledCard>
     </Grid>

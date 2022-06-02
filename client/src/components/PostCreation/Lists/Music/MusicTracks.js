@@ -1,9 +1,11 @@
 import React, {useState, useEffect } from 'react';
-import { StyledGrid } from './styles';
-import { Paper, Typography, Input } from '@mui/material';
+import { StyledGrid, StyledList, StyledGrid2 } from './styles';
+import { Paper, Typography, TextField, Button, Container, Grid, } from '@mui/material';
+import { Add } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
 
 import Suggestions from './Suggestions';
+import MusicListItem from './MusicListItem';
 
 import { GetMusicTrack } from '../../../../actions/itunes';
 
@@ -12,7 +14,7 @@ import { GetMusicTrack } from '../../../../actions/itunes';
 const MusicTracks = () => {
     const [trackName, setTrackName] = useState('')
     const [listItems, setListItems] = useState([]); //for list to be saved on db
-    const [listItem, setListItem] = useState({'trackName':'', 'artistName':'', 'description':'', 'image':''}) //for list item to be added on to list
+    const [listItem, setListItem] = useState(0) //for list item to be added on to list
     const [data,setData] = useState([]);
     const dispatch = useDispatch();
 
@@ -37,34 +39,65 @@ const MusicTracks = () => {
       };
 
     }, [trackName])
+
+    const handleAdd = () => {
+        setListItems([...listItems, listItem]);
+        setListItem(0);
+    }
     
 
   return (
-    <div>
-        <input value={trackName} onChange={(e)=>setTrackName(e.target.value)}></input>
-        <button onClick={()=>handleSearch(trackName)}>search</button>
-        
-        {data.length ? 
-        <StyledGrid sx={{m:5}} container alignItems='stretch' spacing={4}>
-             {data.map((d)=> (
-                <Suggestions 
-                    key={d?.trackId} 
-                    trackName={d?.trackName} 
-                    artistName={d?.artistName} 
-                    img={d?.artworkUrl100} 
-                    handleClick={(e)=>{
-                        e.stopPropagation();setListItem({...listItem, trackName:d?.trackName, artistName:d?.artistName, image:d?.artworkUrl100 })
-                    }} 
-                />))} 
-        </StyledGrid> 
-        : null }
+    <Container>
+        <StyledGrid2 container flexDirection='column' justify='space-between' alignItems='stretch' spacing={3}>
+            <Grid item xs={5}>
+                <form>
+                    <input value={trackName} onChange={(e)=>setTrackName(e.target.value)}></input>
+                    <button onClick={()=>handleSearch(trackName)}>search</button>
+                    {!listItem ? null : 
+                        (<Paper>
+                            <Typography>{listItem?.trackName} by {listItem?.artistName}</Typography>
+                            <TextField label='Description' onChange={e=>setListItem({...listItem, description:e.target.value})}/>
+                            <Button onClick={handleAdd}><Add /></Button>
+                        </Paper>) 
+                    }
+                </form>
+            </Grid>
+            <Grid item xs={5}>
+            <Paper>
+            {!listItems ? null : 
+                <StyledList subheader={<li />}>{
+                    listItems.map((item,index) => (
+                        <MusicListItem
+                            key={`${item?.key}-${index}`}
+                            listItem={item}
+                            index={index}
+                        />))
+                    }
+                </StyledList>
+            }
+            </Paper>
+            </Grid>
+        </StyledGrid2>
+        <StyledGrid container>
+        <Grid item xs={6}>
+            {data.length ? (
+                <StyledGrid container alignItems='stretch'spacing={1}>
+                     {data.map((d) => (
+                        <Suggestions 
+                            key={d?.trackId} 
+                            trackName={d?.trackName} 
+                            artistName={d?.artistName} 
+                            img={d?.artworkUrl100} 
+                            handleClick={(e)=>{
+                                e.stopPropagation();setListItem({...listItem, key:d?.trackId, trackName:d?.trackName, artistName:d?.artistName, image:d?.artworkUrl100, description:''});setTrackName('');
+                            }} 
+                        />))}
+                </StyledGrid> )
+            : null }
+            </Grid>
+        </StyledGrid>
 
-        {listItem ? <Paper>
-            <Typography>{listItem?.trackName} by {listItem?.artistName}</Typography>
-        </Paper> : null}
-        
-
-    </div>
+    </Container>
   )
 }
 
