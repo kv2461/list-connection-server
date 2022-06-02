@@ -1,10 +1,11 @@
 import React, {useState,useEffect} from 'react';
-import {TextField, Button, Typography} from '@mui/material';
+import {TextField, Button, Typography, Paper, Container } from '@mui/material';
 import FileBase from 'react-file-base64';
-import {StyledForm, StyledButton, StyledPaper, StyledFileInput } from './styles';
+import {StyledForm, StyledButton, StyledPaper, StyledFileInput, StyledBox} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {CreatePost, UpdatePost} from '../../actions/posts';
 import { useNavigate } from 'react-router';
+import List from './List/List';
 
 const PostCreation = ({currentId,setCurrentId}) => {
     const [postData,setPostData] = useState({
@@ -19,7 +20,7 @@ const PostCreation = ({currentId,setCurrentId}) => {
     useEffect(()=>{
       if(post) setPostData(post);
     },[post])
-
+ 
     const handleSubmit = (e) => {
       e.preventDefault();
 
@@ -48,6 +49,7 @@ const PostCreation = ({currentId,setCurrentId}) => {
     }
     
   return (
+    <Container component='main' maxWidth='xs'>
     <StyledPaper>
       <StyledForm autoComplete='off' noValidate onSubmit={handleSubmit}>
         <Typography variant='h6'>{currentId?'Edit':'Make'} a List</Typography>
@@ -61,10 +63,22 @@ const PostCreation = ({currentId,setCurrentId}) => {
             onDone={({base64})=> setPostData({...postData,selectedFile:base64})}
           />
         </StyledFileInput>
+        {postData.selectedFile?<Paper>
+          <StyledBox
+            component="img"
+            sx={{
+              maxHeight: { xs: 220, md: 167, lg:250 },
+              maxWidth: { xs: 280, md: 250, lg:280},
+              padding:0.5}}
+            src={postData.selectedFile}
+        />
+        </Paper>:null}
+        <List />
         <StyledButton sx={{bgcolor:'primary.main'}}variant='container' size='large' type='submit' fullWidth>Submit</StyledButton>
         <Button sx={{bgcolor:'secondary.main'}}variant='container' size='small' onClick={clear} fullWidth>Clear</Button>
       </StyledForm>
     </StyledPaper>
+    </Container>
   )
 }
 
