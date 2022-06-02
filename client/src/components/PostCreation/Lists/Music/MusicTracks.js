@@ -1,6 +1,7 @@
 import React, {useState, useEffect } from 'react';
 import { StyledGrid, StyledList, StyledGrid2 } from './styles';
-import { Paper, Typography, TextField, Button, Container, Grid, } from '@mui/material';
+import { Paper, Typography, TextField, Button, Container, Grid, Box} from '@mui/material';
+import { Masonry } from '@mui/lab';
 import { Add } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
 
@@ -48,8 +49,8 @@ const MusicTracks = () => {
 
   return (
     <Container>
-        <StyledGrid2 container flexDirection='column' justify='space-between' alignItems='stretch' spacing={3}>
-            <Grid item xs={5}>
+        <Masonry columns={2} spacing={2}>
+            <Box xs={5}>
                 <form>
                     <input value={trackName} onChange={(e)=>setTrackName(e.target.value)}></input>
                     <button onClick={()=>handleSearch(trackName)}>search</button>
@@ -61,9 +62,7 @@ const MusicTracks = () => {
                         </Paper>) 
                     }
                 </form>
-            </Grid>
-            <Grid item xs={5}>
-            <Paper>
+                <Paper>
             {!listItems ? null : 
                 <StyledList subheader={<li />}>{
                     listItems.map((item,index) => (
@@ -76,10 +75,10 @@ const MusicTracks = () => {
                 </StyledList>
             }
             </Paper>
-            </Grid>
-        </StyledGrid2>
-        <StyledGrid container>
-        <Grid item xs={6}>
+            </Box>
+        
+
+        <Box xs={6}>
             {data.length ? (
                 <StyledGrid container alignItems='stretch'spacing={1}>
                      {data.map((d) => (
@@ -94,8 +93,8 @@ const MusicTracks = () => {
                         />))}
                 </StyledGrid> )
             : null }
-            </Grid>
-        </StyledGrid>
+            </Box>
+        </Masonry>
 
     </Container>
   )
