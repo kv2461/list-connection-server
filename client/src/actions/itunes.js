@@ -8,7 +8,7 @@ export const GetMusicTrack = (term) => async (dispatch) => {
         const { data } = await api.getMusicTrack(term);
 
         // dispatch(FETCH_ALL(data));
-        console.log(data);
+        return data;
     } catch (error) {
         console.log(error)
     }
