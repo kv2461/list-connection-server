@@ -45,6 +45,10 @@ const MusicTracks = () => {
         setListItems([...listItems, listItem]);
         setListItem(0);
     }
+
+    const handleDelete = (item) => {
+        setListItems(listItems.filter(i => i !== item))
+    }
     
 
   return (
@@ -64,6 +68,7 @@ const MusicTracks = () => {
                                 key={`${item?.key}-${index}`}
                                 listItem={item}
                                 index={index}
+                                handleDelete={()=>handleDelete(item)}
                             />))
                         } 
                     </StyledList>

@@ -34,7 +34,7 @@ const App = () => {
             <Route path='/auth' element={(user===null)?<Auth />:<Navigate to='/posts/'/>} />
 
 
-            <Route path='/createPost' element={<ListType currentId={currentId} setCurrentId={setCurrentId}/>} />
+            <Route path='/createpost' element={<ListType currentId={currentId} setCurrentId={setCurrentId}/>} />
 
                 <Route path='/createpost/music' element={<Music currentId={currentId} setCurrentId={setCurrentId}/>} />
                     <Route path='/createpost/music/musictracks' element={<MusicTracks currentId={currentId} setCurrentId={setCurrentId}/>} />
