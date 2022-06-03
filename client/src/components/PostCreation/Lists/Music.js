@@ -5,7 +5,7 @@ import {ArtTrack, Album, InterpreterMode, MiscellaneousServices} from '@mui/icon
 import ListTypeCards from '../ListTypeCard/ListTypeCards';
 import { useNavigate } from 'react-router';
 
-const ListType = ({currentId,setCurrentId}) => {
+const ListType = () => {
   const navigate = useNavigate();
 
   return (

@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
-import PostMessage from '../models/postMessage.js';
+import PostList from '../models/postList.js';
 
 export const getPosts = async (req, res) => {
     try {
-        const postMessages = await PostMessage.find();
+        const postLists = await PostList.find();
 
-        res.status(200).json(postMessages);
+        res.status(200).json(postLists);
     } catch (error) {
         res.status(404).json({message:error.message});
     }
@@ -14,12 +14,12 @@ export const getPosts = async (req, res) => {
 export const createPost = async (req,res) => {
     const post = req.body;
 
-    const newPostMessage = new PostMessage({...post,creator:req.userId,createdAt:new Date().toISOString()});
+    const newPostList = new PostList({...post,creator:req.userId,createdAt:new Date().toISOString()});
 
     try {
-        await newPostMessage.save();
+        await newPostList.save();
 
-        res.status(201).json(newPostMessage);
+        res.status(201).json(newPostList);
     } catch (error) {
         res.status(409).json({message:error.message});
     }
@@ -31,7 +31,7 @@ export const updatePost = async (req,res) => {
 
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
 
-    const updatedPost = await PostMessage.findByIdAndUpdate(_id,{...post,_id},{new:true} )
+    const updatedPost = await PostList.findByIdAndUpdate(_id,{...post,_id},{new:true} )
     
     res.json(updatedPost);
 }
@@ -41,7 +41,7 @@ export const deletePost = async (req,res) => {
     
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
 
-    await PostMessage.findByIdAndRemove(_id);
+    await PostList.findByIdAndRemove(_id);
 
     res.json({message:'Post deleted successfully'});
 }
@@ -54,17 +54,17 @@ export const likePost = async (req,res) => {
 
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
 
-    const post = await PostMessage.findById(_id);
+    const post = await PostList.findById(_id);
 
     const index = post.likes.findIndex((id)=>id===String(req.userId));
 
     if(index===-1) {
         post.likes.push(req.userId);
     } else {
-        post.likes.filter((id)=>id!==String(req.userId))
+        post.likes = post.likes.filter((id)=>id!==String(req.userId))
     }
 
-    const updatedPost = await PostMessage.findByIdAndUpdate(_id,post,{new:true});
+    const updatedPost = await PostList.findByIdAndUpdate(_id,post,{new:true});
 
     res.json(updatedPost);
 }

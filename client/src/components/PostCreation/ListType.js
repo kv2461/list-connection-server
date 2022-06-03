@@ -5,7 +5,7 @@ import {MusicNote, MovieFilter, FitnessCenter, ShoppingBasket} from '@mui/icons-
 import ListTypeCards from './ListTypeCard/ListTypeCards';
 import { useNavigate } from 'react-router';
 
-const ListType = ({currentId,setCurrentId}) => {
+const ListType = () => {
   const navigate = useNavigate();
 
   return (

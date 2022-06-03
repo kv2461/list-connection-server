@@ -5,9 +5,9 @@ import {StyledForm, StyledButton, StyledPaper, StyledFileInput } from './styles'
 import {useDispatch, useSelector} from 'react-redux';
 import {CreatePost, UpdatePost} from '../../actions/posts';
 
-const Form = ({currentId,setCurrentId}) => {
+const Form = ({ currentId, setCurrentId, genre, subgenre, list }) => {
     const [postData,setPostData] = useState({
-      title:'', description:'', tags:'', selectedFile:'',
+      title:'', description:'', tags:'', selectedFile:'', genre:genre, subgenre:subgenre, list:list
     });
     const post = useSelector((state)=>currentId?state.postsSlice.find((p)=>p._id===currentId):null);
 
@@ -41,7 +41,7 @@ const Form = ({currentId,setCurrentId}) => {
 
     const clear = () => {
       setCurrentId(0);
-      setPostData({title:'',description:'',tags:'',selectedFile:''});
+      setPostData({title:'',description:'',tags:'',selectedFile:'', genre:genre, subgenre:subgenre, list:list});
     }
     
   return (
