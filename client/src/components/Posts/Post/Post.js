@@ -1,6 +1,6 @@
 import React from 'react';
 import {CardContent,Button,Typography} from '@mui/material';
-import { StyledCard,StyledCardMedia,StyledTypography,StyledCardActions,StyledOverlay,StyledOverlay2,StyledDetails } from './styles';
+import { StyledCard,StyledCardMedia,StyledTypography,StyledCardActions,StyledOverlay,StyledOverlay2,StyledDetails,StyledButtonBase } from './styles';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbUpAltOutlined from '@mui/icons-material/ThumbUpOutlined'
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -31,7 +31,12 @@ const Post = ({post, setCurrentId}) => {
 
 
   return (
-    <StyledCard>
+    <StyledCard raised elevation={6}>
+      <StyledButtonBase
+      component='span'
+      name='test'
+      onClick={()=>{}}
+      />
       <StyledCardMedia image={post.selectedFile} title={post.title}/>
       <StyledOverlay>
         <Typography variant='h6'>{post.username}</Typography>

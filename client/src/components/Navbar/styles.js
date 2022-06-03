@@ -1,6 +1,6 @@
 import { AppBar, Typography, Toolbar, Avatar, Button } from '@mui/material';
 import { styled } from '@mui/system';
-// import { theme } from '../../Theme';
+import { theme } from '../../Theme';
 
 export const StyledAppBar = styled(AppBar, {})({
     borderRadius: 15,
@@ -10,6 +10,9 @@ export const StyledAppBar = styled(AppBar, {})({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '10px 50px',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
   });
   
   export const StyledTypography = styled(Typography,{})({
@@ -25,12 +28,21 @@ export const StyledAppBar = styled(AppBar, {})({
     display: 'flex',
     justifyContent: 'flex-end',
     width: '400px',
+    [theme.breakpoints.down('sm')]: {
+      width:'auto'
+    },
   })
 
   export const StyledProfile = styled('div',{})({
     display: 'flex',
     justifyContent: 'space-between',
     width: '400px',
+    alignItems:'center',
+    [theme.breakpoints.down('sm')]: {
+      width:'auto',
+      marginTop:20,
+      justifyContent:'center',
+    }
   })
 
   export const StyledContainer = styled('div',{})({
@@ -46,6 +58,7 @@ export const StyledAppBar = styled(AppBar, {})({
   export const StyledUsername = styled(Typography,{})({
     display: 'flex',
     alignItems: 'center',
+    textAlign: 'center',
   })
 
   export const StyledLogoutButton = styled(Button,{})({
