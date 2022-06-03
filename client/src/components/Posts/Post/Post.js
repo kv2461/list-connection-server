@@ -30,6 +30,7 @@ const Post = ({post, setCurrentId}) => {
       <StyledTypography gutterBottom variant='h5' component='h2'>{post.title}</StyledTypography>
       <CardContent>
         <Typography variant='body2' sx={{color:'text.secondary'}} gutterBottom component='p'>{post.description}</Typography>
+        <Typography variant='body2' sx={{color:'text.secondary',fontSize:'0.6rem'}} gutterBottom component='p'>{`Genre:${post.genre.toUpperCase()} Subgenre:${post.subgenre.toUpperCase()}`}</Typography>
       </CardContent>
       <StyledCardActions>
         <Button size='small' sx={{color:'primary.main'}} onClick={()=>dispatch(LikePost(post._id))}>
