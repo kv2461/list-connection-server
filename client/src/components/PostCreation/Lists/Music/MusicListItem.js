@@ -1,14 +1,31 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { ListSubheader, ListItem, ListItemText, Typography, Box, Divider, Button} from '@mui/material';
 import { DeleteForever, KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material';
 
 
-const MusicListItem = ({ listItem, index, handleDelete, length, handleMoveUp, handleMoveDown }) => {
+const MusicListItem = ({ listItem, index, handleDelete, length, handleMoveUp, handleMoveDown, genre }) => {
+
+  const [name,setName] = useState('');
+
+  useEffect(() => {
+
+    const genrify = () => {
+      if (genre === 'musicTracks') {
+      setName(listItem?.trackName);
+      } else if (genre === 'musicAlbums') {
+      setName(listItem?.albumName);
+      }
+    }
+
+    genrify();
+
+  },[listItem?.albumName,genre,listItem?.trackName])
+
   return (
     <li key={listItem?.key}>
         <ul>
            {index > 0 ? <Divider sx={{borderBottomWidth:3}} /> : null}
-            <ListSubheader sx={{fontWeight:700 ,lineHeight:1, p:2}}>{`${listItem?.trackName} by ${listItem?.artistName}`}</ListSubheader>
+            <ListSubheader sx={{fontWeight:700 ,lineHeight:1, p:2}}>{`${name} by ${listItem?.artistName}`}</ListSubheader>
             <ListItem key={`${listItem?.key}-${index}`}>
                   <Box sx={{p:2}} component='img' src={listItem?.thumbnail}/>
                 <ListItemText 

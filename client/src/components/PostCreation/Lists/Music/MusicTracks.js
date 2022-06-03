@@ -28,7 +28,7 @@ const MusicTracks = ({currentId,setCurrentId}) => {
         setData(results);
     }
 
-    const handleSearch = (trackName) => {
+    const handleSearch = () => {
         fetchData()
         .catch(console.error);
     }
@@ -99,6 +99,7 @@ const MusicTracks = ({currentId,setCurrentId}) => {
 
   return (
     <Container>
+
         <Masonry columns={2} spacing={1}>
             <Box justifyContent='center'>
 
@@ -121,6 +122,7 @@ const MusicTracks = ({currentId,setCurrentId}) => {
                                     length={listItems.length - 1}
                                     handleMoveUp = {()=>listLogic.handleMoveUp(item)}
                                     handleMoveDown = {()=>listLogic.handleMoveDown(item)}
+                                    genre='musicTracks'
                                 />))
                             } 
                         </StyledList>
@@ -131,12 +133,13 @@ const MusicTracks = ({currentId,setCurrentId}) => {
         
 
             <Box>
+
                 {!readyToSubmit ? 
                     (<Button onClick={()=>listLogic.preSubmit()}>Ready to Submit?</Button>) : 
                     (<Button onClick={()=>listLogic.editSubmit()}>Back to Edit Mode</Button>)
                 }
 
-                {!readyToSubmit ? null : <Form currentId={currentId} setCurrentId={setCurrentId} list={listItems} genre='music' subgenre='musicTrack'/>}
+                {!readyToSubmit ? null : <Form currentId={currentId} setCurrentId={setCurrentId} list={listItems} genre='music' subgenre='musicTracks'/>}
                 {!listItem ? null : 
                     (<Paper sx={{p:2}}>
                         <Typography sx={{m:1}}>{listItem?.trackName} by {listItem?.artistName}</Typography>
@@ -149,6 +152,7 @@ const MusicTracks = ({currentId,setCurrentId}) => {
                     <StyledGrid container alignItems='stretch'spacing={1}>
                          {data.map((d) => (
                             <Suggestions 
+                                genre='musicTracks'
                                 key={d?.trackId} 
                                 trackName={d?.trackName} 
                                 artistName={d?.artistName} 
