@@ -1,4 +1,4 @@
-import { FETCH_ALL,CREATE,UPDATE,DELETE,LIKE } from '../reducers/posts';
+import { FETCH_BY_SEARCH,FETCH_ALL,CREATE,UPDATE,DELETE,LIKE } from '../reducers/posts';
 
 import * as api from '../api';
 
@@ -9,6 +9,17 @@ export const GetPosts = () => async (dispatch) => {
         dispatch(FETCH_ALL(data));
     } catch (error) {
         console.log(error)
+    }
+}
+
+export const GetPostsBySearch = (searchQuery) => async (dispatch) => {
+    try {
+        const { data: {data} } = await api.fetchPostsBySearch(searchQuery); 
+        //destructuring required twice due to axios request AND postsearch assigning it to a new object called data
+        
+        dispatch(FETCH_BY_SEARCH(data));
+    } catch (error) {
+        console.log(error);
     }
 }
 

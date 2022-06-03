@@ -8,6 +8,9 @@ export const postsSlice = createSlice({
         FETCH_ALL: (posts,action) => {
             return posts = action.payload;
         },
+        FETCH_BY_SEARCH:(posts,action)=>{
+            return posts = action.payload;
+        },
         CREATE: (posts,action) => {
             return [...posts, action.payload];
         },
@@ -24,6 +27,6 @@ export const postsSlice = createSlice({
 })
 
 
-export const {FETCH_ALL, CREATE, UPDATE, DELETE,LIKE} = postsSlice.actions;
+export const {FETCH_ALL, CREATE, UPDATE, DELETE,LIKE,FETCH_BY_SEARCH} = postsSlice.actions;
 
 export default postsSlice.reducer;

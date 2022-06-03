@@ -6,7 +6,7 @@ import { StyledGrid, StyledAppBarSearch } from './styles';
 
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
-import { GetPosts } from '../../actions/posts';
+import { GetPosts, GetPostsBySearch } from '../../actions/posts';
 import Pagination from '../Pagination';
 
 function useQuery() {
@@ -27,6 +27,15 @@ const Home = ({currentId, setCurrentId}) => {
   useEffect(()=> {
     dispatch(GetPosts())
     },[currentId,dispatch])
+
+  const searchPost = () => {
+    if (search.trim() || tags) {
+      dispatch(GetPostsBySearch({ search, tags: tags.join(',') }));
+      navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
+    } else {
+      navigate('/')
+    }
+  }
 
   useEffect(()=> {
     document.addEventListener('keydown', detectKeyDown , true)
@@ -66,9 +75,10 @@ const Home = ({currentId, setCurrentId}) => {
                 <Grid item xs={12} sm={6} md={3}>
                   <StyledAppBarSearch position='static' sx={{bgcolor:'inherit'}}>
                     <TextField name='search' variant='outlined' label='Search List Name' fullWidth value={search} onKeyPress={handleKeyPress} onChange={(e)=>setSearch(e.target.value)}/>
-                    <TextField sx={{m:'10px 0'}} name='search' variant='outlined' label='Add Search Tags by pressing Enter' fullWidth onKeyPress={(e)=>handleAdd(e)} onChange={(e)=>setTagToAdd(e.target.value)} value={tagToAdd}/>
+                    <TextField sx={{m:'10px 0'}} name='search' variant='outlined' label='Add Search Tags By Pressing Enter' fullWidth onKeyPress={(e)=>handleAdd(e)} onChange={(e)=>setTagToAdd(e.target.value)} value={tagToAdd}/>
                     {tags.length > 0 ? <Container>
                     {tags.map((tag,index)=> <Chip sx={{width:1/2, bgcolor:'primary.light', color:'white'}} key={index} onDelete={handleDelete(tag)} label={tag}/>)}  </Container>: null}
+                    <Button sx={{bgcolor:'primary.main',m:'10px 0'}} variant='contained' onClick={searchPost}>Search</Button>
                   </StyledAppBarSearch>
                   <Form currentId={currentId} setCurrentId={setCurrentId} />
                   <Paper elevation={6}>
