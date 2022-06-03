@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from 'react';
 import { StyledGrid, StyledList, } from './styles';
-import { Paper, Typography, TextField, Button, Container, Box} from '@mui/material';
+import { Paper, Typography, TextField, Button, Container, Box, FormControl } from '@mui/material';
 import { Masonry } from '@mui/lab';
 import { Add } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
@@ -51,10 +51,10 @@ const MusicTracks = () => {
     <Container>
         <Masonry columns={2} spacing={2}>
             <Box justifyContent='center' xs={5}>
-                <form>
-                    <input value={trackName} onChange={(e)=>setTrackName(e.target.value)}></input>
-                    <button onClick={(e)=>{e.stopPropagation();e.preventDefault(e);handleSearch(trackName)}}>search</button>
-                </form>
+                <FormControl fullWidth>
+                    <TextField label='Track Name/Artist'value={trackName} variant='outlined' onChange={(e)=>setTrackName(e.target.value)}></TextField>
+                    <Button onClick={(e)=>{e.stopPropagation();e.preventDefault(e);handleSearch(trackName)}}>search</Button>
+                </FormControl>
 
             {listItems.length===0 ? null : 
                 <Paper sx={{marginTop:5}}>
