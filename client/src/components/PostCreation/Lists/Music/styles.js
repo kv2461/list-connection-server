@@ -25,11 +25,6 @@ export const StyledGrid = styled(Grid, {})({
     padding:theme.spacing(2),
   });
 
-  export const StyledGrid2 = styled(Grid, {})({
-    [theme.breakpoints.down('sm')]: {
-        flexDirection:'column-reverse'
-    }
-  });
 
 export const StyledList = styled(List, {})({
     width:'100%',
@@ -37,6 +32,6 @@ export const StyledList = styled(List, {})({
     backgroundColor:'backround.paper',
     position:'relative',
     overflow:'auto',
-    maxHeight:700,
+    maxHeight:500,
     '& ul':{padding:0},
 })

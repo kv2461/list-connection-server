@@ -1,5 +1,5 @@
 import React from 'react'
-import {Typography, Grid ,Box } from '@mui/material';
+import {Typography, Grid , Box } from '@mui/material';
 import { StyledCard, } from './styles'
 const Suggestions = ({ img, trackName, artistName, handleClick}) => {
   return (

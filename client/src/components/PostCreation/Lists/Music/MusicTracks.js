@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from 'react';
-import { StyledGrid, StyledList, StyledGrid2 } from './styles';
-import { Paper, Typography, TextField, Button, Container, Grid, Box} from '@mui/material';
+import { StyledGrid, StyledList, } from './styles';
+import { Paper, Typography, TextField, Button, Container, Box} from '@mui/material';
 import { Masonry } from '@mui/lab';
 import { Add } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
@@ -50,35 +50,37 @@ const MusicTracks = () => {
   return (
     <Container>
         <Masonry columns={2} spacing={2}>
-            <Box xs={5}>
+            <Box justifyContent='center' xs={5}>
                 <form>
                     <input value={trackName} onChange={(e)=>setTrackName(e.target.value)}></input>
-                    <button onClick={()=>handleSearch(trackName)}>search</button>
-                    {!listItem ? null : 
-                        (<Paper>
-                            <Typography>{listItem?.trackName} by {listItem?.artistName}</Typography>
-                            <TextField label='Description' onChange={e=>setListItem({...listItem, description:e.target.value})}/>
-                            <Button onClick={handleAdd}><Add /></Button>
-                        </Paper>) 
-                    }
+                    <button onClick={(e)=>{e.stopPropagation();e.preventDefault(e);handleSearch(trackName)}}>search</button>
                 </form>
-                <Paper>
-            {!listItems ? null : 
-                <StyledList subheader={<li />}>{
-                    listItems.map((item,index) => (
-                        <MusicListItem
-                            key={`${item?.key}-${index}`}
-                            listItem={item}
-                            index={index}
-                        />))
-                    }
-                </StyledList>
+
+            {listItems.length===0 ? null : 
+                <Paper sx={{marginTop:5}}>
+                    <StyledList subheader={<li />}>{
+                        listItems.map((item,index) => (
+                            <MusicListItem
+                                key={`${item?.key}-${index}`}
+                                listItem={item}
+                                index={index}
+                            />))
+                        } 
+                    </StyledList>
+                </Paper>
             }
-            </Paper>
+            
             </Box>
         
 
         <Box xs={6}>
+            {!listItem ? null : 
+                (<Paper sx={{p:2}}>
+                    <Typography sx={{m:1}}>{listItem?.trackName} by {listItem?.artistName}</Typography>
+                    <TextField sx={{width:'80%'}}label='Description' onChange={e=>setListItem({...listItem, description:e.target.value})}/>
+                    <Button onClick={handleAdd}><Add /></Button>
+                </Paper>) 
+            }
             {data.length ? (
                 <StyledGrid container alignItems='stretch'spacing={1}>
                      {data.map((d) => (
@@ -86,9 +88,9 @@ const MusicTracks = () => {
                             key={d?.trackId} 
                             trackName={d?.trackName} 
                             artistName={d?.artistName} 
-                            img={d?.artworkUrl100} 
+                            img={d?.artworkUrl100}
                             handleClick={(e)=>{
-                                e.stopPropagation();setListItem({...listItem, key:d?.trackId, trackName:d?.trackName, artistName:d?.artistName, image:d?.artworkUrl100, description:''});setTrackName('');
+                                e.stopPropagation();setListItem({...listItem, key:d?.trackId, trackName:d?.trackName, artistName:d?.artistName, image:d?.artworkUrl100, description:'', thumbnail:d?.artworkUrl60});setTrackName('');
                             }} 
                         />))}
                 </StyledGrid> )
