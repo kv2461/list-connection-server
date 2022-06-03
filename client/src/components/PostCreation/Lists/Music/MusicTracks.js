@@ -7,13 +7,15 @@ import { useDispatch } from 'react-redux';
 
 import Suggestions from './Suggestions';
 import MusicListItem from './MusicListItem';
+import Form from '../../../Form/Form';
 
 import { GetMusicTrack } from '../../../../actions/itunes';
 
 
 
-const MusicTracks = () => {
+const MusicTracks = ({currentId,setCurrentId}) => {
     const [trackName, setTrackName] = useState('')
+    const [readyToSubmit, setReadyToSubmit] = useState(false);
     const [listItems, setListItems] = useState([]); //for list to be saved on db
     const [listItem, setListItem] = useState(0) //for list item to be added on to list
     const [data,setData] = useState([]);
@@ -23,7 +25,6 @@ const MusicTracks = () => {
         const term = trackName.split(' ').join('+');
         const {results} = await dispatch(GetMusicTrack(term))
         setData(results);
-        // console.log(data[0].artistId);
     }
 
     const handleSearch = (trackName) => {
@@ -34,12 +35,13 @@ const MusicTracks = () => {
     useEffect(() => {
       if (trackName.length%7===0 || trackName.length === 5) {
 
-        fetchData()
+        fetchData() 
 
         .catch(console.error);
       };
-
-    }, [trackName])
+      
+        //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [trackName]) 
 
     const handleAdd = () => {
         setListItems([...listItems, listItem]);
@@ -80,16 +82,30 @@ const MusicTracks = () => {
 
         setListItems(updatedList);
     }
+
+    const preSubmit = () => {
+        if (listItems.length>0){
+            setReadyToSubmit(true);
+            setTrackName('');
+        }
+    }
+
+    const editSubmit = () => {
+        setReadyToSubmit(false);
+    }
     
 
   return (
     <Container>
         <Masonry columns={2} spacing={1}>
             <Box justifyContent='center'>
-                <FormControl fullWidth>
-                    <TextField label='Track Name/Artist'value={trackName} variant='outlined' onChange={(e)=>setTrackName(e.target.value)}></TextField>
-                    <Button onClick={(e)=>{e.stopPropagation();e.preventDefault(e);handleSearch(trackName)}}>search</Button>
-                </FormControl>
+
+                {readyToSubmit ? null : 
+                    (<FormControl fullWidth>
+                        <TextField label='Track Name/Artist'value={trackName} variant='outlined' onChange={(e)=>setTrackName(e.target.value)}></TextField>
+                        <Button onClick={(e)=>{e.stopPropagation();e.preventDefault(e);handleSearch(trackName)}}>search</Button>
+                    </FormControl>) 
+                }
 
             {listItems.length===0 ? null : 
                 <Paper sx={{marginTop:5}}>
@@ -113,6 +129,12 @@ const MusicTracks = () => {
         
 
         <Box>
+            {!readyToSubmit ? 
+                (<Button onClick={()=>preSubmit()}>Ready to Submit?</Button>) : 
+                (<Button onClick={()=>editSubmit()}>Back to Edit Mode</Button>)
+            }
+
+            {!readyToSubmit ? null : <Form currentId={currentId} setCurrentId={setCurrentId} list={listItems} genre='music' subgenre='musicTrack'/>}
             {!listItem ? null : 
                 (<Paper sx={{p:2}}>
                     <Typography sx={{m:1}}>{listItem?.trackName} by {listItem?.artistName}</Typography>

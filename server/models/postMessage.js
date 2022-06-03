@@ -11,6 +11,8 @@ const postSchema = new mongoose.Schema({
         type:[String],
         default:[],
     },
+    genre:String,
+    subgenre:String,
     list:{
         type:[Object],
         default:[]
