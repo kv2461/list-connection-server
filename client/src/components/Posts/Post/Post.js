@@ -2,6 +2,7 @@ import React from 'react';
 import {CardContent,Button,Typography} from '@mui/material';
 import { StyledCard,StyledCardMedia,StyledTypography,StyledCardActions,StyledOverlay,StyledOverlay2,StyledDetails } from './styles';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import ThumbUpAltOutlined from '@mui/icons-material/ThumbUpOutlined'
 import DeleteIcon from '@mui/icons-material/Delete';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import moment from 'moment'
@@ -11,6 +12,23 @@ import { DeletePost,LikePost } from '../../../actions/posts';
 
 const Post = ({post, setCurrentId}) => {
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem('profile'));
+
+  const Likes = () => {
+    if (post.likes.length > 0) {
+      return post.likes.find((like) => like === (user?.result?.googleId || user?.result?._id))
+        ? (
+          <><ThumbUpAltIcon fontSize="small" />&nbsp;{post.likes.length > 2 ? `You and ${post.likes.length - 1} others` : `${post.likes.length} like${post.likes.length > 1 ? 's' : ''}` }</>
+        ) : (
+          <><ThumbUpAltOutlined fontSize="small" />&nbsp;{post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}</>
+        );
+    }
+
+    return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
+  };
+
+  //might remove 2nd styled overlay because not sure if i want to allow editing in main page...
+
 
   return (
     <StyledCard>
@@ -19,11 +37,13 @@ const Post = ({post, setCurrentId}) => {
         <Typography variant='h6'>{post.username}</Typography>
         <Typography variant='body2'>{moment(post.createdAt).fromNow()}</Typography>
       </StyledOverlay>
-      <StyledOverlay2>
+
+      {(user?.result?._id === post?.creator) && (<StyledOverlay2>
         <Button style={{color:'white'}} size='small' onClick={(e)=>{e.stopPropagation();setCurrentId(post._id)}}>
           <MoreHorizIcon fontSize='default'/>
         </Button>
-      </StyledOverlay2>
+      </StyledOverlay2>)} 
+
       <StyledDetails>
         <Typography variant='body2' sx={{color:'text.secondary'}}>{post.tags.map((tag)=>`#${tag} `)}</Typography>
       </StyledDetails>
@@ -33,15 +53,13 @@ const Post = ({post, setCurrentId}) => {
         <Typography variant='body2' sx={{color:'text.secondary',fontSize:'0.6rem'}} gutterBottom component='p'>{`Genre:${post.genre.toUpperCase()} Subgenre:${post.subgenre.toUpperCase()}`}</Typography>
       </CardContent>
       <StyledCardActions>
-        <Button size='small' sx={{color:'primary.main'}} onClick={()=>dispatch(LikePost(post._id))}>
-          <ThumbUpAltIcon fontSize='small' />
-          &nbsp;Like&nbsp;
-          {post.likes.length}
+        <Button size='small' sx={{color:'primary.main'}} disabled={!user?.result} onClick={()=>dispatch(LikePost(post._id))}>
+          <Likes />
         </Button>
-        <Button size='small' sx={{color:'primary.main'}} onClick={()=>dispatch(DeletePost(post._id))}>
+        {(user?.result?._id === post?.creator) && (<Button size='small' sx={{color:'primary.main'}} onClick={()=>dispatch(DeletePost(post._id))}>
           <DeleteIcon fontSize='small' />
           Delete
-        </Button>
+        </Button>)}
       </StyledCardActions>
     </StyledCard>
   )
