@@ -1,6 +1,6 @@
 import { AppBar, Typography, Toolbar, Avatar, Button } from '@mui/material';
 import { styled } from '@mui/system';
-import { theme } from '../../Theme';
+// import { theme } from '../../Theme';
 
 export const StyledAppBar = styled(AppBar, {})({
     borderRadius: 15,
