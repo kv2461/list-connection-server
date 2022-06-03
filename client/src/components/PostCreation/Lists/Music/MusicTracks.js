@@ -77,8 +77,8 @@ const MusicTracks = () => {
             {!listItem ? null : 
                 (<Paper sx={{p:2}}>
                     <Typography sx={{m:1}}>{listItem?.trackName} by {listItem?.artistName}</Typography>
-                    <TextField sx={{width:'80%'}}label='Description' onChange={e=>setListItem({...listItem, description:e.target.value})}/>
-                    <Button onClick={handleAdd}><Add /></Button>
+                    <TextField fullWidth label='Description' onChange={e=>setListItem({...listItem, description:e.target.value})}/>
+                    <Button onClick={handleAdd}>Add to List<Add /></Button>
                 </Paper>) 
             }
             {data.length ? (
