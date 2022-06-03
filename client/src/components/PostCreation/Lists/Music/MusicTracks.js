@@ -49,12 +49,43 @@ const MusicTracks = () => {
     const handleDelete = (item) => {
         setListItems(listItems.filter(i => i !== item))
     }
+
+    const changeValuePosition = (arr,init,target) => {
+        [arr[init], arr[target]] = [arr[target],arr[init]];
+        return arr;
+    }
+
+    const handleMoveUp = (item) => {
+        let index = 0;
+        const updatedList = listItems.map((x,i) => {
+            if(x.key === item.key) {
+                index = i;
+            }
+            return x;
+        });
+        changeValuePosition(updatedList,index,index-1);
+
+        setListItems(updatedList);
+    }
+    
+    const handleMoveDown = (item) => {
+        let index = 0;
+        const updatedList = listItems.map((x,i) => {
+            if(x.key === item.key) {
+                index = i;
+            }
+            return x;
+        });
+        changeValuePosition(updatedList,index,index+1);
+
+        setListItems(updatedList);
+    }
     
 
   return (
     <Container>
-        <Masonry columns={2} spacing={2}>
-            <Box justifyContent='center' xs={5}>
+        <Masonry columns={2} spacing={1}>
+            <Box justifyContent='center'>
                 <FormControl fullWidth>
                     <TextField label='Track Name/Artist'value={trackName} variant='outlined' onChange={(e)=>setTrackName(e.target.value)}></TextField>
                     <Button onClick={(e)=>{e.stopPropagation();e.preventDefault(e);handleSearch(trackName)}}>search</Button>
@@ -69,6 +100,9 @@ const MusicTracks = () => {
                                 listItem={item}
                                 index={index}
                                 handleDelete={()=>handleDelete(item)}
+                                length={listItems.length - 1}
+                                handleMoveUp = {()=>handleMoveUp(item)}
+                                handleMoveDown = {()=>handleMoveDown(item)}
                             />))
                         } 
                     </StyledList>
@@ -78,7 +112,7 @@ const MusicTracks = () => {
             </Box>
         
 
-        <Box xs={6}>
+        <Box>
             {!listItem ? null : 
                 (<Paper sx={{p:2}}>
                     <Typography sx={{m:1}}>{listItem?.trackName} by {listItem?.artistName}</Typography>
