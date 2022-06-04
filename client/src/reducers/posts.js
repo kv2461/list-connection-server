@@ -3,8 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const postsSlice = createSlice({
     name:'posts',
-    initialState:{isLoading: true, posts:[]},
+    initialState:{posts:[], isLoading:true},
     reducers: {
+        START_LOADING: (state,action) => {
+            return {...state, isLoading:true}
+        },
+        END_LOADING: (state,action) => {
+            return {...state, isLoading:false}
+        },
         FETCH_ALL: (state,action) => {
             return {
                 ...state,
@@ -32,6 +38,6 @@ export const postsSlice = createSlice({
 })
 
 
-export const {FETCH_ALL, CREATE, UPDATE, DELETE,LIKE,FETCH_BY_SEARCH} = postsSlice.actions;
+export const {FETCH_ALL, CREATE, UPDATE, DELETE,LIKE,FETCH_BY_SEARCH,START_LOADING,END_LOADING} = postsSlice.actions;
 
 export default postsSlice.reducer;

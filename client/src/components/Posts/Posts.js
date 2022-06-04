@@ -6,11 +6,12 @@ import { StyledGrid } from './styles';
 
 
 const Posts = ({ setCurrentId }) => {
-  const {posts} = useSelector((state) => state.postsSlice)
+  const { posts, isLoading } = useSelector((state) => state.postsSlice)
 
+  if(!posts.length && !isLoading) return 'No Posts'
   
   return (
-    !posts?.length ? <CircularProgress /> : (
+    isLoading ? <CircularProgress /> : (
       <StyledGrid container alignItems='stretch' spacing={3}>
         {posts.map((post)=> (
           <Grid key={post._id} item xs={12} sm={12} md={6} lg={4}>
