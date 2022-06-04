@@ -76,10 +76,10 @@ const Home = ({currentId, setCurrentId}) => {
                     {tags.map((tag,index)=> <Chip sx={{width:1/2, bgcolor:'primary.light', color:'white'}} key={index} onDelete={handleDelete(tag)} label={tag}/>)}  </Container>: null}
                     <Button sx={{bgcolor:'primary.main',m:'10px 0'}} variant='contained' onClick={searchPost}>Search</Button>
                   </StyledAppBarSearch>
-                  <Form currentId={currentId} setCurrentId={setCurrentId} />
-                  <Paper elevation={6}>
+                  <Form currentId={currentId} setCurrentId={setCurrentId} /> 
+                  {(!searchQuery && !tags.length) && (<Paper elevation={6}>
                     <Pagination page={page} />
-                  </Paper>
+                  </Paper>)}
                 </Grid>
             </StyledGrid>
           </Container>
