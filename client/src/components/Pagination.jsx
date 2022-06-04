@@ -7,6 +7,7 @@ import { GetPosts } from '../actions/posts';
 
 
 const Paginate = ({ page }) => {
+    const { numberOfPages } = useSelector((state)=>state.postsSlice);
     const dispatch = useDispatch();
 
     useEffect(()=> {
@@ -17,12 +18,12 @@ const Paginate = ({ page }) => {
 
     return (
         <Pagination
-            count={5}
-            page={1}
+            count={numberOfPages}
+            page={Number(page) || 1}
             variant='outlined'
             sx={{color:'primary.main', '.MuiPagination-ul':{justifyContent:'space-around'}}}
             renderItem={(item)=>(
-                <PaginationItem {...item} component={Link} to={`/posts?page=${1}`}/>
+                <PaginationItem {...item} component={Link} to={`/posts?page=${item.page}`}/>
             )}
         />
 
