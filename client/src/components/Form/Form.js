@@ -9,7 +9,9 @@ const Form = ({ currentId, setCurrentId, genre, subgenre, list }) => {
     const [postData,setPostData] = useState({
       title:'', description:'', tags:'', selectedFile:'', genre:genre, subgenre:subgenre, list:list
     });
-    const post = useSelector((state)=>currentId?state.postsSlice.find((p)=>p._id===currentId):null);
+    const { posts } = useSelector((state) => state.postsSlice)
+    
+    const post = currentId ? posts.find((p)=>p._id===currentId) : null
 
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
