@@ -2,10 +2,35 @@ import mongoose from 'mongoose';
 import PostList from '../models/postList.js';
 
 export const getPosts = async (req, res) => {
-    try {
-        const postLists = await PostList.find();
+    const {page} = req.query
 
-        res.status(200).json(postLists);
+    try {
+        const LIMIT = 6;
+        const startIndex = (Number(page) - 1) * LIMIT;
+        
+        const total = await PostList.countDocuments({});
+
+        const posts = await PostList.find().sort({_id: -1}).limit(LIMIT).skip(startIndex);
+
+        res.status(200).json({data:posts, currentPage:Number(page), numberOfPages:Math.ceil(total/LIMIT)});
+
+    } catch (error) {
+        res.status(404).json({message:error.message});
+    }
+}
+
+//QUERY -> /posts?page=1 -> page = 1
+//PARAMS -> /posts/123 -> id = 123
+
+export const getPostsBySearch = async (req, res) => {
+    const { searchQuery, tags } = req.query
+    try {
+        const title = new RegExp(searchQuery,'i'); //ignore case
+
+        const posts = await PostList.find({ $or: [{title}, {tags: {$in:tags.split(',') } }] }); //$or find me title or tags
+        //$in is one of the tags in the array of tags equal to any of my tags
+
+        res.json({ data: posts }); //will need to destructure twice when recieving in actions
     } catch (error) {
         res.status(404).json({message:error.message});
     }

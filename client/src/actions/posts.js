@@ -2,9 +2,9 @@ import { FETCH_BY_SEARCH,FETCH_ALL,CREATE,UPDATE,DELETE,LIKE } from '../reducers
 
 import * as api from '../api';
 
-export const GetPosts = () => async (dispatch) => {
+export const GetPosts = (page) => async (dispatch) => {
     try {
-        const { data } = await api.fetchPosts();
+        const { data } = await api.fetchPosts(page);
 
         dispatch(FETCH_ALL(data));
     } catch (error) {
