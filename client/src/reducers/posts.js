@@ -19,6 +19,9 @@ export const postsSlice = createSlice({
                 numberOfPages: action.payload.numberOfPages,
             }
         },
+        FETCH_POST: (state,action)=> {
+            return {...state, post: action.payload };
+        },
         FETCH_BY_SEARCH:(state,action)=>{
             return {...state, posts:action.payload}
         },
@@ -38,6 +41,6 @@ export const postsSlice = createSlice({
 })
 
 
-export const {FETCH_ALL, CREATE, UPDATE, DELETE,LIKE,FETCH_BY_SEARCH,START_LOADING,END_LOADING} = postsSlice.actions;
+export const {FETCH_ALL, CREATE, UPDATE, DELETE,LIKE,FETCH_BY_SEARCH,START_LOADING,END_LOADING, FETCH_POST} = postsSlice.actions;
 
 export default postsSlice.reducer;

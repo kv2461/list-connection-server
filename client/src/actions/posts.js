@@ -1,6 +1,19 @@
-import { FETCH_BY_SEARCH,FETCH_ALL,CREATE,UPDATE,DELETE,LIKE, START_LOADING, END_LOADING } from '../reducers/posts';
+import { FETCH_BY_SEARCH, FETCH_POST, FETCH_ALL, CREATE, UPDATE, DELETE, LIKE, START_LOADING, END_LOADING } from '../reducers/posts';
 
 import * as api from '../api';
+
+export const GetPost = (id) => async (dispatch) => {
+    try {
+        dispatch(START_LOADING());
+        
+        const { data } = await api.fetchPost(id);
+
+        dispatch(FETCH_POST(data));
+        dispatch(END_LOADING());
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 export const GetPosts = (page) => async (dispatch) => {
     try {

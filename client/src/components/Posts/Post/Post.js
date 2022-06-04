@@ -7,11 +7,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import moment from 'moment'
 import {useDispatch} from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { DeletePost,LikePost } from '../../../actions/posts';
 
 const Post = ({post, setCurrentId}) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('profile'));
 
   const Likes = () => {
@@ -29,14 +31,18 @@ const Post = ({post, setCurrentId}) => {
 
   //might remove 2nd styled overlay because not sure if i want to allow editing in main page...
 
+  const openPost = () => {
+    navigate(`/posts/${post._id}`);
+  }
+
 
   return (
     <StyledCard raised elevation={6}>
       <StyledButtonBase
       component='span'
       name='test'
-      onClick={()=>{}}
-      />
+      onClick={openPost}
+      >
       <StyledCardMedia image={post.selectedFile} title={post.title}/>
       <StyledOverlay>
         <Typography variant='h6'>{post.username}</Typography>
@@ -57,6 +63,7 @@ const Post = ({post, setCurrentId}) => {
         <Typography variant='body2' sx={{color:'text.secondary'}} gutterBottom component='p'>{post.description}</Typography>
         <Typography variant='body2' sx={{color:'text.secondary',fontSize:'0.6rem'}} gutterBottom component='p'>{`Genre:${post.genre.toUpperCase()} Subgenre:${post.subgenre.toUpperCase()}`}</Typography>
       </CardContent>
+      </StyledButtonBase>
       <StyledCardActions>
         <Button size='small' sx={{color:'primary.main'}} disabled={!user?.result} onClick={()=>dispatch(LikePost(post._id))}>
           <Likes />
