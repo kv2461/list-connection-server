@@ -16,12 +16,12 @@ export const GetPosts = (page) => async (dispatch) => {
 
 export const GetPostsBySearch = (searchQuery) => async (dispatch) => {
     try {
-        dispatch(START_LOADING)
+        dispatch(START_LOADING())
         const { data: {data} } = await api.fetchPostsBySearch(searchQuery); 
         //destructuring required twice due to axios request AND postsearch assigning it to a new object called data
         
         dispatch(FETCH_BY_SEARCH(data));
-        dispatch(END_LOADING);
+        dispatch(END_LOADING());
     } catch (error) {
         console.log(error);
     }
@@ -29,11 +29,11 @@ export const GetPostsBySearch = (searchQuery) => async (dispatch) => {
 
 export const CreatePost = (post) => async (dispatch) => {
     try {
-        dispatch(START_LOADING)
+        dispatch(START_LOADING())
         const { data } = await api.createPost(post);
 
         dispatch(CREATE(data));
-        dispatch(END_LOADING);
+        dispatch(END_LOADING());
     } catch(error) {
         console.log(error);
     }
