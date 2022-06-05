@@ -28,6 +28,7 @@ export const StyledImgMedia = styled('img',{})({
     borderRadius:'20px',
     objectFit:'cover',
     width:'100%',
+    maxWidth:'500px',
     maxHeight:'600px',
 })
 

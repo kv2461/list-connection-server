@@ -9,15 +9,18 @@ const MusicListItem = ({ listItem, index, handleDelete, length, handleMoveUp, ha
 
   useEffect(() => {
 
-    const genrify = () => {
-      if (genre === 'musicTracks') {
-      setName(listItem?.trackName);
-      } else if (genre === 'musicAlbums') {
-      setName(listItem?.albumName);
-      }
+    switch(genre) {
+      case 'musicTracks':
+        setName(listItem?.trackName);
+        break;
+      case 'musicAlbums':
+        setName(listItem?.albumName);
+        break;
+      default:
+        setName(listItem?.trackName);
+        break;
     }
 
-    genrify();
 
   },[listItem?.albumName,genre,listItem?.trackName])
 
@@ -32,7 +35,7 @@ const MusicListItem = ({ listItem, index, handleDelete, length, handleMoveUp, ha
                   disableTypography 
                   primary={ <Typography fontSize='0.8rem'> {listItem.description ? `${listItem?.description}` :null } </Typography>}
                  />
-                 <Button onClick={handleDelete}><DeleteForever/></Button>
+                 {handleDelete ? <Button onClick={handleDelete}><DeleteForever/></Button> : null}
                  <Box sx={{display:'flex', flexDirection:'column'}}>
                       {index===0 ? null : <Button onClick={handleMoveUp}><KeyboardArrowUp/></Button>}
                       {index===length ? null : <Button onClick={handleMoveDown}><KeyboardArrowDown/></Button>}
