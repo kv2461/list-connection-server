@@ -6,6 +6,7 @@ import moment from 'moment';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import {GetPost} from '../../actions/posts';
+import ListDetails from './ListDetails/ListDetails';
 
 const PostDetails = () => {
     const { post, posts, isLoading } = useSelector((state)=>state.postsSlice);
@@ -17,6 +18,7 @@ const PostDetails = () => {
       dispatch(GetPost(id));
     
     }, [id])
+
 
     if (!post) return null;
 
@@ -37,6 +39,7 @@ const PostDetails = () => {
           <Typography variant='body1'>{moment(post.createdAt).fromNow()}</Typography>
           <Divider sx={{m:'20px 0'}} />
           <Typography variant='body1'><strong>List Details</strong></Typography>
+          <ListDetails post={post} list={post.list}/>
           <Divider sx={{m:'20px 0'}} />
           <Typography variant='body1'><strong>Comments Coming Soon</strong></Typography>
           <Divider sx={{m:'20px 0'}} />
