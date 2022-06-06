@@ -20,7 +20,7 @@ export const StyledDivSection = styled('div',{})({
 export const StyledDivImageSection = styled('div',{})({
     marginLeft:'20px',
     [theme.breakpoints.down('sm')]: {
-        marginLeft:0,
+        margin:'20px',
     },
 });
 
