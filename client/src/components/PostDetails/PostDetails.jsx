@@ -9,7 +9,7 @@ import {GetPost} from '../../actions/posts';
 import ListDetails from './ListDetails/ListDetails';
 
 const PostDetails = () => {
-    const { post, posts, isLoading } = useSelector((state)=>state.postsSlice);
+    const { post, posts, isLoading, } = useSelector((state)=>state.postsSlice);
     const dispatch = useDispatch();
     const navigate= useNavigate();
     const { id } = useParams();

@@ -20,13 +20,13 @@ export const postsSlice = createSlice({
             }
         },
         FETCH_POST: (state,action)=> {
-            return {...state, post: action.payload };
+            return {...state, post: action.payload, createdPost:'' };
         },
         FETCH_BY_SEARCH:(state,action)=>{
             return {...state, posts:action.payload}
         },
         CREATE: (state,action) => {
-            return {...state, posts:[...state.posts, action.payload]};
+            return {...state, posts:[...state.posts, action.payload], createdPost:action.payload};
         },
         UPDATE: (state,action)=> {
             return {...state, posts:state.posts.map((post)=> post._id === action.payload._id ? action.payload : post)};

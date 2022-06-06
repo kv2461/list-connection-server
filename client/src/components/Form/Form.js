@@ -3,17 +3,20 @@ import {TextField, Button, Typography} from '@mui/material';
 import FileBase from 'react-file-base64';
 import {StyledForm, StyledButton, StyledPaper, StyledFileInput } from './styles';
 import {useDispatch, useSelector} from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {CreatePost, UpdatePost} from '../../actions/posts';
 
 const Form = ({ currentId, setCurrentId, genre, subgenre, list }) => {
     const [postData,setPostData] = useState({
       title:'', description:'', tags:'', selectedFile:'', genre:genre, subgenre:subgenre, list:list
     });
-    const { posts } = useSelector((state) => state.postsSlice)
+    const { posts, createdPost } = useSelector((state) => state.postsSlice);
+
     
     const post = currentId ? posts.find((p)=>p._id===currentId) : null
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(()=>{
@@ -28,8 +31,15 @@ const Form = ({ currentId, setCurrentId, genre, subgenre, list }) => {
       } else {
       dispatch(UpdatePost(currentId, {...postData, username: user?.result?.username}));
       }
+      console.log(createdPost);
       clear();
     }
+
+    useEffect(()=> { //so that a newly createdPost will navigate user to its page
+      if (createdPost) {
+        navigate(`/posts/${createdPost._id}`)
+      }
+    },[createdPost])
 
     if(!user?.result?.name) {
       return(
