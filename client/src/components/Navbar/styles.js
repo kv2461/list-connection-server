@@ -1,5 +1,5 @@
 import { AppBar, Typography, Toolbar, Avatar, Button } from '@mui/material';
-import { styled } from '@mui/system';
+import { fontSize, styled } from '@mui/system';
 import { theme } from '../../Theme';
 
 export const StyledAppBar = styled(AppBar, {})({
@@ -21,7 +21,9 @@ export const StyledAppBar = styled(AppBar, {})({
     '&:hover':{
         cursor:'pointer',
         backgroundColor: 'rgba(128,128,128,0.1)'
-    }
+    },
+    fontSize:'3em',
+    fontWeight:300,
   })
 
   export const StyledToolbar = styled(Toolbar,{})({

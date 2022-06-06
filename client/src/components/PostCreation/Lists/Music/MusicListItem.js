@@ -4,7 +4,7 @@ import { DeleteForever, KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-ma
 
 
 const MusicListItem = ({ listItem, index, handleDelete, length, handleMoveUp, handleMoveDown, genre }) => {
-
+  const [hover, setHover] = useState(false)
   const [name,setName] = useState('');
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const MusicListItem = ({ listItem, index, handleDelete, length, handleMoveUp, ha
     <li key={listItem?.key}>
         <ul>
            {index > 0 ? <Divider sx={{borderBottomWidth:3}} /> : null}
-            <ListSubheader sx={{fontWeight:700 ,lineHeight:1, p:2}}>{`${name} by ${listItem?.artistName}`}</ListSubheader>
+            <ListSubheader sx={{fontWeight:700 ,lineHeight:1, p:2}} >{`${name} by ${listItem?.artistName}`}</ListSubheader>
             <ListItem key={`${listItem?.key}-${index}`}>
                   <Box sx={{p:2}} component='img' src={listItem?.thumbnail}/>
                 <ListItemText 
