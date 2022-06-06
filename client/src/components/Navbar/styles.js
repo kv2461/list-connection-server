@@ -44,6 +44,7 @@ export const StyledAppBar = styled(AppBar, {})({
       width:'auto',
       marginTop:20,
       justifyContent:'center',
+      flexDirection:'column'
     }
   })
 
@@ -61,10 +62,16 @@ export const StyledAppBar = styled(AppBar, {})({
     display: 'flex',
     alignItems: 'center',
     textAlign: 'center',
+    marginLeft:'5px',
+    marginRight:'5px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize:'1em',
+    },
   })
 
   export const StyledLogoutButton = styled(Button,{})({
-      marginLeft:'20px',
+      marginLeft:'5px',
+      marginRight:'5px',
   })
 
   export const StyledCreatePost = styled(Button,{})({

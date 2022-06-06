@@ -11,6 +11,7 @@ import Form from '../../../Form/Form';
 
 
 import { GetMusicTrack } from '../../../../actions/itunes';
+import { width } from '@mui/system';
 
 
 
@@ -21,6 +22,22 @@ const MusicTracks = ({currentId,setCurrentId}) => {
     const [listItem, setListItem] = useState(0) //for list item to be added on to list
     const [data,setData] = useState([]);
     const dispatch = useDispatch();
+
+    //resize masonry component
+    const useViewport = () => {
+    const [width, setWidth] = useState(window.innerWidth);
+
+    useEffect(()=> {
+        const handleWindowResize = () => setWidth(window.innerWidth);
+        window.addEventListener('resize',handleWindowResize);
+        return () => window.removeEventListener('resize', handleWindowResize);
+    },[])
+
+    return {width};
+    }   
+
+    const {width} = useViewport();
+    const breakpoint = 500;
 
     const fetchData = async () => {
         const term = trackName.split(' ').join('+');
@@ -100,7 +117,7 @@ const MusicTracks = ({currentId,setCurrentId}) => {
   return (
     <Container>
 
-        <Masonry columns={2} spacing={1}>
+        <Masonry columns={width>breakpoint?2:1} spacing={1}>
             <Box justifyContent='center'>
 
                 {readyToSubmit ? null : 
