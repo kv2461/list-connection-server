@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import {Typography, Grid , Box } from '@mui/material';
-import { StyledCard, } from './styles'
+import { StyledCard, StyledTypography } from './styles'
 const Suggestions = ({ img, trackName, artistName, handleClick, albumName, genre}) => {
   const [name,setName] = useState('');
 
@@ -19,12 +19,12 @@ const Suggestions = ({ img, trackName, artistName, handleClick, albumName, genre
   },[albumName,genre,trackName])
   
   return (
-    <Grid item sm={3}>
+    <Grid item xs={6} sm={4} md={6}>
         <StyledCard onClick={handleClick}>
             <Box component='img' sx={{m:2,p:2}} src={img}/>
-            <Typography>{name}</Typography>
-            <p>by</p>
-            <Typography>{artistName}</Typography>
+            <StyledTypography>{name}</StyledTypography>
+            <StyledTypography>by</StyledTypography>
+            <StyledTypography>{artistName}</StyledTypography>
         </StyledCard>
     </Grid>
   )
