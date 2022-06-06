@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import {TextField, Button, Typography, Chip, Container} from '@mui/material';
 import FileBase from 'react-file-base64';
-import {StyledForm, StyledButton, StyledPaper, StyledFileInput } from './styles';
+import {StyledForm, StyledButton, StyledPaper, StyledFileInput, StyledDivImageSection, StyledImgMedia } from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {CreatePost, UpdatePost} from '../../actions/posts';
@@ -40,14 +40,17 @@ const Form = ({ currentId, setCurrentId, genre, subgenre, list }) => {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-
-      if(currentId===0) {
-        dispatch(CreatePost({...postData, username: user?.result?.username}));
-      } else {
-      dispatch(UpdatePost(currentId, {...postData, username: user?.result?.username}));
-      }
-      console.log(createdPost);
-      clear();
+      if (postData.title) {
+        if (currentId===0 && postData.selectedFile ==='') {
+            const defaultImage = postData.list[0].image
+            dispatch(CreatePost({...postData, selectedFile: defaultImage, username: user?.result?.username}));
+        } else if (currentId===0) {
+          dispatch(CreatePost({...postData, username: user?.result?.username}));
+        } else {
+        dispatch(UpdatePost(currentId, {...postData, username: user?.result?.username}));
+        }
+        clear();
+        }
     }
 
     useEffect(()=> { //so that a newly createdPost will navigate user to its page
@@ -77,7 +80,7 @@ const Form = ({ currentId, setCurrentId, genre, subgenre, list }) => {
     <StyledPaper>
       <StyledForm autoComplete='off' noValidate onSubmit={handleSubmit}>
         <Typography variant='h6'>{currentId?'Edit':'Make'} a List</Typography>
-        <TextField name='title' variant='outlined' label='Title' fullWidth value={postData.title} onChange={(e) =>setPostData({...postData, title:e.target.value})}/>
+        <TextField required autoFocus name='title' variant='outlined' label='Title' fullWidth value={postData.title} onChange={(e) =>setPostData({...postData, title:e.target.value})}/>
         <TextField name='description' variant='outlined' label='Description' fullWidth value={postData.description} onChange={(e) =>setPostData({...postData, description:e.target.value})}/>
         <TextField sx={{m:'10px 0'}} name='search' variant='outlined' label='Add Search Tags By Pressing Enter' fullWidth onKeyPress={(e)=>handleAddTag(e)} onChange={(e)=>setTagToAdd(e.target.value)} value={tagToAdd}/>
           {postData.tags.length > 0 ? <Container>
@@ -89,6 +92,9 @@ const Form = ({ currentId, setCurrentId, genre, subgenre, list }) => {
             onDone={({base64})=> setPostData({...postData,selectedFile:base64})}
           />
         </StyledFileInput>
+        <StyledDivImageSection>
+          <StyledImgMedia src={postData.selectedFile} />
+        </StyledDivImageSection>
         <StyledButton sx={{bgcolor:'primary.main'}}variant='container' size='large' onClick={handleSubmit} fullWidth>Submit</StyledButton>
         <Button sx={{bgcolor:'secondary.main'}}variant='container' size='small' onClick={clear} fullWidth>Clear</Button>
       </StyledForm>

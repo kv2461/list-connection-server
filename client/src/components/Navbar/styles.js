@@ -24,6 +24,9 @@ export const StyledAppBar = styled(AppBar, {})({
     },
     fontSize:'3em',
     fontWeight:300,
+    [theme.breakpoints.down('sm')]: {
+      fontSize:'2em',
+    },
   })
 
   export const StyledToolbar = styled(Toolbar,{})({
@@ -44,7 +47,7 @@ export const StyledAppBar = styled(AppBar, {})({
       width:'auto',
       marginTop:20,
       justifyContent:'center',
-      flexDirection:'column'
+      flexDirection:'row'
     }
   })
 
