@@ -8,7 +8,7 @@ import Form from '../../../../Form/Form';
 import MusicListItem from '../MusicListItem';
 import Suggestions from '../Suggestions';
 
-const MobileTemplate = ({setTrackName, setAlbumName, albumName, setListItem, listItem, trackName, listItems, listLogic, width, data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre }) => {
+const MobileTemplate = ({setTrackName, setAlbumName, setArtistName, artistName, albumName, setListItem, listItem, trackName, listItems, listLogic, width, data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre }) => {
 
     const [name,setName] = useState('');
     const [label, setLabel] = useState('');
@@ -21,30 +21,31 @@ const MobileTemplate = ({setTrackName, setAlbumName, albumName, setListItem, lis
             case 'musicAlbums':
                 setAlbumName(e.target.value);
                 break;
-            default:
-                setTrackName(e.target.value);
+            case 'musicArtists':
+                setArtistName(e.target.value);
                 break;
         }
     }
 
-        useEffect(() => {
+    useEffect(() => {
 
-            switch(subgenre) {
-              case 'musicTracks':
-                setName(trackName);
-                setLabel('Search Music Track/Artist');
-                break;
-              case 'musicAlbums':
-                setName(albumName);
-                setLabel('Search Music Album/Artist');
-                break;
-              default:
-                setName(trackName);
-                break;
-            }
-            
+        switch(subgenre) {
+          case 'musicTracks':
+            setName(trackName);
+            setLabel('Search Music Track/Artist');
+            break;
+          case 'musicAlbums':
+            setName(albumName);
+            setLabel('Search Music Album/Artist');
+            break;
+          case 'musicArtists':
+            setName(artistName);
+            setLabel('Search Music Artist');
+            break;
+        }
+        
 
-        },[albumName,subgenre,trackName])
+    },[ albumName, subgenre, trackName, artistName ])
 
 
   return (
@@ -72,8 +73,9 @@ const MobileTemplate = ({setTrackName, setAlbumName, albumName, setListItem, lis
                     (<Paper sx={{p:2}}>
                         {subgenre==='musicTracks' && <Typography sx={{m:1}}>{listItem?.trackName} by {listItem?.artistName}</Typography>}
                         {subgenre==='musicAlbums' && <Typography sx={{m:1}}>{listItem?.albumName} by {listItem?.artistName}</Typography>}
+                        {subgenre==='musicArtists' && <Typography sx={{m:1}}>{listItem?.artistName}</Typography>}
                         <TextField fullWidth label='Description' onChange={e=>setListItem({...listItem, description:e.target.value})}/>
-                        <Button variant='contained' onClick={listLogic.handleAdd}> Add to List<Add /></Button>
+                        <Button variant='contained' onClick={listLogic.handleAdd}>Add to List<Add /></Button>
                     </Paper>) 
                 }
 
@@ -103,11 +105,28 @@ const MobileTemplate = ({setTrackName, setAlbumName, albumName, setListItem, lis
                                 subgenre={subgenre}
                                 key={d?.trackId || d?.collectionId} 
                                 albumName={d?.collectionName}
-                                trackName={d?.trackName} 
                                 artistName={d?.artistName} 
                                 img={d?.artworkUrl100}
                                 handleClick={(e)=>{
                                     e.stopPropagation();setListItem({...listItem, key:d?.collectionId, albumName:d?.collectionName, artistName:d?.artistName, image:d?.artworkUrl100, description:'', thumbnail:d?.artworkUrl60});setAlbumName('');
+                                }} 
+                            />))}
+                    </StyledGrid> )
+                : null }
+
+
+                {data.length && subgenre==='musicArtists'? (
+                    <StyledGrid container alignItems='stretch'spacing={1}>
+                         {data.map((d) => (
+                            <Suggestions 
+                                width={width}
+                                subgenre={subgenre}
+                                key={d?.trackId || d?.collectionId} 
+                                albumName={d?.collectionName}
+                                artistName={d?.artistName} 
+                                img={d?.artworkUrl100}
+                                handleClick={(e)=>{
+                                    e.stopPropagation();setListItem({...listItem, key:d?.artistId, albumName:d?.collectionName, artistName:d?.artistName, image:d?.artworkUrl100, description:'', thumbnail:d?.artworkUrl60});setArtistName('');
                                 }} 
                             />))}
                     </StyledGrid> )
