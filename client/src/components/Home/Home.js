@@ -31,11 +31,12 @@ const Home = ({currentId, setCurrentId}) => {
       dispatch(GetPostsBySearch({ search: searchQuery, tags: tagsQuery }));
     }
 
-  },[searchQuery,tagsQuery])
+  },[searchQuery,tagsQuery, dispatch])
 
   const searchPost = () => {
     if (search.trim() || tags) {
-      dispatch(GetPostsBySearch({ search, tags: tags.join(',') }));
+      // dispatch(GetPostsBySearch({ search, tags: tags.join(',') }));
+         // this is redundant since it gets data before using the search query it navigates to
       navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
     } else {
       navigate('/')
