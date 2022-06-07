@@ -7,7 +7,7 @@ import auth from '../middleware/auth.js';
 const router = express.Router();
 
 router.get('/search',getPostsBySearch);
-router.get('/categories',getPostsBySubgenre);
+router.get('/categories',getPostsBySubgenre); //not sure if i want to keep this name
 router.get('/',getPosts);
 router.get('/:id', getPost)
 
