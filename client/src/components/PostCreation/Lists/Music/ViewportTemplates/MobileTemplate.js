@@ -67,7 +67,7 @@ const MobileTemplate = ({setTrackName, setAlbumName, albumName, setListItem, lis
 
             <Box>
 
-                {!readyToSubmit ? null : <Form currentId={currentId} setCurrentId={setCurrentId} list={listItems} genre='music' subgenre='musicTracks'/>}
+                {!readyToSubmit ? null : <Form currentId={currentId} setCurrentId={setCurrentId} list={listItems} genre={genre} subgenre={subgenre}/>}
                 {!listItem ? null : 
                     (<Paper sx={{p:2}}>
                         {subgenre==='musicTracks' && <Typography sx={{m:1}}>{listItem?.trackName} by {listItem?.artistName}</Typography>}

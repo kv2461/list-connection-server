@@ -99,7 +99,7 @@ const DesktopTemplate = ({setTrackName, setAlbumName, albumName, setListItem, li
                     </Paper>) 
                 }
 
-{data.length && subgenre==='musicTracks' ? (
+                {data.length && subgenre==='musicTracks' ? (
                     <StyledGrid container alignItems='stretch'spacing={1}>
                          {data.map((d) => (
                             <Suggestions 
@@ -134,7 +134,7 @@ const DesktopTemplate = ({setTrackName, setAlbumName, albumName, setListItem, li
                             />))}
                     </StyledGrid> )
                 : null }
-                
+
             </Box>
         </Masonry>
   )
