@@ -14,18 +14,19 @@ export const getPost = async (req,res) => {
 }
 
 export const getPosts = async (req, res) => {
-    const {page, subgenrename} = req.query
+    const {page, subgenrename, genrename} = req.query
 
     try {
 
         const subgenre = new RegExp(subgenrename,'i');
+        const genre = new RegExp(genrename,'i');
 
         const LIMIT = 6;
         const startIndex = (Number(page) - 1) * LIMIT;
         
-        const total = await PostList.countDocuments({subgenre});
+        const total = await PostList.countDocuments({subgenre,genre});
 
-        const posts = await PostList.find({subgenre}).sort({_id: -1}).limit(LIMIT).skip(startIndex);
+        const posts = await PostList.find({subgenre,genre}).sort({_id: -1}).limit(LIMIT).skip(startIndex);
 
         res.status(200).json({data:posts, currentPage:Number(page), numberOfPages:Math.ceil(total/LIMIT)});
 

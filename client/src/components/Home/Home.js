@@ -28,9 +28,6 @@ const Home = ({currentId, setCurrentId}) => {
   const searchQuery = query.get('searchQuery');
   const tagsQuery = query.get('tags');
 
-
-  console.log(subgenreName);
-
   useEffect(() => {
 
     if (searchQuery || tagsQuery){ //use url parser
