@@ -22,18 +22,3 @@ export const getFoodData = async (req,res) => {
         res.status(404).json({message:error.message})
     }
 }
-
-
-const params = {
-    api_key:'BdndmSuoHSDQTOluzcbZspFejauCzw7XPE2ea4do',
-    query:'cheddar cheese',
-    dataType:['Survey (FNDDS)'],
-    pageSize:1,
-}
-
-// function getData() {
-//     return fetch(api_url)
-//     .then(response => response.json())
-// }
-
-// getData.then(data => console.log(data.foods[0].foodNutrients))
