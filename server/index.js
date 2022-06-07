@@ -6,6 +6,7 @@ import cors from 'cors';
 
 import postRoutes from './routes/posts.js';
 import userRoutes from './routes/users.js';
+import FoodDataRoutes from './routes/FoodDataRoutes.js';
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded({limit: '30mb',extended:true}));
 
 app.use('/user',userRoutes);
 app.use('/posts',postRoutes);
+app.use('/food',FoodDataRoutes);
 
 
 const PORT = process.env.PORT || 4001;
