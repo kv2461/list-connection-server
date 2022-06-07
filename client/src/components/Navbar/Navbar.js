@@ -31,6 +31,7 @@ const Navbar = () => {
         }
 
         setUser(JSON.parse(localStorage.getItem('profile')));
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     },[location])
 
   return (
@@ -41,7 +42,7 @@ const Navbar = () => {
         <StyledToolbar>
             {user ? (
                 <StyledProfile>
-                    <StyledCreatePost variant='h2' align='center' onClick={()=>navigate('/createPost')}><AddIcon/></StyledCreatePost>
+                    <StyledCreatePost variant='h2' disabled={!user?.result} align='center' onClick={()=>navigate('/createPost')}><AddIcon/></StyledCreatePost>
                     <StyledAvatar alt={user.result.username} src={user.result.imageUrl}>{user.result.username.charAt(0)}</StyledAvatar>
                     <StyledUsername variant='h6'>{user.result.username}</StyledUsername>
                     <StyledLogoutButton variant='contained' sx={{backgroundColor:'secondary.main'}} onClick={logout} >Logout</StyledLogoutButton>

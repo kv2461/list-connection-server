@@ -4,7 +4,7 @@ import {StyledCard,StyledSvgIcon} from './styles'
 
 const ListTypeCards = ({Icon, genre, handleClick}) => {
   return (
-    <Grid item sm={3}>
+    <Grid item xs={6} sm={4} md={3}>
         <StyledCard onClick={handleClick}>
             <StyledSvgIcon component={Icon}/>
             <Typography>{genre}</Typography>

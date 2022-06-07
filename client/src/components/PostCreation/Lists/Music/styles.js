@@ -1,4 +1,4 @@
-import {Card, SvgIcon, Grid, List} from '@mui/material';
+import {Card, SvgIcon, Grid, List, Typography} from '@mui/material';
 import {styled} from '@mui/system';
 import { theme } from '../../../../Theme';
 
@@ -14,7 +14,7 @@ export const StyledCard = styled(Card,{})({
     '&:hover':{
         cursor:'pointer',
         backgroundColor: 'rgba(128,128,128,0.1)'
-    }
+    },
 })
 
 export const StyledSvgIcon = styled(SvgIcon,{})({
@@ -34,4 +34,10 @@ export const StyledList = styled(List, {})({
     overflow:'auto',
     maxHeight:500,
     '& ul':{padding:0},
+})
+
+export const StyledTypography = styled(Typography,{})({
+    [theme.breakpoints.down('sm')]: {
+        fontSize:'0.5em'
+    }
 })

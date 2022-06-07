@@ -6,7 +6,16 @@ export const GetMusicTrack = (term) => async (dispatch) => {
     try {
         const { data } = await api.getMusicTrack(term);
 
-        // dispatch(FETCH_ALL(data));
+        return data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const GetMusicAlbum = (term) => async (dispatch) => {
+    try {
+        const { data } = await api.getMusicAlbum(term);
+
         return data;
     } catch (error) {
         console.log(error)

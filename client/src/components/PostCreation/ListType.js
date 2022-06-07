@@ -10,7 +10,7 @@ const ListType = () => {
 
   return (
     <Container maxWidth='md'>
-        <Typography component='h2' variant='h4' align='center'>What kind of list are you making?</Typography>
+        <Typography component='h3' variant='h5' align='center'>What kind of list are you making?</Typography>
         <StyledGrid container alignItems='stretch' spacing={3}>
             <ListTypeCards Icon={MusicNote} genre='Music' handleClick={()=>navigate('/createpost/music')}/>
             <ListTypeCards Icon={MovieFilter}genre='Movies' handleClick={()=>navigate('/createpost/movies')}/>

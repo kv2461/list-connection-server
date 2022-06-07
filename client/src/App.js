@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import { Container } from '@mui/material';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 
 import NavBar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
 import Auth from './components/Auth/Auth';
+import PostDetails from './components/PostDetails/PostDetails';
 
 import ListType from './components/PostCreation/ListType';
 import Music from './components/PostCreation/Lists/Music';
@@ -26,12 +27,14 @@ const App = () => {
 
   return (
       <BrowserRouter>
-        <Container maxWidth='lg'>
+        <Container maxWidth='xl'>
           <NavBar />
           <Routes>
             <Route path='/' element={<Navigate to='/posts/'/>}/>
             <Route path='/posts' element={<Home currentId={currentId} setCurrentId={setCurrentId}/>}/>
-            <Route path='/auth' element={(user===null)?<Auth />:<Navigate to='/posts/'/>} />
+            <Route path='/posts/search' element={<Home currentId={currentId} setCurrentId={setCurrentId}/>} />
+            <Route path='/posts/:id' element={<PostDetails />} />
+            <Route path='/auth' element={!user ? <Auth /> : <Navigate to='/posts/'/> } />
 
 
             <Route path='/createpost' element={<ListType currentId={currentId} setCurrentId={setCurrentId}/>} />

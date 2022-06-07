@@ -1,13 +1,10 @@
 import React, {useState, useEffect } from 'react';
-import { StyledGrid, StyledList, } from './styles';
-import { Paper, Typography, TextField, Button, Container, Box, FormControl } from '@mui/material';
-import { Masonry } from '@mui/lab';
-import { Add } from '@mui/icons-material';
+import { Container, } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
-import Suggestions from './Suggestions';
-import MusicListItem from './MusicListItem';
-import Form from '../../../Form/Form';
+import DesktopTemplate from './ViewportTemplates/DesktopTemplate';
+import MobileTemplate from './ViewportTemplates/MobileTemplate';
+
 
 import { GetMusicTrack } from '../../../../actions/itunes';
 
@@ -20,6 +17,23 @@ const MusicTracks = ({currentId,setCurrentId}) => {
     const [listItem, setListItem] = useState(0) //for list item to be added on to list
     const [data,setData] = useState([]);
     const dispatch = useDispatch();
+    const subgenre = 'musicTracks';
+    const genre = 'music';
+    //resize masonry component
+    const useViewport = () => {
+    const [width, setWidth] = useState(window.innerWidth);
+
+    useEffect(()=> {
+        const handleWindowResize = () => setWidth(window.innerWidth);
+        window.addEventListener('resize',handleWindowResize);
+        return () => window.removeEventListener('resize', handleWindowResize);
+    },[])
+
+    return {width};
+    }   
+
+    const {width} = useViewport();
+    const breakpoint = 500;
 
     const fetchData = async () => {
         const term = trackName.split(' ').join('+');
@@ -27,7 +41,7 @@ const MusicTracks = ({currentId,setCurrentId}) => {
         setData(results);
     }
 
-    const handleSearch = (trackName) => {
+    const handleSearch = () => {
         fetchData()
         .catch(console.error);
     }
@@ -43,121 +57,96 @@ const MusicTracks = ({currentId,setCurrentId}) => {
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [trackName]) 
 
-    const handleAdd = () => {
-        setListItems([...listItems, listItem]);
-        setListItem(0);
-    }
-
-    const handleDelete = (item) => {
-        setListItems(listItems.filter(i => i !== item))
-    }
-
-    const changeValuePosition = (arr,init,target) => {
-        [arr[init], arr[target]] = [arr[target],arr[init]];
-        return arr;
-    }
-
-    const handleMoveUp = (item) => {
-        let index = 0;
-        const updatedList = listItems.map((x,i) => {
-            if(x.key === item.key) {
-                index = i;
-            }
-            return x;
-        });
-        changeValuePosition(updatedList,index,index-1);
-
-        setListItems(updatedList);
+    const listLogic = {
+        handleAdd: () => {
+            setListItems([...listItems, listItem]);
+            setListItem(0);
+        },
+        handleDelete: (item) => {
+            setListItems(listItems.filter(i => i !== item))
+        },
+        changeValuePosition: (arr,init,target) => {
+            [arr[init], arr[target]] = [arr[target],arr[init]];
+            return arr;
+        },
+        handleMoveUp: (item) => {
+            let index = 0;
+            const updatedList = listItems.map((x,i) => {
+                if(x.key === item.key) {
+                    index = i;
+                }
+                return x;
+            });
+            listLogic.changeValuePosition(updatedList,index,index-1);
+        
+            setListItems(updatedList);
+        },
+        handleMoveDown: (item) => {
+            let index = 0;
+            const updatedList = listItems.map((x,i) => {
+                if(x.key === item.key) {
+                    index = i;
+                }
+                return x;
+            });
+            listLogic.changeValuePosition(updatedList,index,index+1);
+        
+            setListItems(updatedList);
+        },
+    
+        preSubmit: () => {
+                if (listItems.length>0){
+                    setReadyToSubmit(true);
+                    setTrackName('');
+                }
+        },
+    
+        editSubmit: () => {
+            setReadyToSubmit(false);
+        }
+    
     }
     
-    const handleMoveDown = (item) => {
-        let index = 0;
-        const updatedList = listItems.map((x,i) => {
-            if(x.key === item.key) {
-                index = i;
-            }
-            return x;
-        });
-        changeValuePosition(updatedList,index,index+1);
-
-        setListItems(updatedList);
-    }
-
-    const preSubmit = () => {
-        if (listItems.length>0){
-            setReadyToSubmit(true);
-            setTrackName('');
-        }
-    }
-
-    const editSubmit = () => {
-        setReadyToSubmit(false);
-    }
+    
     
 
   return (
     <Container>
-        <Masonry columns={2} spacing={1}>
-            <Box justifyContent='center'>
-
-                {readyToSubmit ? null : 
-                    (<FormControl fullWidth>
-                        <TextField label='Track Name/Artist'value={trackName} variant='outlined' onChange={(e)=>setTrackName(e.target.value)}></TextField>
-                        <Button onClick={(e)=>{e.stopPropagation();e.preventDefault(e);handleSearch(trackName)}}>search</Button>
-                    </FormControl>) 
-                }
-
-            {listItems.length===0 ? null : 
-                <Paper sx={{marginTop:5}}>
-                    <StyledList subheader={<li />}>{
-                        listItems.map((item,index) => (
-                            <MusicListItem
-                                key={`${item?.key}-${index}`}
-                                listItem={item}
-                                index={index}
-                                handleDelete={()=>handleDelete(item)}
-                                length={listItems.length - 1}
-                                handleMoveUp = {()=>handleMoveUp(item)}
-                                handleMoveDown = {()=>handleMoveDown(item)}
-                            />))
-                        } 
-                    </StyledList>
-                </Paper>
-            }
-            
-            </Box>
-        
-
-        <Box>
-            {!readyToSubmit ? 
-                (<Button onClick={()=>preSubmit()}>Ready to Submit?</Button>) : 
-                (<Button onClick={()=>editSubmit()}>Back to Edit Mode</Button>)
-            }
-
-            {!readyToSubmit ? null : <Form currentId={currentId} setCurrentId={setCurrentId} list={listItems} genre='music' subgenre='musicTrack'/>}
-            {!listItem ? null : 
-                (<Paper sx={{p:2}}>
-                    <Typography sx={{m:1}}>{listItem?.trackName} by {listItem?.artistName}</Typography>
-                    <TextField fullWidth label='Description' onChange={e=>setListItem({...listItem, description:e.target.value})}/>
-                    <Button onClick={handleAdd}>Add to List<Add /></Button>
-                </Paper>) 
-            }
-            {data.length ? (
-                <StyledGrid container alignItems='stretch'spacing={1}>
-                     {data.map((d) => (
-                        <Suggestions 
-                            key={d?.trackId} 
-                            trackName={d?.trackName} 
-                            artistName={d?.artistName} 
-                            img={d?.artworkUrl100}
-                            handleClick={(e)=>{
-                                e.stopPropagation();setListItem({...listItem, key:d?.trackId, trackName:d?.trackName, artistName:d?.artistName, image:d?.artworkUrl100, description:'', thumbnail:d?.artworkUrl60});setTrackName('');
-                            }} 
-                        />))}
-                </StyledGrid> )
-            : null }
-            </Box>
-        </Masonry>
+        {width > breakpoint ? 
+            <DesktopTemplate 
+                setTrackName={setTrackName} 
+                setListItem={setListItem} 
+                listItem={listItem} 
+                trackName={trackName} 
+                listItems={listItems} 
+                listLogic={listLogic} 
+                width={width} 
+                data={data} 
+                handleSearch={handleSearch} 
+                readyToSubmit={readyToSubmit} 
+                currentId={currentId} 
+                setCurrentId={setCurrentId}
+                genre={genre}
+                subgenre={subgenre}
+            />
+    : 
+            <MobileTemplate 
+                setTrackName={setTrackName} 
+                setListItem={setListItem} 
+                listItem={listItem} 
+                trackName={trackName} 
+                listItems={listItems} 
+                listLogic={listLogic} 
+                width={width} 
+                data={data} 
+                handleSearch={handleSearch} 
+                readyToSubmit={readyToSubmit} 
+                currentId={currentId} 
+                setCurrentId={setCurrentId}
+                genre={genre}
+                subgenre={subgenre}
+            />
+    }   
 
     </Container>
   )
