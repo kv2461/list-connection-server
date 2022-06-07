@@ -56,7 +56,7 @@ const Post = ({post, setCurrentId}) => {
       </StyledOverlay2>)} 
 
       <StyledDetails>
-        <Typography variant='body2' sx={{color:'text.secondary'}}>{post.tags.map((tag)=>`#${tag} `)}</Typography>
+        {post.tags?.length > 0 && <Typography variant='body2' sx={{color:'text.secondary'}}>{post.tags.map((tag)=>`#${tag} `)}</Typography>}
       </StyledDetails>
       <StyledTypography gutterBottom variant='h5' component='h2'>{post.title}</StyledTypography>
       <CardContent>
