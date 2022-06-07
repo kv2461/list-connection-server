@@ -1,13 +1,9 @@
 import React, {useState, useEffect } from 'react';
-import { StyledGrid, StyledList, } from './styles';
-import { Paper, Typography, TextField, Button, Container, Box, FormControl } from '@mui/material';
-import { Masonry } from '@mui/lab';
-import { Add } from '@mui/icons-material';
+import { Container, } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
-import Suggestions from './Suggestions';
-import MusicListItem from './MusicListItem';
-import Form from '../../../Form/Form';
+import DesktopTemplate from './ViewportTemplates/DesktopTemplate';
+import MobileTemplate from './ViewportTemplates/MobileTemplate';
 
 
 import { GetMusicTrack } from '../../../../actions/itunes';
@@ -116,163 +112,34 @@ const MusicTracks = ({currentId,setCurrentId}) => {
   return (
     <Container>
         {width > breakpoint ? 
-        <Masonry columns={2} spacing={1}>
-            <Box justifyContent='center'>
-
-                {readyToSubmit ? null : 
-                    (<FormControl fullWidth>
-                        <TextField label='Track Name/Artist'value={trackName} variant='outlined' onChange={(e)=>setTrackName(e.target.value)}></TextField>
-                        <Button onClick={(e)=>{e.stopPropagation();e.preventDefault(e);handleSearch(trackName)}}>search</Button>
-                    </FormControl>) 
-                }
-
-                
-                {listItems.length===0 ? null : 
-                    <Paper sx={{marginTop:5}}>
-                        <StyledList subheader={<li />}>{
-                            listItems.map((item,index) => (
-                                <MusicListItem
-                                    key={`${item?.key}-${index}`}
-                                    listItem={item}
-                                    index={index}
-                                    handleDelete={()=>listLogic.handleDelete(item)}
-                                    length={listItems.length - 1}
-                                    handleMoveUp = {()=>listLogic.handleMoveUp(item)}
-                                    handleMoveDown = {()=>listLogic.handleMoveDown(item)}
-                                    genre='musicTracks'
-                                />))
-                            } 
-                        </StyledList>
-                    </Paper>
-                }
-            
-            </Box>
-        
-
-            <Box>
-
-                {!readyToSubmit ? 
-                    (<Button onClick={()=>listLogic.preSubmit()}>Ready to Submit?</Button>) : 
-                    (<Button onClick={()=>listLogic.editSubmit()}>Back to Edit Mode</Button>)
-                }
-
-                {!readyToSubmit ? null : <Form currentId={currentId} setCurrentId={setCurrentId} list={listItems} genre='music' subgenre='musicTracks'/>}
-                {!listItem ? null : 
-                    (<Paper sx={{p:2}}>
-                        <Typography sx={{m:1}}>{listItem?.trackName} by {listItem?.artistName}</Typography>
-                        <TextField fullWidth label='Description' onChange={e=>setListItem({...listItem, description:e.target.value})}/>
-                        <Button onClick={listLogic.handleAdd}>Add to List<Add /></Button>
-                    </Paper>) 
-                }
-
-                {data.length ? (
-                    <StyledGrid container alignItems='stretch'spacing={1}>
-                         {data.map((d) => (
-                            <Suggestions 
-                                width={width}
-                                genre='musicTracks'
-                                key={d?.trackId} 
-                                trackName={d?.trackName} 
-                                artistName={d?.artistName} 
-                                img={d?.artworkUrl100}
-                                handleClick={(e)=>{
-                                    e.stopPropagation();setListItem({...listItem, key:d?.trackId, trackName:d?.trackName, artistName:d?.artistName, image:d?.artworkUrl100, description:'', thumbnail:d?.artworkUrl60});setTrackName('');
-                                }} 
-                            />))}
-                    </StyledGrid> )
-                : null }
-            </Box>
-        </Masonry>
+            <DesktopTemplate 
+                setTrackName={setTrackName} 
+                setListItem={setListItem} 
+                listItem={listItem} 
+                trackName={trackName} 
+                listItems={listItems} 
+                listLogic={listLogic} 
+                width={width} 
+                data={data} 
+                handleSearch={handleSearch} 
+                readyToSubmit={readyToSubmit} 
+                currentId={currentId} 
+                setCurrentId={setCurrentId}/>
     : 
-    <Container>
-            <Box justifyContent='center'>
-
-                {readyToSubmit ? null : 
-                    (<FormControl fullWidth>
-                        <TextField label='Track Name/Artist'value={trackName} variant='outlined' onChange={(e)=>setTrackName(e.target.value)}></TextField>
-                        <Button onClick={(e)=>{e.stopPropagation();e.preventDefault(e);handleSearch(trackName)}}>search</Button>
-                    </FormControl>) 
-                }
-
-                {width>breakpoint ? (
-                listItems.length===0 ? null : 
-                    <Paper sx={{marginTop:5}}>
-                        <StyledList subheader={<li />}>{
-                            listItems.map((item,index) => (
-                                <MusicListItem
-                                    key={`${item?.key}-${index}`}
-                                    listItem={item}
-                                    index={index}
-                                    handleDelete={()=>listLogic.handleDelete(item)}
-                                    length={listItems.length - 1}
-                                    handleMoveUp = {()=>listLogic.handleMoveUp(item)}
-                                    handleMoveDown = {()=>listLogic.handleMoveDown(item)}
-                                    genre='musicTracks'
-                                />))
-                            } 
-                        </StyledList>
-                    </Paper>
-                ) : null}
-            
-            </Box>
-        
-
-            <Box>
-
-                {!readyToSubmit ? 
-                    (<Button onClick={()=>listLogic.preSubmit()}>Ready to Submit?</Button>) : 
-                    (<Button onClick={()=>listLogic.editSubmit()}>Back to Edit Mode</Button>)
-                }
-
-                {!readyToSubmit ? null : <Form currentId={currentId} setCurrentId={setCurrentId} list={listItems} genre='music' subgenre='musicTracks'/>}
-                {!listItem ? null : 
-                    (<Paper sx={{p:2}}>
-                        <Typography sx={{m:1}}>{listItem?.trackName} by {listItem?.artistName}</Typography>
-                        <TextField fullWidth label='Description' onChange={e=>setListItem({...listItem, description:e.target.value})}/>
-                        <Button onClick={listLogic.handleAdd}>Add to List<Add /></Button>
-                    </Paper>) 
-                }
-
-                {data.length ? (
-                    <StyledGrid container alignItems='stretch'spacing={1}>
-                         {data.map((d) => (
-                            <Suggestions 
-                                width={width}
-                                genre='musicTracks'
-                                key={d?.trackId} 
-                                trackName={d?.trackName} 
-                                artistName={d?.artistName} 
-                                img={d?.artworkUrl100}
-                                handleClick={(e)=>{
-                                    e.stopPropagation();setListItem({...listItem, key:d?.trackId, trackName:d?.trackName, artistName:d?.artistName, image:d?.artworkUrl100, description:'', thumbnail:d?.artworkUrl60});setTrackName('');
-                                }} 
-                            />))}
-                    </StyledGrid> )
-                : null }
-
-                {width<breakpoint ? (
-                listItems.length===0 ? null : 
-                    <Paper sx={{marginTop:5}}>
-                        <StyledList subheader={<li />}>{
-                            listItems.map((item,index) => (
-                                <MusicListItem
-                                    key={`${item?.key}-${index}`}
-                                    listItem={item}
-                                    index={index}
-                                    handleDelete={()=>listLogic.handleDelete(item)}
-                                    length={listItems.length - 1}
-                                    handleMoveUp = {()=>listLogic.handleMoveUp(item)}
-                                    handleMoveDown = {()=>listLogic.handleMoveDown(item)}
-                                    genre='musicTracks'
-                                />))
-                            } 
-                        </StyledList>
-                    </Paper>
-                ) : null} 
-
-
-            </Box>
-        </Container>}
+            <MobileTemplate 
+                setTrackName={setTrackName} 
+                setListItem={setListItem} 
+                listItem={listItem} 
+                trackName={trackName} 
+                listItems={listItems} 
+                listLogic={listLogic} 
+                width={width} 
+                data={data} 
+                handleSearch={handleSearch} 
+                readyToSubmit={readyToSubmit} 
+                currentId={currentId} 
+                setCurrentId={setCurrentId}/>
+    }   
 
     </Container>
   )
