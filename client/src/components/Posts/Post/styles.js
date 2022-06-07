@@ -1,4 +1,4 @@
-import { Card, CardMedia, Typography, CardActions, ButtonBase} from '@mui/material';
+import { Card, CardMedia, Typography, CardActions, ButtonBase, SvgIcon } from '@mui/material';
 import { styled } from '@mui/system';
 // import { theme } from '../../Theme';
 
@@ -46,12 +46,16 @@ export const StyledOverlay2 = styled('div',{})({
 export const StyledDetails = styled('div',{})({
   display: 'flex',
   justifyContent: 'space-between',
-  margin: '20px',
+  margin: '5px',
 })
 
 export const StyledButtonBase = styled(ButtonBase,{})({
   display:'block',
   textAlign:'initial'
+})
+
+export const StyledSvgIcon = styled(SvgIcon,{})({
+  fontSize:'15px',
 })
 
 // export default makeStyles({

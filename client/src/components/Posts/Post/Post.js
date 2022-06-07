@@ -1,6 +1,6 @@
 import React from 'react';
 import {CardContent,Button,Typography} from '@mui/material';
-import { StyledCard,StyledCardMedia,StyledTypography,StyledCardActions,StyledOverlay,StyledOverlay2,StyledDetails,StyledButtonBase } from './styles';
+import { StyledCard,StyledCardMedia,StyledTypography,StyledCardActions,StyledOverlay,StyledOverlay2,StyledDetails,StyledButtonBase, } from './styles';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbUpAltOutlined from '@mui/icons-material/ThumbUpOutlined'
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -10,6 +10,8 @@ import {useDispatch} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { DeletePost,LikePost } from '../../../actions/posts';
+import More from './More';
+import GenreIcon from './GenreIcon';
 
 const Post = ({post, setCurrentId}) => {
   const dispatch = useDispatch();
@@ -54,16 +56,18 @@ const Post = ({post, setCurrentId}) => {
           <MoreHorizIcon fontSize='default'/>
         </Button>
       </StyledOverlay2>)} 
-
-      <StyledDetails>
-        {post.tags?.length > 0 && <Typography variant='body2' sx={{color:'text.secondary'}}>{post.tags.map((tag)=>`#${tag} `)}</Typography>}
-      </StyledDetails>
-      <StyledTypography gutterBottom variant='h5' component='h2'>{post.title}</StyledTypography>
-      <CardContent>
-        <Typography variant='body2' sx={{color:'text.secondary'}} gutterBottom component='p'>{post.description}</Typography>
-        <Typography variant='body2' sx={{color:'text.secondary',fontSize:'0.6rem'}} gutterBottom component='p'>{`Genre:${post?.genre?.toUpperCase()} Subgenre:${post?.subgenre?.toUpperCase()}`}</Typography>
-      </CardContent>
       </StyledButtonBase>
+      <StyledTypography align='center' variant='h5' component='h2'>{post.title}</StyledTypography>
+      <CardContent>
+        <More message={post.description} limit={25} variant='body2' sx={{fontSize:'0.9rem',color:'text.primary'}} component='p'/>
+        <StyledDetails >
+          {post.tags?.length > 0 && <More variant='body2'  limit={3} sx={{fontSize:'0.6rem',color:'text.secondary'}} message={post.tags.map((tag)=>`#${tag} `)} />}
+        </StyledDetails>
+        <Typography variant='body2' sx={{color:'text.secondary',fontSize:'0.6rem'}} component='p'>
+          Genre:{<GenreIcon genre={post.genre}/>} 
+          Subgenre:{<GenreIcon subgenre={post.subgenre}/>} 
+        </Typography>
+      </CardContent>
       <StyledCardActions>
         <Button size='small' sx={{color:'primary.main'}} disabled={!user?.result} onClick={()=>dispatch(LikePost(post._id))}>
           <Likes />
