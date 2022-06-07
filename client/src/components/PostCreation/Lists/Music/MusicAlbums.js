@@ -1,16 +1,12 @@
 import React, {useState, useEffect } from 'react';
-import { StyledGrid, StyledList, } from './styles';
-import { Paper, Typography, TextField, Button, Container, Box, FormControl } from '@mui/material';
-import { Masonry } from '@mui/lab';
-import { Add } from '@mui/icons-material';
+import { Container, } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
-import Suggestions from './Suggestions';
-import MusicListItem from './MusicListItem';
-import Form from '../../../Form/Form';
+import DesktopTemplate from './ViewportTemplates/DesktopTemplate';
+import MobileTemplate from './ViewportTemplates/MobileTemplate';
 
 
-import { GetMusicAlbum } from '../../../../actions/itunes'; 
+import { GetMusicAlbum } from '../../../../actions/itunes';
 
 
 
@@ -21,6 +17,23 @@ const MusicAlbums = ({currentId,setCurrentId}) => {
     const [listItem, setListItem] = useState(0) //for list item to be added on to list
     const [data,setData] = useState([]);
     const dispatch = useDispatch();
+    const subgenre = 'musicAlbums';
+    const genre = 'music';
+    //resize masonry component
+    const useViewport = () => {
+    const [width, setWidth] = useState(window.innerWidth);
+
+    useEffect(()=> {
+        const handleWindowResize = () => setWidth(window.innerWidth);
+        window.addEventListener('resize',handleWindowResize);
+        return () => window.removeEventListener('resize', handleWindowResize);
+    },[])
+
+    return {width};
+    }   
+
+    const {width} = useViewport();
+    const breakpoint = 500;
 
     const fetchData = async () => {
         const term = albumName.split(' ').join('+');
@@ -99,77 +112,45 @@ const MusicAlbums = ({currentId,setCurrentId}) => {
 
   return (
     <Container>
-        
-        <Masonry columns={2} spacing={1}>
-            <Box justifyContent='center'>
-
-                {readyToSubmit ? null : 
-                    (<FormControl fullWidth>
-                        <TextField label='Album Name/Artist'value={albumName} variant='outlined' onChange={(e)=>setAlbumName(e.target.value)}></TextField>
-                        <Button onClick={(e)=>{e.stopPropagation();e.preventDefault(e);handleSearch(albumName)}}>search</Button>
-                    </FormControl>) 
-                }
-
-                {listItems.length===0 ? null : 
-                    <Paper sx={{marginTop:5}}>
-                        <StyledList subheader={<li />}>{
-                            listItems.map((item,index) => (
-                                <MusicListItem
-                                    key={`${item?.key}-${index}`}
-                                    listItem={item}
-                                    index={index}
-                                    handleDelete={()=>listLogic.handleDelete(item)}
-                                    length={listItems.length - 1}
-                                    handleMoveUp = {()=>listLogic.handleMoveUp(item)}
-                                    handleMoveDown = {()=>listLogic.handleMoveDown(item)}
-                                    genre='musicAlbums'
-                                />))
-                            } 
-                        </StyledList>
-                    </Paper>
-                }
-            
-            </Box>
-        
-
-            <Box>
-
-                {!readyToSubmit ? 
-                    (<Button onClick={()=>listLogic.preSubmit()}>Ready to Submit?</Button>) : 
-                    (<Button onClick={()=>listLogic.editSubmit()}>Back to Edit Mode</Button>)
-                }
-
-                {!readyToSubmit ? null : <Form currentId={currentId} setCurrentId={setCurrentId} list={listItems} genre='music' subgenre='musicAlbums'/>}
-                {!listItem ? null : 
-                    (<Paper sx={{p:2}}>
-                        <Typography sx={{m:1}}>{listItem?.albumName} by {listItem?.artistName}</Typography>
-                        <TextField fullWidth label='Description' onChange={e=>setListItem({...listItem, description:e.target.value})}/>
-                        <Button onClick={listLogic.handleAdd}>Add to List<Add /></Button>
-                    </Paper>) 
-                }
-
-                {data.length ? (
-                    <StyledGrid container alignItems='stretch'spacing={1}>
-                         {data.map((d) => (
-                            <Suggestions 
-                                genre='musicAlbums'
-                                key={d?.collectionId} 
-                                albumName={d?.collectionName} 
-                                artistName={d?.artistName} 
-                                img={d?.artworkUrl100}
-                                handleClick={(e)=>{
-                                    e.stopPropagation();setListItem({...listItem, key:d?.collectionId, albumName:d?.collectionName, artistName:d?.artistName, image:d?.artworkUrl100, description:'', thumbnail:d?.artworkUrl60});setAlbumName('');
-                                }} 
-                            />))}
-                    </StyledGrid> )
-                : null }
-
-
-            </Box>
-        </Masonry>
+        {width > breakpoint ? 
+            <DesktopTemplate 
+                setAlbumName={setAlbumName} 
+                setListItem={setListItem} 
+                listItem={listItem} 
+                albumName={albumName} 
+                listItems={listItems} 
+                listLogic={listLogic} 
+                width={width} 
+                data={data} 
+                handleSearch={handleSearch} 
+                readyToSubmit={readyToSubmit} 
+                currentId={currentId} 
+                setCurrentId={setCurrentId}
+                genre={genre}
+                subgenre={subgenre}
+            />
+    : 
+            <MobileTemplate 
+                setAlbumName={setAlbumName} 
+                setListItem={setListItem} 
+                listItem={listItem} 
+                albumName={albumName} 
+                listItems={listItems} 
+                listLogic={listLogic} 
+                width={width} 
+                data={data} 
+                handleSearch={handleSearch} 
+                readyToSubmit={readyToSubmit} 
+                currentId={currentId} 
+                setCurrentId={setCurrentId}
+                genre={genre}
+                subgenre={subgenre}
+            />
+    }   
 
     </Container>
   )
 }
 
 export default MusicAlbums
+

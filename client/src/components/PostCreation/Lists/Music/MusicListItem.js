@@ -3,13 +3,13 @@ import { ListSubheader, ListItem, ListItemText, Typography, Box, Divider, Button
 import { DeleteForever, KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material';
 
 
-const MusicListItem = ({ listItem, index, handleDelete, length, handleMoveUp, handleMoveDown, genre }) => {
+const MusicListItem = ({ listItem, index, handleDelete, length, handleMoveUp, handleMoveDown, subgenre}) => {
   const [hover, setHover] = useState(false)
   const [name,setName] = useState('');
 
   useEffect(() => {
 
-    switch(genre) {
+    switch(subgenre) {
       case 'musicTracks':
         setName(listItem?.trackName);
         break;
@@ -22,7 +22,7 @@ const MusicListItem = ({ listItem, index, handleDelete, length, handleMoveUp, ha
     }
 
 
-  },[listItem?.albumName,genre,listItem?.trackName])
+  },[listItem?.albumName,subgenre,listItem?.trackName])
 
   return (
     <li key={listItem?.key}>

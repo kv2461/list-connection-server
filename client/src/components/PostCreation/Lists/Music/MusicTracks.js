@@ -17,7 +17,8 @@ const MusicTracks = ({currentId,setCurrentId}) => {
     const [listItem, setListItem] = useState(0) //for list item to be added on to list
     const [data,setData] = useState([]);
     const dispatch = useDispatch();
-
+    const subgenre = 'musicTracks';
+    const genre = 'music';
     //resize masonry component
     const useViewport = () => {
     const [width, setWidth] = useState(window.innerWidth);
@@ -124,7 +125,10 @@ const MusicTracks = ({currentId,setCurrentId}) => {
                 handleSearch={handleSearch} 
                 readyToSubmit={readyToSubmit} 
                 currentId={currentId} 
-                setCurrentId={setCurrentId}/>
+                setCurrentId={setCurrentId}
+                genre={genre}
+                subgenre={subgenre}
+            />
     : 
             <MobileTemplate 
                 setTrackName={setTrackName} 
@@ -138,7 +142,10 @@ const MusicTracks = ({currentId,setCurrentId}) => {
                 handleSearch={handleSearch} 
                 readyToSubmit={readyToSubmit} 
                 currentId={currentId} 
-                setCurrentId={setCurrentId}/>
+                setCurrentId={setCurrentId}
+                genre={genre}
+                subgenre={subgenre}
+            />
     }   
 
     </Container>

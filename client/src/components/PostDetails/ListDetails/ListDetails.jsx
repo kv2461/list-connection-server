@@ -79,7 +79,7 @@ const ListDetails = ({post,list}) => {
                                     listItem={item}
                                     index={index}
                                     length={listItems.length - 1}
-                                    genre={post?.subgenre}
+                                    subgenre={post?.subgenre}
                                     handleMoveUp = {()=>listLogic.handleMoveUp(item)}
                                     handleMoveDown = {()=>listLogic.handleMoveDown(item)}
                                 />))
