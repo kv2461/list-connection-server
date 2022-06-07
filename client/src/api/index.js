@@ -12,7 +12,7 @@ API.interceptors.request.use((req)=> {
 
 export const fetchPost = (id) => API.get(`/posts/${id}`);
 
-export const fetchPosts = (page) => API.get(`/posts?page=${page}`);
+export const fetchPosts = (page,subgenrename) => API.get(`/posts?page=${page}&subgenrename=${subgenrename|| ''}`);
 
 export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`)
 

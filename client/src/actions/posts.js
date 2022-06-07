@@ -15,10 +15,10 @@ export const GetPost = (id) => async (dispatch) => {
     }
 }
 
-export const GetPosts = (page) => async (dispatch) => {
+export const GetPosts = (page,subgenrename) => async (dispatch) => {
     try {
         dispatch(START_LOADING());
-        const { data } = await api.fetchPosts(page);
+        const { data } = await api.fetchPosts(page,subgenrename);
 
         dispatch(FETCH_ALL(data));
         dispatch(END_LOADING());
