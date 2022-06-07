@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useDispatch } from 'react-redux';
 import { Container, Grow, Grid, Paper, TextField, Button, Chip } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -23,6 +23,15 @@ const Home = ({currentId, setCurrentId}) => {
   const navigate = useNavigate();
   const page = query.get('page') || 1;
   const searchQuery = query.get('searchQuery');
+  const tagsQuery = query.get('tags');
+
+  useEffect(() => {
+
+    if (searchQuery || tagsQuery){ //use url parser
+      dispatch(GetPostsBySearch({ search: searchQuery, tags: tagsQuery }));
+    }
+
+  },[searchQuery,tagsQuery])
 
   const searchPost = () => {
     if (search.trim() || tags) {
