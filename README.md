@@ -17,6 +17,11 @@
 ## Features
   * User creation and login
 <!--     * ![login](https://login.gif) -->
+* User authenticated action such as creating post, commenting, and liking
+<!--     * ![login](https://login.gif) -->
+* Search/recommendations  by title, tags, and genre
+<!--     * ![login](https://login.gif) -->
+
  
 ## Code Highlights
   * All list data was return by the different 3rd party API call in a javascript object so could not be easily organized. By creating components that rendered different content based on data structure, the data could keep proper specificity without making front end overly redundant.
