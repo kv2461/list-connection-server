@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { MusicNote, MovieFilter, MiscellaneousServices } from '@mui/icons-material'
+import { ButtonBase } from '@mui/material'
+import { MusicNote, MovieFilter, MiscellaneousServices, } from '@mui/icons-material'
 import { ArtTrack, Album, InterpreterMode, } from '@mui/icons-material'
 import { StyledSvgIcon } from './styles';
+import { useNavigate } from 'react-router-dom';
 
 const GenreIcon = ({genre, subgenre}) => {
     const [genreIcon, setGenreIcon] = useState();
+    const navigate = useNavigate();
   
   useEffect(() => {
     if (genre) {
@@ -41,7 +44,9 @@ const GenreIcon = ({genre, subgenre}) => {
 
   }, [genre,subgenre])
   return (
-    <StyledSvgIcon component={genreIcon}/>
+    <ButtonBase onClick={ ()=>navigate(`?subgenrename=${subgenre ? subgenre : ''}&genrename=${genre ? genre : ''}`)}>
+      <StyledSvgIcon component={genreIcon} />
+    </ButtonBase>
   )
 }
 

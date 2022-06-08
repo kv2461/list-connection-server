@@ -6,6 +6,10 @@ import cors from 'cors';
 
 import postRoutes from './routes/posts.js';
 import userRoutes from './routes/users.js';
+import FoodDataRoutes from './routes/FoodDataRoutes.js';
+import TMDBRoutes from './routes/TMDBRoutes.js';
+import WgerRoutes from './routes/WgerRoutes.js';
+import { getExerciseData } from './controllers/WgerAPI.js';
 
 const app = express();
 
@@ -19,6 +23,9 @@ app.use(bodyParser.urlencoded({limit: '30mb',extended:true}));
 
 app.use('/user',userRoutes);
 app.use('/posts',postRoutes);
+app.use('/food',FoodDataRoutes);
+app.use('/film', TMDBRoutes);
+app.use('/exercise',WgerRoutes);
 
 
 const PORT = process.env.PORT || 4001;

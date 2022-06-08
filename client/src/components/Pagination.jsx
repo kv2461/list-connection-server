@@ -6,14 +6,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GetPosts } from '../actions/posts';
 
 
-const Paginate = ({ page }) => {
+const Paginate = ({ page, subgenreName, genreName }) => {
     const { numberOfPages } = useSelector((state)=>state.postsSlice);
     const dispatch = useDispatch();
 
     useEffect(()=> {
-        if(page) dispatch(GetPosts(page));
+        if ( subgenreName || genreName ) {
+            dispatch(GetPosts(page,subgenreName,genreName))
+        } else if (page) dispatch(GetPosts(page));
 
-    },[page]);
+    },[page,subgenreName, dispatch, genreName]);
 
 
     return (

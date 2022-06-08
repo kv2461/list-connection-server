@@ -17,6 +17,8 @@ import MusicAlbums from './components/PostCreation/Lists/Music/MusicAlbums';
 import MusicArtists from './components/PostCreation/Lists/Music/MusicArtists';
 import MusicCustom from './components/PostCreation/Lists/Music/MusicCustom';
 
+import Recipes from './components/PostCreation/Lists/Food/Recipes';
+
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -46,6 +48,9 @@ const App = () => {
                     <Route path='/createpost/music/musiccustom' element={<MusicCustom currentId={currentId} setCurrentId={setCurrentId}/>} />
 
                 <Route path='/createpost/movies' element={<Movies currentId={currentId} setCurrentId={setCurrentId}/>} />
+
+
+                <Route path='/createpost/food/recipes' element={<Recipes />} />
 
           </Routes>
         </Container>

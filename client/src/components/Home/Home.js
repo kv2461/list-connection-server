@@ -6,7 +6,7 @@ import { StyledGrid, StyledAppBarSearch } from './styles';
 
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
-import { GetPostsBySearch } from '../../actions/posts';
+import { GetPostsBySearch, } from '../../actions/posts';
 import Pagination from '../Pagination';
 
 function useQuery() {
@@ -21,7 +21,10 @@ const Home = ({currentId, setCurrentId}) => {
   const dispatch = useDispatch();
   const query = useQuery();
   const navigate = useNavigate();
+
   const page = query.get('page') || 1;
+  const subgenreName = query.get('subgenrename');
+
   const searchQuery = query.get('searchQuery');
   const tagsQuery = query.get('tags');
 
@@ -31,7 +34,8 @@ const Home = ({currentId, setCurrentId}) => {
       dispatch(GetPostsBySearch({ search: searchQuery, tags: tagsQuery }));
     }
 
-  },[searchQuery,tagsQuery, dispatch])
+
+  },[searchQuery,tagsQuery, dispatch, subgenreName, page])
 
   const searchPost = () => {
     if (search.trim() || tags) {
@@ -72,7 +76,7 @@ const Home = ({currentId, setCurrentId}) => {
                   </StyledAppBarSearch>
                   {currentId!==0 && (<Form currentId={currentId} setCurrentId={setCurrentId} />) }
                   {(!searchQuery && !tags.length) && (<Paper elevation={6}>
-                    <Pagination page={page} />
+                    <Pagination page={page} subgenreName={subgenreName} />
                   </Paper>)}
                 </Grid>
             </StyledGrid>
