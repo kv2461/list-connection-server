@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import {Typography, Grid , Box } from '@mui/material';
+import { Grid , Box } from '@mui/material';
 import { StyledCard, StyledTypography } from './styles'
 const Suggestions = ({ img, trackName, artistName, albumName, subgenre, handleClick }) => {
   const [name,setName] = useState('');
@@ -17,10 +17,12 @@ const Suggestions = ({ img, trackName, artistName, albumName, subgenre, handleCl
       case 'musicArtists':
         setName(artistName);
         break;
+      default:
+        break;
     }
 
 
-  },[albumName,subgenre,trackName])
+  },[albumName,subgenre,trackName, artistName])
   
   return ( 
     <Grid sx={{p:'5px'}} item xs={6} sm={4} md={6}>
