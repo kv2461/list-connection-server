@@ -6,8 +6,7 @@ import { DeleteForever, KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-ma
 const FoodListItem = ({ listItem, index, handleDelete, length, handleMoveUp, handleMoveDown, subgenre, }) => {
   // const [hover, setHover] = useState(false)
   const [name,setName] = useState('');
-  const [brandName, setBrandName] = useState('');
-  const [brandOwner, setBrandOwner] = useState('');
+  const [image, setImage] = useState('');
   const [description, setDescription] = useState('');
   const [measurements, setMeasurements] = useState('');
   const [itemKey, setItemKey] = useState('');
@@ -18,8 +17,7 @@ const FoodListItem = ({ listItem, index, handleDelete, length, handleMoveUp, han
       case 'foodRecipe':
         setName(listItem?.ingredientName);
         setMeasurements(listItem?.measurements);
-        setBrandName(listItem?.brandName);
-        setBrandOwner(listItem?.brandOwner);
+        setImage(listItem?.image);
         setItemKey(listItem?.key);
         setDescription(listItem?.comments);
         break;
@@ -33,23 +31,19 @@ const FoodListItem = ({ listItem, index, handleDelete, length, handleMoveUp, han
     }
 
 
-  },[subgenre,listItem?.ingredientName,listItem?.instruction])
+  },[subgenre,listItem])
 
   return (
     <li key={itemKey}>
         <ul>
            {index > 0 ? <Divider sx={{borderBottomWidth:3}} /> : null}
             { subgenre === 'foodRecipe' ? 
-              <ListSubheader sx={{fontWeight:700 ,lineHeight:1, p:2}} >{
-                `${name} 
-                ${brandName !== undefined ? `-${brandName}` : ''}
-                ${brandOwner !== undefined ? `from ${brandOwner}` : ''}
-                `}
-              </ListSubheader>
-             : <ListSubheader sx={{fontWeight:700 ,lineHeight:1, p:2}} >{`${name}`}</ListSubheader>
+              <ListSubheader sx={{fontWeight:700 ,lineHeight:1, p:2}} >{`${name.charAt(0).toUpperCase()}${name.slice(1)}`}</ListSubheader>
+             : <ListSubheader sx={{fontWeight:700 ,lineHeight:1, p:2}} >{name}</ListSubheader>
             }
 
             <ListItem key={itemKey}>
+              {subgenre === 'foodRecipe' && image !== null && (<Box component='img' sx={{m:1,p:1, maxHeight:'40px', maxWidth:'40px'}} src={image}/>)}
                 <ListItemText 
                   disableTypography 
                   primary={ <>

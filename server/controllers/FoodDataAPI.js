@@ -24,7 +24,7 @@ export const getFoodData = async (req,res) => {
 }
 
 export const getSpoonacularData = async (req,res) => {
-    const { query } = req.params;
+    const { query } = req.query;
     const api_key = process.env.SPOONACULAR_APIKEY;
 
     const api_url = `https://api.spoonacular.com/food/ingredients/search?apiKey=${api_key}&query=${query}`
@@ -41,23 +41,38 @@ export const getSpoonacularData = async (req,res) => {
 }
 
 export const getSpoonacularSpecificData = async (req,res) => {
-    const { query } = req.params;
+    const { id } = req.params;
     const api_key = process.env.SPOONACULAR_APIKEY;
+    const api_key2 = process.env.SPOONACULAR_APIKEY2;
 
-    const api_url = `https://api.spoonacular.com/food/ingredients/search?apiKey=${api_key}&query=${query}`
+    const api_url = `https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=${api_key}${1}&amount=1`
+    const api_url2 = `https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=${api_key2}&amount=1`
 
+    
+
+    var exceptionCaught = false;
 
     try {
-        axios.get(api_url)
-        .then((response) => {
-            const {id} = response.data.results[0];
-            axios.get(`https://api.spoonacular.com/food/ingredients/${id}/information?apiKey=${api_key}&amount=1`)
-            .then((response) => {
-                res.status(200).json(response.data);
-            });
-        });
+        const response = await axios(api_url) 
+    
+        res.status(200).json(response.data);
 
     } catch (error) {
-        res.status(404).json({message:error.message})
+        exceptionCaught = true;
+        
     }
+
+    if (exceptionCaught) {
+        try {
+            const response = await axios(api_url2)
+            exceptionCaught = false;
+
+            res.status(200).json(response.data);
+        } catch (error) {
+            res.status(404).json({message:error.message});
+        }
+    }
+
+    console.log(exceptionCaught);
+
 }

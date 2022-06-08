@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import DesktopTemplate from './ViewportTemplates/DesktopTemplate';
 import MobileTemplate from './ViewportTemplates/MobileTemplate';
 
-import { GetFoodSuggestions } from '../../../../actions/foodcentral';
+import { GetSpoonacularSuggestions } from '../../../../actions/foodcentral';
 
 
 const Recipes = ({currentId, setCurrentId}) => {
@@ -45,9 +45,8 @@ const Recipes = ({currentId, setCurrentId}) => {
         
         const query = ingredientName.split(' ').join(' ');
         if (query.length > 0) {
-        const { foods } = await dispatch(GetFoodSuggestions(query))
-
-        setData(foods);
+            const { results } = await dispatch(GetSpoonacularSuggestions(query))
+            setData(results.slice(0,4));
         }
         
     }

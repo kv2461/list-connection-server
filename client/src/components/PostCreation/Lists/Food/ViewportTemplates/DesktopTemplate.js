@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import {Box, FormControl, TextField, Button, Paper, Container, Typography, Collapse } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import {Box, FormControl, TextField, Button, Paper, Container, Typography, Collapse, Select, InputLabel, MenuItem } from '@mui/material';
 import { StyledGrid, StyledList } from './styles';
 import { Add } from '@mui/icons-material';
 import { Masonry } from '@mui/lab';
@@ -8,13 +9,15 @@ import { Masonry } from '@mui/lab';
 import Form from '../../../../Form/Form';
 import FoodListItem from '../FoodListItem';
 import Suggestions from '../Suggestions';
+import { GetSpoonacularInfo } from '../../../../../actions/foodcentral';
 
 const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instructionsItems, ingredientItem, setIngredientItem, ingredientName, setIngredientName, ingredientsItems, setListItem, listItem, listItems, listLogic, width, data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre }) => {
-    
+    const dispatch = useDispatch();
     const [name,setName] = useState('');
     const [label, setLabel] = useState('');
     const [collapseIngredients,setCollapseIngredients] = useState(true);
     const [collapseInstructions, setCollapseInstructions] = useState(true);
+
 
     const handleChange = (e) => {
         switch(subgenre) {
@@ -24,6 +27,53 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
             default:
                 break;
         }
+    }
+
+    const fetchInfo = async (id) => {
+
+            const item = await dispatch(GetSpoonacularInfo(id))
+            setIngredientItem({
+                ...ingredientItem, 
+                key:`${item?.id}-${Date.now()}`, 
+                ingredientName:item?.name, 
+                image:`${item?.image !== 'no.jpg' ? `https://spoonacular.com/cdn/ingredients_100x100/${item?.image}` : null}`, 
+                comments:'', 
+                estimatedCost:item?.estimatedCost, aisle:item?.aisle,
+                caloricBreakdown: item?.nutrition?.caloricBreakdown,
+                weightPerServing: item?.nutrition?.weightPerServing,
+                possibleUnits:item?.possibleUnits,
+                amount:0,
+                amountUnit:item?.possibleUnits?.[0]
+                }
+            )
+
+            setIngredientName('');
+            setData([])
+
+
+    }
+
+    const calculateFoodStats = () => {
+        const {percentCarbs, percentFat, percentProtein} = ingredientItem?.caloricBreakdown;
+        const {amount:weight, unit: weightUnit} = ingredientItem?.weightPerServing;      
+        const {value} = ingredientItem?.estimatedCost;
+        const dollarValueNumber = Number((value*.01).toFixed(2));
+        const dollarValueString = `${(value*.01).toFixed(2)}`;
+        const amount = ingredientItem?.amount;
+        const amountUnit = ingredientItem?.amountUnit;
+        let calculatedAmount = 0;
+
+        switch(amountUnit) {
+            case 'steak':
+                calculatedAmount = amount*1.3;
+            default:
+                calculatedAmount = 0;
+                
+        }
+
+        
+  
+        console.log(percentCarbs, percentFat, percentProtein, weight, weightUnit, amount, amountUnit, dollarValueNumber,dollarValueString, calculatedAmount)
     }
 
     useEffect(() => {
@@ -140,11 +190,17 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
                     (<Paper sx={{p:2}}>
                         {subgenre==='foodRecipe' && 
                             <Typography sx={{m:1}}>
-                                {ingredientItem?.ingredientName} {ingredientItem.brandName !== undefined ? `-${ingredientItem.brandName}` : ''} {ingredientItem.brandOwner !== undefined ? `from ${ingredientItem.brandOwner}` : ''}
+                                {`${ingredientItem?.ingredientName.charAt(0).toUpperCase()}${ingredientItem?.ingredientName.slice(1)}`}
                             </Typography>}
+                        <FormControl sx={{flexDirection:'row'}}>
+                        <TextField  required defaultValue={0} label='Amount' type='number' onChange={e=>setIngredientItem({...ingredientItem, amount:e.target.valueAsNumber})}/>
+                            <Select value={ingredientItem.amountUnit} onChange={e=>setIngredientItem({...ingredientItem, amountUnit:e.target.value})}>
+                                {ingredientItem.possibleUnits && ingredientItem.possibleUnits.map((unit,index)=> (<MenuItem key={`select-${index}`} value={unit}>{unit}</MenuItem>))}
+                            </Select>
+                        </FormControl>
                         <TextField fullWidth label='Comments' onChange={e=>setIngredientItem({...ingredientItem, comments:e.target.value})}/>
-                        <TextField fullWidth label='Measurements' onChange={e=>setIngredientItem({...ingredientItem, measurements:e.target.value})}/>
-                        <Button variant='contained' onClick={listLogic.handleAddIngredient}>Add to List<Add /></Button>
+                        {/* <Button variant='contained' onClick={listLogic.handleAddIngredient}>Add to List<Add /></Button> */}
+                        <Button variant='contained' onClick={calculateFoodStats}>Add to List<Add /></Button>
                         <Button variant='contained' onClick={()=>{setIngredientItem(0);setData([])}}>Cancel</Button>
                     </Paper>) 
                 }
@@ -155,13 +211,14 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
                             <Suggestions 
                                 width={width}
                                 subgenre={subgenre}
-                                key={d?.fdcId} 
-                                ingredientName={d?.description}
-                                brandName={d?.brandName} 
-                                brandOwner={d?.brandOwner} 
-                                handleClick={(e)=>{
-                                    e.stopPropagation();setIngredientItem({...ingredientItem, key:`${d?.fdcId}-${Date.now()}`, ingredientName:d?.description, brandName:d?.brandName, brandOwner:d?.brandOwner , comments:''});setIngredientName('');setData([]);
-                                }}
+                                item={d}
+                                key={d?.id} 
+                                ingredientName={d?.name}
+                                image={`${d?.image !== 'no.jpg' ? `https://spoonacular.com/cdn/ingredients_100x100/${d?.image}` : null}`}
+                                // handleClick={(e)=>{
+                                //     e.stopPropagation();setIngredientItem({...ingredientItem, key:`${d?.id}-${Date.now()}`, ingredientName:d?.name, image:d?.image, comments:''});setIngredientName('');setData([]);
+                                // }}
+                                fetchInfo={fetchInfo}
                             />))}
                     </StyledGrid> )
                 : null }

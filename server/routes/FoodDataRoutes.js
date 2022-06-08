@@ -1,16 +1,17 @@
 import express from 'express';
 
-import { getFoodData, getSpoonacularData, getSpoonacularSpecificData } from '../controllers/FoodDataAPI.js';
+import { getFoodData, getSpoonacularData, getSpoonacularSpecificData, } from '../controllers/FoodDataAPI.js';
 
 const router = express.Router();
 
-router.get('/search/:query',getFoodData);
-//http://localhost:4001/film/search/john
+// router.get('/search/:query',getFoodData);
+//http://localhost:4001/food/search/john
 
-router.get('/lookup/:query',getSpoonacularData);
-//http://localhost:4001/food/lookup/salmon
+router.get('/search/',getSpoonacularData);
+//http://localhost:4001/food/search/?query=salmon
 
-router.get('/find/:query',getSpoonacularSpecificData);
-//http://localhost:4001/food/find/salmon
+router.get('/search/:id',getSpoonacularSpecificData);
+//http://localhost:4001/food/search/15076
+
 
 export default router;
