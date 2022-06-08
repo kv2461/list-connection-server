@@ -9,7 +9,7 @@ import Form from '../../../../Form/Form';
 import FoodListItem from '../FoodListItem';
 import Suggestions from '../Suggestions';
 
-const DesktopTemplate = ({ instructionItem, setInstructionItem, setInstructionsItems, instructionsItems, ingredientItem, setIngredientItem, ingredientName, setIngredientName, ingredientsItems, setListItem, listItem, listItems, listLogic, width, data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre }) => {
+const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instructionsItems, ingredientItem, setIngredientItem, ingredientName, setIngredientName, ingredientsItems, setListItem, listItem, listItems, listLogic, width, data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre }) => {
     
     const [name,setName] = useState('');
     const [label, setLabel] = useState('');
@@ -57,7 +57,7 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setInstructionsI
                         <StyledList subheader={<li />}>{
                             ingredientsItems.map((item,index) => (
                                 <FoodListItem
-                                    key={`${item?.key}-${index}`}
+                                    key={item?.key}
                                     listItem={item}
                                     index={index}
                                     handleDelete={()=>listLogic.handleDeleteIngredient(item)}
@@ -77,11 +77,11 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setInstructionsI
                         <StyledList subheader={<li />}>{
                             instructionsItems.map((item,index) => (
                                 <FoodListItem
-                                    key={`${item?.instruction.slice(10)}${index}`}
+                                    key={`${item?.key}10001`}
                                     listItem={item}
                                     index={index}
                                     handleDelete={()=>listLogic.handleDeleteInstructions(item)}
-                                    // length={instructionsItems.length - 1}
+                                    length={instructionsItems.length - 1}
                                     handleMoveUp = {()=>listLogic.handleMoveUpInstructions(item)}
                                     handleMoveDown = {()=>listLogic.handleMoveDownInstructions(item)}
                                     subgenre='instructions'
@@ -113,13 +113,14 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setInstructionsI
                             <TextField fullWidth label='Instruction' value={instructionItem.instruction} onChange={e=>setInstructionItem({...instructionItem, instruction:e.target.value})}/>
                             <TextField fullWidth label='Measurements' value={instructionItem.measurements} onChange={e=>setInstructionItem({...instructionItem, measurements:e.target.value})}/>
                             <Button variant='contained' onClick={listLogic.handleAddInstruction}>Add to List<Add /></Button>
+                            <Button variant='contained' onClick={()=>setInstructionItem(0)}>Cancel</Button>
                         </Paper>)
                     }
 
                     {instructionItem ? null : 
                     (<Container align='center' sx={{margin:'10px 0'}}>
                         <Button variant='contained' sx={{m:'auto'}}onClick={(e)=>{
-                                    e.stopPropagation();setInstructionItem({instruction:'', measurements:''});
+                                    e.stopPropagation();setInstructionItem({instruction:'', measurements:'', key:`${Date.now()}`});
                                 }}>Add Instruction
                         </Button>
                     </Container>)
@@ -136,6 +137,7 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setInstructionsI
                         <TextField fullWidth label='Description' onChange={e=>setIngredientItem({...ingredientItem, description:e.target.value})}/>
                         <TextField fullWidth label='Measurements' onChange={e=>setIngredientItem({...ingredientItem, measurements:e.target.value})}/>
                         <Button variant='contained' onClick={listLogic.handleAddIngredient}>Add to List<Add /></Button>
+                        <Button variant='contained' onClick={()=>{setIngredientItem(0);setData([])}}>Cancel</Button>
                     </Paper>) 
                 }
 
@@ -150,7 +152,7 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setInstructionsI
                                 brandName={d?.brandName} 
                                 brandOwner={d?.brandOwner} 
                                 handleClick={(e)=>{
-                                    e.stopPropagation();setIngredientItem({...ingredientItem, key:d?.fdcId, ingredientName:d?.description, brandName:d?.brandName, brandOwner:d?.brandOwner , description:''});setIngredientName('');
+                                    e.stopPropagation();setIngredientItem({...ingredientItem, key:`${d?.fdcId}-${Date.now()}`, ingredientName:d?.description, brandName:d?.brandName, brandOwner:d?.brandOwner , description:''});setIngredientName('');setData([]);
                                 }}
                             />))}
                     </StyledGrid> )

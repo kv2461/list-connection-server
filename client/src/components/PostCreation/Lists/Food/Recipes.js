@@ -107,7 +107,7 @@ const Recipes = ({currentId, setCurrentId}) => {
                   }
                   return x;
               });
-              listLogic.changeValuePosition(updatedList,index,index-1);
+              listLogic.changeValuePosition(updatedList,index,index+1);
           
               setIngredientsItems(updatedList);
           },
@@ -154,6 +154,7 @@ const Recipes = ({currentId, setCurrentId}) => {
     <Container>
         {width > breakpoint ? 
             <DesktopTemplate 
+                setData={setData}
                 instructionItem={instructionItem}
                 setInstructionItem={setInstructionItem}
                 instructionsItems={instructionsItems}
