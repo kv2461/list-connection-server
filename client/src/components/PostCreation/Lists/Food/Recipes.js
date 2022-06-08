@@ -45,7 +45,7 @@ const Recipes = ({currentId, setCurrentId}) => {
         
         const query = ingredientName.split(' ').join(' ');
         if (query.length > 0) {
-            const { results } = await dispatch(GetSpoonacularSuggestions(query))
+            const  {results}  = await dispatch(GetSpoonacularSuggestions(query))
             setData(results.slice(0,4));
         }
         
