@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {Box, FormControl, TextField, Button, Paper, Container, Typography} from '@mui/material';
+import {Box, FormControl, TextField, Button, Paper, Container, Typography, Collapse } from '@mui/material';
 import { StyledGrid, StyledList } from './styles';
 import { Add } from '@mui/icons-material';
 import { Masonry } from '@mui/lab';
@@ -13,6 +13,8 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
     
     const [name,setName] = useState('');
     const [label, setLabel] = useState('');
+    const [collapseIngredients,setCollapseIngredients] = useState(true);
+    const [collapseInstructions, setCollapseInstructions] = useState(true);
 
     const handleChange = (e) => {
         switch(subgenre) {
@@ -54,6 +56,8 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
                 {ingredientsItems.length===0 ? null : 
                     <Paper sx={{marginTop:5}}>
                         <Typography sx={{m:1}}>Ingredients</Typography>
+                        <Button onClick={()=>setCollapseIngredients(!collapseIngredients)}> {collapseIngredients ? 'Hide' : 'Show'} </Button>
+                        <Collapse in={collapseIngredients} timeout="auto" unmountOnExit>
                         <StyledList subheader={<li />}>{
                             ingredientsItems.map((item,index) => (
                                 <FoodListItem
@@ -68,12 +72,15 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
                                 />))
                             } 
                         </StyledList>
+                        </Collapse>
                     </Paper>
                 }
 
                 {instructionsItems.length === 0 ? null : 
                     <Paper sx={{marginTop:5}}>
                         <Typography sx={{m:1}}>Instructions</Typography>
+                        <Button onClick={()=>setCollapseInstructions(!collapseInstructions)}> {collapseInstructions ? 'Hide' : 'Show'} </Button>
+                        <Collapse in={collapseInstructions} timeout="auto" unmountOnExit>
                         <StyledList subheader={<li />}>{
                             instructionsItems.map((item,index) => (
                                 <FoodListItem
@@ -89,6 +96,7 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
                             } 
 
                         </StyledList>
+                        </Collapse>
                     </Paper>
                 }
                 
@@ -111,7 +119,7 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
                             {subgenre==='foodRecipe' && 
                                 <Typography sx={{m:1}}>Add A Recipe Step</Typography>}
                             <TextField fullWidth label='Instruction' value={instructionItem.instruction} onChange={e=>setInstructionItem({...instructionItem, instruction:e.target.value})}/>
-                            <TextField fullWidth label='Measurements' value={instructionItem.measurements} onChange={e=>setInstructionItem({...instructionItem, measurements:e.target.value})}/>
+                            <TextField fullWidth label='Comments' value={instructionItem.comments} onChange={e=>setInstructionItem({...instructionItem, comments:e.target.value})}/>
                             <Button variant='contained' onClick={listLogic.handleAddInstruction}>Add to List<Add /></Button>
                             <Button variant='contained' onClick={()=>setInstructionItem(0)}>Cancel</Button>
                         </Paper>)
@@ -120,7 +128,7 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
                     {instructionItem ? null : 
                     (<Container align='center' sx={{margin:'10px 0'}}>
                         <Button variant='contained' sx={{m:'auto'}}onClick={(e)=>{
-                                    e.stopPropagation();setInstructionItem({instruction:'', measurements:'', key:`${Date.now()}`});
+                                    e.stopPropagation();setInstructionItem({instruction:'', comments:'' , key:`${Date.now()}`});
                                 }}>Add Instruction
                         </Button>
                     </Container>)
@@ -134,7 +142,7 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
                             <Typography sx={{m:1}}>
                                 {ingredientItem?.ingredientName} {ingredientItem.brandName !== undefined ? `-${ingredientItem.brandName}` : ''} {ingredientItem.brandOwner !== undefined ? `from ${ingredientItem.brandOwner}` : ''}
                             </Typography>}
-                        <TextField fullWidth label='Description' onChange={e=>setIngredientItem({...ingredientItem, description:e.target.value})}/>
+                        <TextField fullWidth label='Comments' onChange={e=>setIngredientItem({...ingredientItem, comments:e.target.value})}/>
                         <TextField fullWidth label='Measurements' onChange={e=>setIngredientItem({...ingredientItem, measurements:e.target.value})}/>
                         <Button variant='contained' onClick={listLogic.handleAddIngredient}>Add to List<Add /></Button>
                         <Button variant='contained' onClick={()=>{setIngredientItem(0);setData([])}}>Cancel</Button>
@@ -152,7 +160,7 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
                                 brandName={d?.brandName} 
                                 brandOwner={d?.brandOwner} 
                                 handleClick={(e)=>{
-                                    e.stopPropagation();setIngredientItem({...ingredientItem, key:`${d?.fdcId}-${Date.now()}`, ingredientName:d?.description, brandName:d?.brandName, brandOwner:d?.brandOwner , description:''});setIngredientName('');setData([]);
+                                    e.stopPropagation();setIngredientItem({...ingredientItem, key:`${d?.fdcId}-${Date.now()}`, ingredientName:d?.description, brandName:d?.brandName, brandOwner:d?.brandOwner , comments:''});setIngredientName('');setData([]);
                                 }}
                             />))}
                     </StyledGrid> )

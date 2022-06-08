@@ -21,12 +21,12 @@ const FoodListItem = ({ listItem, index, handleDelete, length, handleMoveUp, han
         setBrandName(listItem?.brandName);
         setBrandOwner(listItem?.brandOwner);
         setItemKey(listItem?.key);
-        setDescription(listItem?.description);
+        setDescription(listItem?.comments);
         break;
       case 'instructions':
         setName(listItem?.instruction);
-        setMeasurements(listItem?.measurements);
         setItemKey(listItem?.key)
+        setDescription(listItem?.comments)
         break;
       default:
         break;
@@ -42,29 +42,24 @@ const FoodListItem = ({ listItem, index, handleDelete, length, handleMoveUp, han
             { subgenre === 'foodRecipe' ? 
               <ListSubheader sx={{fontWeight:700 ,lineHeight:1, p:2}} >{
                 `${name} 
-                ${brandName !== '' ? `-${brandName}` : ''}
-                ${brandOwner !== '' ? `from ${brandOwner}` : ''}
+                ${brandName !== undefined ? `-${brandName}` : ''}
+                ${brandOwner !== undefined ? `from ${brandOwner}` : ''}
                 `}
               </ListSubheader>
              : <ListSubheader sx={{fontWeight:700 ,lineHeight:1, p:2}} >{`${name}`}</ListSubheader>
             }
 
             <ListItem key={itemKey}>
-                  {/* <Box sx={{p:2}} component='img' src={listItem?.thumbnail}/> */}
                 <ListItemText 
                   disableTypography 
                   primary={ <>
-                  {subgenre === 'foodRecipe' &&
                   <Typography fontSize='0.8rem'> 
                     {description ? description : null }
-                  </Typography>}
-                  {subgenre === 'instructions' &&
-                  <Typography fontSize='0.8rem'> 
-                    {name}
-                  </Typography>}
-                  <Typography fontSize='0.8rem'> 
-                    {measurements? `${measurements}` : null }
                   </Typography>
+
+                  {subgenre === 'foodRecipe' && <Typography fontSize='0.8rem'> 
+                    {measurements? `${measurements}` : null }
+                  </Typography>}
                   </>}
 
 
