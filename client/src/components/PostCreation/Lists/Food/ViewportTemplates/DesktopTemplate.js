@@ -56,7 +56,6 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
 
     }
 
-    
 
     useEffect(() => {
 
@@ -182,7 +181,7 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
                         </FormControl>
                         <TextField fullWidth label='Comments' onChange={e=>setIngredientItem({...ingredientItem, comments:e.target.value})}/>
                         {/* <Button variant='contained' onClick={listLogic.handleAddIngredient}>Add to List<Add /></Button> */}
-                        <Button variant='contained' onClick={()=>calculateFoodStats(ingredientItem)}>Add to List<Add /></Button>
+                        <Button variant='contained' onClick={()=>calculateFoodStats(ingredientItem,setIngredientItem)}>Add to List<Add /></Button>
                         <Button variant='contained' onClick={()=>{setIngredientItem(0);setData([])}}>Cancel</Button>
                     </Paper>) 
                 }

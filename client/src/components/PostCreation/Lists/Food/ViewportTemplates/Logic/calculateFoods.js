@@ -1,11 +1,9 @@
-export const calculateFoodStats = (ingredientItem) => {
+export const calculateFoodStats = (ingredientItem, setIngredientItem) => {
     const {key} = ingredientItem
-    const consistency = ingredientItem?.consistency
     const {percentCarbs, percentFat, percentProtein} = ingredientItem?.caloricBreakdown;
     const {amount:weight, unit: weightUnit} = ingredientItem?.weightPerServing;      
     const {value} = ingredientItem?.estimatedCost;
     const dollarValueNumber = Number((value*.01).toFixed(2));
-    const dollarValueString = `${(value*.01).toFixed(2)}`;
     const amount = ingredientItem?.amount;
     const amountUnit = ingredientItem?.amountUnit;
     let calculatedGrams = 0;
@@ -14,6 +12,7 @@ export const calculateFoodStats = (ingredientItem) => {
     let calculatedCarbs = 0;
     let calculatedFat = 0;
     let calculatedProtein = 0;
+    let calculatedCost = 0;
 
     switch(amountUnit) {
         case 'g':
@@ -49,26 +48,30 @@ export const calculateFoodStats = (ingredientItem) => {
         calculatedCarbs = (percentCarbs*.01)*calculatedGrams;
         calculatedFat = (percentFat*.01)*calculatedGrams;
         calculatedProtein = (percentProtein*.01)*calculatedGrams;
+        calculatedCost = (calculatedGrams/weight)*dollarValueNumber;
     }
 
     
 
-    console.table([
-        `calculatedFat = ${calculatedFat}`,
-        `calculatedProtein = ${calculatedProtein}`,
-        `calculatedCarbs = ${calculatedCarbs}`,
-        `key = ${key}`,
-        `calculable = ${calculable}`,
-        `consistency = ${consistency}`,
-        `percentCarbs = ${percentCarbs}`,
-        `percentFat = ${percentFat}`,
-        `percentProtein = ${percentProtein}`, 
-        `weight = ${weight}`, 
-        `weightUnit = ${weightUnit}`, 
-        `amount = ${amount}`, 
-        `amountUnit = ${amountUnit}`, 
-        `dollarValueNumber = ${dollarValueNumber}`,
-        `dollarValueString = ${dollarValueString}`, 
-        `calculatedGrams = ${calculatedGrams}`
-    ])
+    // console.table([
+    //     `calculatedCost = ${calculatedCost}`,
+    //     `calculatedFat = ${calculatedFat}`,
+    //     `calculatedProtein = ${calculatedProtein}`,
+    //     `calculatedCarbs = ${calculatedCarbs}`,
+    //     `key = ${key}`,
+    //     `calculable = ${calculable}`,
+    //     `percentCarbs = ${percentCarbs}`,
+    //     `percentFat = ${percentFat}`,
+    //     `percentProtein = ${percentProtein}`, 
+    //     `weight = ${weight}`, 
+    //     `weightUnit = ${weightUnit}`, 
+    //     `amount = ${amount}`, 
+    //     `amountUnit = ${amountUnit}`, 
+    //     `dollarValueNumber = ${dollarValueNumber}`,
+    //     `calculatedGrams = ${calculatedGrams}`
+    // ])
+
+
+    setIngredientItem({...ingredientItem, calculable:calculable, calculatedGrams: calculatedGrams, calculatedCarbs: calculatedCarbs, calculatedProtein:calculatedProtein, calculatedCost:calculatedCost })
+ 
 }
