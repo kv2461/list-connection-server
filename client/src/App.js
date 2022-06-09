@@ -8,16 +8,16 @@ import Auth from './components/Auth/Auth';
 import PostDetails from './components/PostDetails/PostDetails';
 
 import ListType from './components/PostCreation/ListType';
-import Music from './components/PostCreation/Lists/Music';
-import Movies from './components/PostCreation/Lists/Movies';
-
+import Music from './components/PostCreation/Lists/Genres/Music';
+import Movies from './components/PostCreation/Lists/Genres/Movies';
+import Food from './components/PostCreation/Lists/Genres/Food';
 
 import MusicTracks from './components/PostCreation/Lists/Music/MusicTracks';
 import MusicAlbums from './components/PostCreation/Lists/Music/MusicAlbums';
 import MusicArtists from './components/PostCreation/Lists/Music/MusicArtists';
 import MusicCustom from './components/PostCreation/Lists/Music/MusicCustom';
 
-import Recipes from './components/PostCreation/Lists/Food/Recipes';
+import Recipes from './components/PostCreation/Lists/Food/Recipe';
 
 
 const App = () => {
@@ -49,8 +49,8 @@ const App = () => {
 
                 <Route path='/createpost/movies' element={<Movies currentId={currentId} setCurrentId={setCurrentId}/>} />
 
-
-                <Route path='/createpost/food/recipes' element={<Recipes currentId={currentId} setCurrentId={setCurrentId}/>} />
+                <Route path='/createpost/food' element={<Food currentId={currentId} setCurrentId={setCurrentId}/>} />
+                  <Route path='/createpost/food/recipe' element={<Recipes currentId={currentId} setCurrentId={setCurrentId}/>} />
 
           </Routes>
         </Container>

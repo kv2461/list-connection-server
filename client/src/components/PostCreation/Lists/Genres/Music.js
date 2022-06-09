@@ -1,8 +1,8 @@
 import React from 'react'
 import {Typography, Container, } from '@mui/material';
-import {StyledGrid} from '../styles'
+import {StyledGrid} from '../../styles'
 import {ArtTrack, Album, InterpreterMode, MiscellaneousServices} from '@mui/icons-material/';
-import ListTypeCards from '../ListTypeCard/ListTypeCards';
+import ListTypeCards from '../../ListTypeCard/ListTypeCards';
 import { useNavigate } from 'react-router';
 
 const ListType = () => {
