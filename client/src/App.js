@@ -50,7 +50,7 @@ const App = () => {
                 <Route path='/createpost/movies' element={<Movies currentId={currentId} setCurrentId={setCurrentId}/>} />
 
 
-                <Route path='/createpost/food/recipes' element={<Recipes />} />
+                <Route path='/createpost/food/recipes' element={<Recipes currentId={currentId} setCurrentId={setCurrentId}/>} />
 
           </Routes>
         </Container>
