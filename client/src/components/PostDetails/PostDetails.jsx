@@ -17,6 +17,7 @@ const PostDetails = () => {
     const useViewport = () => {
       const [width, setWidth] = useState(window.innerWidth);
   
+    
       useEffect(()=> {
           const handleWindowResize = () => setWidth(window.innerWidth);
           window.addEventListener('resize',handleWindowResize);
@@ -33,6 +34,10 @@ const PostDetails = () => {
       dispatch(GetPost(id));
     
     }, [id])
+
+    useEffect(()=> {
+      console.log(post)
+    },[post])
 
 
     if (!post) return null;

@@ -8,7 +8,7 @@ import {CreatePost, UpdatePost} from '../../actions/posts';
 
 const Form = ({ currentId, setCurrentId, genre, subgenre, list }) => {
     const [postData,setPostData] = useState({
-      title:'', description:'', selectedFile:'', genre:genre, subgenre:subgenre, list:list
+      title:'', description:'', selectedFile:'', genre:genre, subgenre:subgenre, list:list, tags:[]
     });
 
     const [tagToAdd, setTagToAdd] = useState('');
@@ -84,7 +84,7 @@ const Form = ({ currentId, setCurrentId, genre, subgenre, list }) => {
         <TextField required autoFocus name='title' variant='outlined' label='Title' fullWidth value={postData.title} onChange={(e) =>setPostData({...postData, title:e.target.value})}/>
         <TextField name='description' variant='outlined' label='Description' fullWidth value={postData.description} onChange={(e) =>setPostData({...postData, description:e.target.value})}/>
         <TextField sx={{m:'10px 0'}} name='search' variant='outlined' label='Add Search Tags By Pressing Enter' fullWidth onKeyPress={(e)=>handleAddTag(e)} onChange={(e)=>setTagToAdd(e.target.value)} value={tagToAdd}/>
-          {postData?.tags > 0 ? <Container>
+          {postData.tags.length  ? <Container>
           {postData.tags.map((tag,index)=> <Chip sx={{width:1/2, bgcolor:'primary.light', color:'white'}} key={index} onDelete={handleDeleteTag(tag)} label={tag}/>)}  </Container>: null}
         <StyledFileInput>
           <FileBase 
