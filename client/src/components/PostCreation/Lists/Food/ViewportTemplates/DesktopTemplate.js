@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux';
-import {Box, FormControl, TextField, Button, Paper, Container, Typography, Collapse, Select, InputLabel, MenuItem } from '@mui/material';
+import {Box, FormControl, TextField, Button, Paper, Container, Typography, Collapse, Select, MenuItem } from '@mui/material';
 import { StyledGrid, StyledList } from './styles';
 import { Add } from '@mui/icons-material';
 import { Masonry } from '@mui/lab';
@@ -10,9 +10,8 @@ import Form from '../../../../Form/Form';
 import FoodListItem from '../FoodListItem';
 import Suggestions from '../Suggestions';
 import { GetSpoonacularInfo } from '../../../../../actions/foodcentral';
-import { calculateFoodStats } from './Logic/calculateFoods';
 
-const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instructionsItems, ingredientItem, setIngredientItem, ingredientName, setIngredientName, ingredientsItems, setListItem, listItem, listItems, listLogic, width, data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre }) => {
+const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instructionsItems, ingredientItem, setIngredientItem, ingredientName, setIngredientName, ingredientsItems, listItems, listLogic, width, data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre }) => {
     const dispatch = useDispatch();
     const [name,setName] = useState('');
     const [label, setLabel] = useState('');
@@ -36,17 +35,21 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
             setIngredientItem({
                 ...ingredientItem, 
                 key:`${item?.id}-${Date.now()}`,
-                consistency:item?.consistency,
+                // consistency:item?.consistency,
                 ingredientName:item?.name, 
                 image:`${item?.image !== 'no.jpg' ? `https://spoonacular.com/cdn/ingredients_100x100/${item?.image}` : null}`, 
                 comments:'', 
-                estimatedCost:item?.estimatedCost, aisle:item?.aisle,
-                caloricBreakdown: item?.nutrition?.caloricBreakdown,
-                weightPerServing: item?.nutrition?.weightPerServing,
+                aisle:item?.aisle,
+                // caloricBreakdown: item?.nutrition?.caloricBreakdown,
+                gramsPerServing: item?.nutrition?.weightPerServing.amount,
                 possibleUnits:item?.possibleUnits,
                 amount:0,
                 amountUnit:item?.possibleUnits?.[0],
                 calculable:true,
+                caloriesPerServing: item?.nutrition?.nutrients.filter((n)=>n.name === 'Calories')[0].amount,
+                fatPerServing: item?.nutrition?.nutrients.filter((n)=>n.name === 'Fat')[0].amount,
+                carbsPerServing: item?.nutrition?.nutrients.filter((n)=>n.name === 'Carbohydrates')[0].amount,
+                proteinPerServing: item?.nutrition?.nutrients.filter((n)=>n.name === 'Protein')[0].amount
                 }
             )
 
@@ -55,8 +58,6 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
 
 
     }
-
-    
 
     useEffect(() => {
 
@@ -181,8 +182,7 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
                             </Select>
                         </FormControl>
                         <TextField fullWidth label='Comments' onChange={e=>setIngredientItem({...ingredientItem, comments:e.target.value})}/>
-                        {/* <Button variant='contained' onClick={listLogic.handleAddIngredient}>Add to List<Add /></Button> */}
-                        <Button variant='contained' onClick={()=>calculateFoodStats(ingredientItem)}>Add to List<Add /></Button>
+                        <Button variant='contained' onClick={listLogic.handleAddIngredient}>Add to List<Add /></Button>
                         <Button variant='contained' onClick={()=>{setIngredientItem(0);setData([])}}>Cancel</Button>
                     </Paper>) 
                 }
