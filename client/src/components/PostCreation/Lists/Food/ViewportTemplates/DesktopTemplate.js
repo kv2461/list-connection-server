@@ -10,6 +10,7 @@ import Form from '../../../../Form/Form';
 import FoodListItem from '../FoodListItem';
 import Suggestions from '../Suggestions';
 import { GetSpoonacularInfo } from '../../../../../actions/foodcentral';
+import { calculateFoodStats } from './Logic/calculateFoods';
 
 const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instructionsItems, ingredientItem, setIngredientItem, ingredientName, setIngredientName, ingredientsItems, setListItem, listItem, listItems, listLogic, width, data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre }) => {
     const dispatch = useDispatch();
@@ -34,7 +35,8 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
             const item = await dispatch(GetSpoonacularInfo(id))
             setIngredientItem({
                 ...ingredientItem, 
-                key:`${item?.id}-${Date.now()}`, 
+                key:`${item?.id}-${Date.now()}`,
+                consistency:item?.consistency,
                 ingredientName:item?.name, 
                 image:`${item?.image !== 'no.jpg' ? `https://spoonacular.com/cdn/ingredients_100x100/${item?.image}` : null}`, 
                 comments:'', 
@@ -43,7 +45,8 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
                 weightPerServing: item?.nutrition?.weightPerServing,
                 possibleUnits:item?.possibleUnits,
                 amount:0,
-                amountUnit:item?.possibleUnits?.[0]
+                amountUnit:item?.possibleUnits?.[0],
+                calculable:true,
                 }
             )
 
@@ -53,28 +56,7 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
 
     }
 
-    const calculateFoodStats = () => {
-        const {percentCarbs, percentFat, percentProtein} = ingredientItem?.caloricBreakdown;
-        const {amount:weight, unit: weightUnit} = ingredientItem?.weightPerServing;      
-        const {value} = ingredientItem?.estimatedCost;
-        const dollarValueNumber = Number((value*.01).toFixed(2));
-        const dollarValueString = `${(value*.01).toFixed(2)}`;
-        const amount = ingredientItem?.amount;
-        const amountUnit = ingredientItem?.amountUnit;
-        let calculatedAmount = 0;
-
-        switch(amountUnit) {
-            case 'steak':
-                calculatedAmount = amount*1.3;
-            default:
-                calculatedAmount = 0;
-                
-        }
-
-        
-  
-        console.log(percentCarbs, percentFat, percentProtein, weight, weightUnit, amount, amountUnit, dollarValueNumber,dollarValueString, calculatedAmount)
-    }
+    
 
     useEffect(() => {
 
@@ -200,7 +182,7 @@ const DesktopTemplate = ({ instructionItem, setInstructionItem, setData, instruc
                         </FormControl>
                         <TextField fullWidth label='Comments' onChange={e=>setIngredientItem({...ingredientItem, comments:e.target.value})}/>
                         {/* <Button variant='contained' onClick={listLogic.handleAddIngredient}>Add to List<Add /></Button> */}
-                        <Button variant='contained' onClick={calculateFoodStats}>Add to List<Add /></Button>
+                        <Button variant='contained' onClick={()=>calculateFoodStats(ingredientItem)}>Add to List<Add /></Button>
                         <Button variant='contained' onClick={()=>{setIngredientItem(0);setData([])}}>Cancel</Button>
                     </Paper>) 
                 }
