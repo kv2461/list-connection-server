@@ -70,9 +70,10 @@ export const getSpoonacularSpecificData = async (req,res) => {
             res.status(200).json(response.data);
         } catch (error) {
             res.status(404).json({message:error.message});
+
+            exceptionCaught = true;
         }
     }
 
-    console.log(exceptionCaught);
 
 }
