@@ -61,8 +61,8 @@ const PostDetails = () => {
           <Typography align='center' variant='h6'>Created by: {post.username}</Typography>
           <Typography align='center' variant='body1'>{moment(post.createdAt).fromNow()}</Typography>
           <Divider sx={{m:'20px 0'}} />
-          <Typography variant='body1'><strong>List Details</strong></Typography>
-          <ListDetails post={post} list={post.list}/>
+          {post.genre==='music' && <ListDetails post={post} list={post.list}/>}
+          {post.genre==='food' && <ListDetails post={post} list={post.list}/>}
           <Divider sx={{m:'20px 0'}} />
           <Typography variant='body1'><strong>Comments Coming Soon</strong></Typography>
           <Divider sx={{m:'20px 0'}} />

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import {Paper} from '@mui/material';
+import {Paper, Button, Collapse, Typography} from '@mui/material';
 import {StyledList} from './styles';
 import MusicListItem from '../../PostCreation/Lists/Music/MusicListItem';
+import FoodListItem from '../../PostCreation/Lists/Food/FoodListItem';
 
 const ListDetails = ({post,list}) => {
     const [listItems, setListItems] = useState([]);
-    
+    const [collapseInstructions, setCollapseInstructions] = useState(true);
+    const [collapseIngredients, setCollapseIngredients] = useState(true);
     const genre = post?.genre;
     const subgenre = post?.subgenre;
 
@@ -28,8 +30,12 @@ const ListDetails = ({post,list}) => {
             case 'movies':
               console.log('MOVIES')
               break;
+            case 'food':
+              setListItems(list);
+              break;
             default:
               console.log('DEFAULT')
+              break;
           }
     
       
@@ -70,8 +76,11 @@ const ListDetails = ({post,list}) => {
 
   return (
     <div>
-    {listItems?.length===0 ? null : 
-                    <Paper sx={{marginTop:5}}>
+    {listItems.length && genre==='music' && 
+        <Paper sx={{marginTop:5}}>
+            {subgenre === 'musicTracks' && <Typography variant='body1'><strong>Music Tracks</strong></Typography>}
+            {subgenre === 'musicAlbums' && <Typography variant='body1'><strong>Music Albums</strong></Typography>}
+            {subgenre === 'musicArtists' && <Typography variant='body1'><strong>Music Artists</strong></Typography>}
                         <StyledList subheader={<li />}>{
                             listItems.map((item,index) => (
                                 <MusicListItem
@@ -85,7 +94,53 @@ const ListDetails = ({post,list}) => {
                                 />))
                             } 
                         </StyledList>
+                    </Paper> 
+                    
+                }
+
+    {listItems.length && genre==='food' &&
+                    <>
+                    <Paper sx={{marginTop:5}}>
+                    <Typography variant='body1'><strong>Ingredients</strong></Typography>
+                        <Button onClick={()=>setCollapseIngredients(!collapseIngredients)}> {collapseIngredients ? 'Hide' : 'Show'} </Button>
+                        <Collapse in={collapseIngredients} timeout="auto" unmountOnExit>
+                        <StyledList subheader={<li />}>{
+                            listItems[0].map((item,index) => (
+                                <FoodListItem
+                                    key={`${item?.key}-${index}`}
+                                    listItem={item}
+                                    index={index}
+                                    length={listItems.length - 1}
+                                    subgenre='foodRecipe'
+                                    handleMoveUp = {()=>listLogic.handleMoveUp(item)}
+                                    handleMoveDown = {()=>listLogic.handleMoveDown(item)}
+                                />))
+                            } 
+                        </StyledList>
+                        </Collapse>
                     </Paper>
+
+                    <Paper sx={{marginTop:5}}>
+                    <Typography variant='body1'><strong>Instructions</strong></Typography>
+                        <Button onClick={()=>setCollapseInstructions(!collapseInstructions)}> {collapseInstructions ? 'Hide' : 'Show'} </Button>
+                        <Collapse in={collapseInstructions} timeout="auto" unmountOnExit>
+                        <StyledList subheader={<li />}>{
+                            listItems[0].map((item,index) => (
+                                <FoodListItem
+                                    key={`${item?.key}-${index}`}
+                                    listItem={item}
+                                    index={index}
+                                    length={listItems.length - 1}
+                                    subgenre='instructions'
+                                    handleMoveUp = {()=>listLogic.handleMoveUp(item)}
+                                    handleMoveDown = {()=>listLogic.handleMoveDown(item)}
+                                />))
+                            } 
+                        </StyledList>
+                        </Collapse>
+                    
+                    </Paper>
+                </>
                 }
     </div>
   )
