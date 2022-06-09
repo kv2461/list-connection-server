@@ -181,9 +181,16 @@ const Recipes = ({currentId, setCurrentId}) => {
             />
     : 
             <MobileTemplate 
+                setData={setData}
+                instructionItem={instructionItem}
+                setInstructionItem={setInstructionItem}
+                instructionsItems={instructionsItems}
+                setInstructionsItems={setInstructionsItems}
                 setIngredientName={setIngredientName} 
-                setListItem={setListItem} 
-                listItem={listItem} 
+                setIngredientsItems={setIngredientsItems}
+                setIngredientItem={setIngredientItem}
+                ingredientItem={ingredientItem}
+                ingredientsItems={ingredientsItems}
                 ingredientName={ingredientName} 
                 listItems={listItems} 
                 listLogic={listLogic} 
