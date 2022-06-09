@@ -38,6 +38,10 @@ const Recipes = ({currentId, setCurrentId}) => {
     return {width};
     }   
 
+    useEffect(()=> {
+        setListItems([ingredientsItems, instructionsItems])
+    }, [ingredientsItems, instructionsItems])
+
     const {width} = useViewport();
     const breakpoint = 500;
 
@@ -45,7 +49,7 @@ const Recipes = ({currentId, setCurrentId}) => {
         
         const query = ingredientName.split(' ').join(' ');
         if (query.length > 0) {
-            const { results } = await dispatch(GetSpoonacularSuggestions(query))
+            const  {results}  = await dispatch(GetSpoonacularSuggestions(query))
             setData(results.slice(0,4));
         }
         
@@ -163,8 +167,6 @@ const Recipes = ({currentId, setCurrentId}) => {
                 setIngredientItem={setIngredientItem}
                 ingredientItem={ingredientItem}
                 ingredientsItems={ingredientsItems}
-                setListItem={setListItem} 
-                listItem={listItem} 
                 ingredientName={ingredientName} 
                 listItems={listItems} 
                 listLogic={listLogic} 
