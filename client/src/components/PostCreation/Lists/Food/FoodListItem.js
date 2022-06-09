@@ -46,14 +46,15 @@ const FoodListItem = ({ listItem, index, handleDelete, length, handleMoveUp, han
                 <ListItemText 
                   disableTypography 
                   primary={ <>
-                  <Typography fontSize='0.8rem'> 
-                    {description ? description : null }
-                  </Typography>
 
                   {subgenre === 'foodRecipe' && <Typography fontSize='0.8rem'> 
                     {listItem.amount > 0 ? `${listItem.amount} ${listItem.amountUnit}` : null }
                   </Typography>
                   }
+                  <Typography fontSize='0.8rem'> 
+                    {description ? description : null }
+                  </Typography>
+
 
                   {listItem.calculable && 
                     <><Button onClick={()=>setCollapseStats(!collapseStats)} > {collapseStats ? 'Hide' : 'Show'} </Button>
