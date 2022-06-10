@@ -73,6 +73,30 @@ const ListDetails = ({post,list}) => {
         
             setListItems(updatedList);
         },
+        handleMoveUp2: (item) => {
+            let index = 0;
+            const updatedList = listItems2.map((x,i) => {
+                if(x.key === item.key) {
+                    index = i;
+                }
+                return x;
+            });
+            listLogic.changeValuePosition(updatedList,index,index-1);
+        
+            setListItems2(updatedList);
+        },
+        handleMoveDown2: (item) => {
+            let index = 0;
+            const updatedList = listItems2.map((x,i) => {
+                if(x.key === item.key) {
+                    index = i;
+                }
+                return x;
+            });
+            listLogic.changeValuePosition(updatedList,index,index+1);
+        
+            setListItems2(updatedList);
+        },
     }
 
 
@@ -134,8 +158,8 @@ const ListDetails = ({post,list}) => {
                                     index={index}
                                     length={listItems.length - 1}
                                     subgenre='instructions'
-                                    handleMoveUp = {()=>listLogic.handleMoveUp(item)}
-                                    handleMoveDown = {()=>listLogic.handleMoveDown(item)}
+                                    handleMoveUp = {()=>listLogic.handleMoveUp2(item)}
+                                    handleMoveDown = {()=>listLogic.handleMoveDown2(item)}
                                 />))
                             } 
                         </StyledList>
