@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const getExerciseData = async (req,res) => {
-    const { query } = req.params;
+    const { query } = req.query;
     const api_key = process.env.WGER_APIKEY;
     const api_url = 
     `https://wger.de/api/v2/exercise/search/?term=${query}`

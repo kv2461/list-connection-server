@@ -12,13 +12,15 @@ import Music from './components/PostCreation/Lists/Genres/Music';
 import Movies from './components/PostCreation/Lists/Genres/Movies';
 import Food from './components/PostCreation/Lists/Genres/Food';
 
+
 import MusicTracks from './components/PostCreation/Lists/Music/MusicTracks';
 import MusicAlbums from './components/PostCreation/Lists/Music/MusicAlbums';
 import MusicArtists from './components/PostCreation/Lists/Music/MusicArtists';
 import MusicCustom from './components/PostCreation/Lists/Music/MusicCustom';
 
-import Recipes from './components/PostCreation/Lists/Food/Recipe';
 
+import Recipes from './components/PostCreation/Lists/Food/Recipe';
+import Workout from './components/PostCreation/Lists/Workout/Workout';
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -48,6 +50,8 @@ const App = () => {
                     <Route path='/createpost/music/musiccustom' element={<MusicCustom currentId={currentId} setCurrentId={setCurrentId}/>} />
 
                 <Route path='/createpost/movies' element={<Movies currentId={currentId} setCurrentId={setCurrentId}/>} />
+
+                <Route path='createpost/workout' element={<Workout currentId={currentId} setCurrentId={setCurrentId}/>} />
 
                 <Route path='/createpost/food' element={<Food currentId={currentId} setCurrentId={setCurrentId}/>} />
                   <Route path='/createpost/food/recipe' element={<Recipes currentId={currentId} setCurrentId={setCurrentId}/>} />

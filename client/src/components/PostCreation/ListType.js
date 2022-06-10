@@ -14,7 +14,7 @@ const ListType = () => {
         <StyledGrid container alignItems='stretch' spacing={3}>
             <ListTypeCards Icon={MusicNote} genre='Music' handleClick={()=>navigate('/createpost/music')}/>
             <ListTypeCards Icon={MovieFilter}genre='Movies' handleClick={()=>navigate('/createpost/movies')}/>
-            <ListTypeCards Icon={FitnessCenter} genre='Workout'/>
+            <ListTypeCards Icon={FitnessCenter} genre='Workout' handleClick={()=>navigate('/createpost/workout')}/>
             <ListTypeCards Icon={EggAlt} genre='Food' handleClick={()=>navigate('/createpost/food')} />
         </StyledGrid>
     </Container>
