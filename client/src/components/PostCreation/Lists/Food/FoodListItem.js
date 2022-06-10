@@ -37,7 +37,7 @@ const FoodListItem = ({ listItem, index, handleDelete, length, handleMoveUp, han
         <ul>
            {index > 0 ? <Divider sx={{borderBottomWidth:3}} /> : null}
             { subgenre === 'foodRecipe' ? 
-              <ListSubheader sx={{fontWeight:700 ,lineHeight:1, p:2}} >{`${name.charAt(0).toUpperCase()}${name.slice(1)}`}</ListSubheader>
+              <ListSubheader sx={{fontWeight:700 ,lineHeight:1, p:2}} >{`${name?.charAt(0).toUpperCase()}${name?.slice(1)}`}</ListSubheader>
              : <ListSubheader sx={{fontWeight:700 ,lineHeight:1, p:2}} >{index + 1} - {name}</ListSubheader>
             }
 

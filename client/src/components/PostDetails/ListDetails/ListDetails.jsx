@@ -6,6 +6,7 @@ import FoodListItem from '../../PostCreation/Lists/Food/FoodListItem';
 
 const ListDetails = ({post,list}) => {
     const [listItems, setListItems] = useState([]);
+    const [listItems2, setListItems2] = useState([]);
     const [collapseInstructions, setCollapseInstructions] = useState(true);
     const [collapseIngredients, setCollapseIngredients] = useState(true);
     const genre = post?.genre;
@@ -31,7 +32,8 @@ const ListDetails = ({post,list}) => {
               console.log('MOVIES')
               break;
             case 'food':
-              setListItems(list);
+              setListItems(list[0]);
+              setListItems2(list[1]);
               break;
             default:
               console.log('DEFAULT')
@@ -105,9 +107,9 @@ const ListDetails = ({post,list}) => {
                         <Button onClick={()=>setCollapseIngredients(!collapseIngredients)}> {collapseIngredients ? 'Hide' : 'Show'} </Button>
                         <Collapse in={collapseIngredients} timeout="auto" unmountOnExit>
                         <StyledList subheader={<li />}>{
-                            listItems[0].map((item,index) => (
+                            listItems.map((item,index) => (
                                 <FoodListItem
-                                    key={`${item?.key}-${index}`}
+                                    key={`${item?.key}`}
                                     listItem={item}
                                     index={index}
                                     length={listItems.length - 1}
@@ -125,9 +127,9 @@ const ListDetails = ({post,list}) => {
                         <Button onClick={()=>setCollapseInstructions(!collapseInstructions)}> {collapseInstructions ? 'Hide' : 'Show'} </Button>
                         <Collapse in={collapseInstructions} timeout="auto" unmountOnExit>
                         <StyledList subheader={<li />}>{
-                            listItems[0].map((item,index) => (
+                            listItems2.map((item,index) => (
                                 <FoodListItem
-                                    key={`${item?.key}-${index}`}
+                                    key={`${item?.key}`}
                                     listItem={item}
                                     index={index}
                                     length={listItems.length - 1}
