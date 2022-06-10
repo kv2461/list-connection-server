@@ -6,6 +6,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {CreatePost, UpdatePost} from '../../actions/posts';
 
+import food from './defaultImages/food.jpg';
+
 const Form = ({ currentId, setCurrentId, genre, subgenre, list }) => {
     const [postData,setPostData] = useState({
       title:'', description:'', selectedFile:'', genre:genre, subgenre:subgenre, list:list, tags:[]
@@ -43,8 +45,14 @@ const Form = ({ currentId, setCurrentId, genre, subgenre, list }) => {
 
       if (postData.title) {
         if (currentId===0 && postData.selectedFile ==='') {
-            const defaultImage = postData.list[0].image
-            dispatch(CreatePost({...postData, selectedFile: defaultImage, username: user?.result?.username}));
+          let defaultImage = '';
+          if (postData.genre === 'music')
+             {
+              defaultImage = postData.list[0].image;
+            } else if (postData.genre === 'food') {
+              defaultImage = food;
+            }
+            dispatch(CreatePost({...postData, selectedFile: defaultImage, username: user?.result?.username}));;
         } else if (currentId===0) {
           dispatch(CreatePost({...postData, username: user?.result?.username}));
         } else {
