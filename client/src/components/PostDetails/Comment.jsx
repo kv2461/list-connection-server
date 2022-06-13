@@ -1,5 +1,6 @@
 import React from 'react'
 import { ListItem, ListItemText, Typography } from '@mui/material';
+import moment from 'moment';
 
 const Comment = ({index, comment, length, commentsRef }) => {
   return (
@@ -10,7 +11,12 @@ const Comment = ({index, comment, length, commentsRef }) => {
                   {/* <Box sx={{p:2}} component='img' src={listItem?.thumbnail}/> */}
                 <ListItemText 
                   disableTypography 
-                  primary={ <Typography fontSize='0.8rem'> {comment} </Typography>}
+                  primary={ 
+                  <>
+                    <Typography fontSize='0.8rem'><strong>{comment.username}</strong> : {comment.comment} </Typography>
+                    <Typography variant="body2">{moment(comment.createdAt).fromNow()}</Typography>
+                  </>
+                }
                  />
                  {/* {handleDelete ? <Button onClick={handleDelete}><DeleteForever/></Button> : null}
                  <Box sx={{display:'flex', flexDirection:'column'}}>

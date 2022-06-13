@@ -14,7 +14,12 @@ const CommentSection = ({ post }) => {
     const commentsRef = useRef();
 
     const handleComment = async () => {
-        const finalComment = `${user.result.username} : ${comment}`;
+        const finalComment = {
+            username:user.result.username,
+            comment:comment,
+            id:`comment-${Date.now()}`,
+            createdAt: new Date(),
+            };
         const newComments = await dispatch(CommentPost(finalComment, post._id));
 
         setComment('');
@@ -24,7 +29,9 @@ const CommentSection = ({ post }) => {
     }
 
     const handleFocus = () => {
+        if (comments.length > 0) {
         commentsRef.current.scrollIntoView({ behavior: 'smooth'});
+        }
     };
 
   return (
