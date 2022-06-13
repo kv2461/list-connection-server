@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { useParams, useNavigate } from 'react-router-dom';
 
+import CommentSection from './CommentSection';
 import {GetPost} from '../../actions/posts';
 import ListDetails from './ListDetails/ListDetails';
 
@@ -33,11 +34,7 @@ const PostDetails = () => {
     useEffect(() => {
       dispatch(GetPost(id));
     
-    }, [id])
-
-    useEffect(()=> {
-      console.log(post)
-    },[post])
+    }, [id,dispatch])
 
 
     if (!post) return null;
@@ -65,7 +62,9 @@ const PostDetails = () => {
           {post.genre==='food' && <ListDetails post={post} list={post.list}/>}
           {post.genre==='workout' && <ListDetails post={post} list={post.list}/>}
           <Divider sx={{m:'20px 0'}} />
-          <Typography variant='body1'><strong>Comments Coming Soon</strong></Typography>
+          
+          <CommentSection post={post} />
+
           <Divider sx={{m:'20px 0'}} />
         </StyledDivSection>
         {width>breakpoint && <StyledDivImageSection>
