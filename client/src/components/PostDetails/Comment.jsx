@@ -1,8 +1,9 @@
 import React from 'react'
-import { ListItem, ListItemText, Typography } from '@mui/material';
+import { ListItem, ListItemText, Typography, Button } from '@mui/material';
+import { DeleteForever } from '@mui/icons-material';
 import moment from 'moment';
 
-const Comment = ({index, comment, length, commentsRef }) => {
+const Comment = ({index, comment, length, commentsRef, deleteComment, user }) => {
   return (
     <li key={index}>
         <ul>
@@ -18,8 +19,13 @@ const Comment = ({index, comment, length, commentsRef }) => {
                   </>
                 }
                  />
-                 {/* {handleDelete ? <Button onClick={handleDelete}><DeleteForever/></Button> : null}
-                 <Box sx={{display:'flex', flexDirection:'column'}}>
+                 {comment.username === user?.result?.username && <Button onClick={()=>deleteComment(comment.id)}><DeleteForever/></Button>}
+
+                 <Button onClick={()=>{console.log(comment.id)}}>Test</Button>
+
+
+                 {/* <Box sx={{display:'flex', flexDirection:'column'}}>
+                     
                       {index===0 ? null : <Button onClick={handleMoveUp}><KeyboardArrowUp/></Button>}
                       {index===length ? null : <Button onClick={handleMoveDown}><KeyboardArrowDown/></Button>}
                  </Box> */}

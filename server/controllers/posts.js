@@ -125,6 +125,8 @@ export const likePost = async (req,res) => {
     res.json(updatedPost);
 }
 
+
+
 export const commentPost = async (req,res) => {
     const { id } = req.params;
     const { value } = req.body;
@@ -136,5 +138,19 @@ export const commentPost = async (req,res) => {
 
     const updatedPost = await PostList.findByIdAndUpdate(id, post, {new:true});
 
+    res.json(updatedPost);
+}
+
+export const deleteComment = async (req, res) => {
+    const { id } = req.params; 
+    const { commentId } = req.body;
+
+    const post = await PostList.findById(id);
+
+
+    post.comments = post.comments.filter((comment) => comment.id !== commentId);
+
+    const updatedPost = await PostList.findByIdAndUpdate(id, post, {new:true});
+    
     res.json(updatedPost);
 }

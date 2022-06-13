@@ -4,6 +4,7 @@ import { StyledCommentsInnerContainer, StyledCommentsOuterContainer, StyledList}
 import { useDispatch } from 'react-redux';
 
 import { CommentPost } from '../../actions/posts';
+import { DeleteComment } from '../../actions/posts';
 import Comment from './Comment';
 
 const CommentSection = ({ post }) => {
@@ -19,13 +20,14 @@ const CommentSection = ({ post }) => {
             comment:comment,
             id:`comment-${Date.now()}`,
             createdAt: new Date(),
+            likes:[String],
             };
         const newComments = await dispatch(CommentPost(finalComment, post._id));
 
         setComment('');
         setComments(newComments);
 
-        commentsRef.current.scrollIntoView({ behavior: 'smooth'});
+        if (comments.length>2) commentsRef.current.scrollIntoView({ behavior: 'smooth'});
     }
 
     const handleFocus = () => {
@@ -33,6 +35,15 @@ const CommentSection = ({ post }) => {
         commentsRef.current.scrollIntoView({ behavior: 'smooth'});
         }
     };
+
+    const deleteComment = async (id) => {
+        const newComments = await dispatch(DeleteComment(id,post._id));
+
+        
+        setComments(newComments);
+
+        commentsRef.current.scrollIntoView({ behavior: 'smooth'});
+    }
 
   return (
     <div>
@@ -49,6 +60,8 @@ const CommentSection = ({ post }) => {
                                     comment={comment}
                                     index={index}
                                     length = {comments.length}
+                                    deleteComment = {deleteComment}
+                                    user={user}
                                 />))
                             } 
             </StyledList>
