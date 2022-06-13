@@ -3,6 +3,7 @@ import {Paper, Button, Collapse, Typography} from '@mui/material';
 import {StyledList} from './styles';
 import MusicListItem from '../../PostCreation/Lists/Music/MusicListItem';
 import FoodListItem from '../../PostCreation/Lists/Food/FoodListItem';
+import WorkoutListItem from '../../PostCreation/Lists/Workout/WorkoutListItems';
 
 const ListDetails = ({post,list}) => {
     const [listItems, setListItems] = useState([]);
@@ -34,6 +35,9 @@ const ListDetails = ({post,list}) => {
             case 'food':
               setListItems(list[0]);
               setListItems2(list[1]);
+              break;
+            case 'workout':
+              setListItems(list);
               break;
             default:
               console.log('DEFAULT')
@@ -115,6 +119,26 @@ const ListDetails = ({post,list}) => {
                                     index={index}
                                     length={listItems.length - 1}
                                     subgenre={post?.subgenre}
+                                    handleMoveUp = {()=>listLogic.handleMoveUp(item)}
+                                    handleMoveDown = {()=>listLogic.handleMoveDown(item)}
+                                />))
+                            } 
+                        </StyledList>
+                    </Paper> 
+                    
+                }
+
+    {listItems.length && genre==='workout' && 
+        <Paper sx={{marginTop:5}}>
+             <Typography variant='body1'><strong>Workouts</strong></Typography>
+                        <StyledList subheader={<li />}>{
+                            listItems.map((item,index) => (
+                                <WorkoutListItem
+                                    key={`${item?.key}-${index}`}
+                                    listItem={item}
+                                    index={index}
+                                    length={listItems.length - 1}
+                                    subgenre={'workout'}
                                     handleMoveUp = {()=>listLogic.handleMoveUp(item)}
                                     handleMoveDown = {()=>listLogic.handleMoveDown(item)}
                                 />))

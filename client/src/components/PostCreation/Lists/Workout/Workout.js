@@ -3,7 +3,7 @@ import { Container, } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
 import DesktopTemplate from './ViewportTemplates/DesktopTemplate'
-// import MobileTemplate from './ViewportTemplates/MobileTemplate';
+import MobileTemplate from './ViewportTemplates/MobileTemplate';
 
 
 import { GetWorkout } from '../../../../actions/wger';
@@ -126,6 +126,7 @@ const Workout = ({currentId,setCurrentId}) => {
                 width={width} 
                 data={data} 
                 handleSearch={handleSearch} 
+                setData={setData}
                 readyToSubmit={readyToSubmit} 
                 currentId={currentId} 
                 setCurrentId={setCurrentId}
@@ -133,23 +134,24 @@ const Workout = ({currentId,setCurrentId}) => {
                 subgenre={genre}
             />
     : 
-            // <MobileTemplate 
-            //     setWorkoutName={setWorkoutName} 
-            //     setListItem={setListItem} 
-            //     listItem={listItem} 
-            //     workoutName={workoutName} 
-            //     listItems={listItems} 
-            //     listLogic={listLogic} 
-            //     width={width} 
-            //     data={data} 
-            //     handleSearch={handleSearch} 
-            //     readyToSubmit={readyToSubmit} 
-            //     currentId={currentId} 
-            //     setCurrentId={setCurrentId}
-            //     genre={genre}
-            //     subgenre={genre}
-            // /> 
-            <>hi</>
+            <MobileTemplate 
+                setWorkoutName={setWorkoutName} 
+                setListItem={setListItem} 
+                listItem={listItem} 
+                workoutName={workoutName} 
+                listItems={listItems} 
+                listLogic={listLogic} 
+                width={width} 
+                data={data} 
+                setData={setData}
+                handleSearch={handleSearch} 
+                readyToSubmit={readyToSubmit} 
+                currentId={currentId} 
+                setCurrentId={setCurrentId}
+                genre={genre}
+                subgenre={genre}
+            /> 
+           
     }   
 
     </Container>
