@@ -63,6 +63,7 @@ const PostDetails = () => {
           <Divider sx={{m:'20px 0'}} />
           {post.genre==='music' && <ListDetails post={post} list={post.list}/>}
           {post.genre==='food' && <ListDetails post={post} list={post.list}/>}
+          {post.genre==='workout' && <ListDetails post={post} list={post.list}/>}
           <Divider sx={{m:'20px 0'}} />
           <Typography variant='body1'><strong>Comments Coming Soon</strong></Typography>
           <Divider sx={{m:'20px 0'}} />

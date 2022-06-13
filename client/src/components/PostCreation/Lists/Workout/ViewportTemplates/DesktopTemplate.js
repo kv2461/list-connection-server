@@ -8,8 +8,9 @@ import { Masonry } from '@mui/lab';
 import Form from '../../../../Form/Form';
 import WorkoutListItem from '../WorkoutListItems';
 import Suggestions from '../Suggestions';
+import { StyledAvatar } from '../../../../Navbar/styles';
 
-const DesktopTemplate = ({setWorkoutName, workoutName, setListItem, listItem, trackName, listItems, listLogic, width, data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre}) => {
+const DesktopTemplate = ({setWorkoutName, workoutName, setListItem, listItem, listItems, listLogic, setData, data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre}) => {
 
     const [name,setName] = useState('');
     const [label, setLabel] = useState('');
@@ -54,7 +55,7 @@ const DesktopTemplate = ({setWorkoutName, workoutName, setListItem, listItem, tr
                 }
 
                 
-                {/* {listItems.length===0 ? null : 
+                {listItems.length===0 ? null : 
                     <Paper sx={{marginTop:5}}>
                         <StyledList subheader={<li />}>{
                             listItems.map((item,index) => (
@@ -71,7 +72,7 @@ const DesktopTemplate = ({setWorkoutName, workoutName, setListItem, listItem, tr
                             } 
                         </StyledList>
                     </Paper>
-                } */}
+                }
             
             </Box>
         
@@ -103,7 +104,7 @@ const DesktopTemplate = ({setWorkoutName, workoutName, setListItem, listItem, tr
                                 key={d?.data?.id} 
                                 category={d?.data?.category}
                                 handleClick={(e)=>{
-                                    e.stopPropagation();setListItem({...listItem, key:d?.data?.id, workoutName:d?.data?.name, image:d?.data?.image, comments:''});setWorkoutName('');
+                                    e.stopPropagation();setListItem({...listItem, key:d?.data?.id, category: d?.data.category, workoutName:d?.data?.name, image:d?.data?.image, comments:''});setWorkoutName('');setData([]);
                                 }}
                             />))}
                     </StyledGrid> )
