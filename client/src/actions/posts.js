@@ -107,3 +107,16 @@ export const DeleteComment= (commentId, id) => async (dispatch) => {
         console.log(error);
     }
 }
+
+
+export const LikeComment= (commentId, id) => async (dispatch) => {
+    try {
+        const { data } = await api.likeComment(commentId, id);
+
+        dispatch(COMMENT(data));
+        
+        return data.comments;
+    } catch (error) {
+        console.log(error);
+    }
+}

@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import { CommentPost } from '../../actions/posts';
 import { DeleteComment } from '../../actions/posts';
+import { LikeComment } from '../../actions/posts';
 import Comment from './Comment';
 
 const CommentSection = ({ post }) => {
@@ -20,7 +21,7 @@ const CommentSection = ({ post }) => {
             comment:comment,
             id:`comment-${Date.now()}`,
             createdAt: new Date(),
-            likes:[String],
+            likes:[],
             };
         const newComments = await dispatch(CommentPost(finalComment, post._id));
 
@@ -39,10 +40,15 @@ const CommentSection = ({ post }) => {
     const deleteComment = async (id) => {
         const newComments = await dispatch(DeleteComment(id,post._id));
 
-        
         setComments(newComments);
 
-        commentsRef.current.scrollIntoView({ behavior: 'smooth'});
+    }
+
+    const likeComment = async (id) => {
+        const newComments = await dispatch(LikeComment(id,post._id));
+
+        setComments(newComments);
+
     }
 
   return (
@@ -62,6 +68,7 @@ const CommentSection = ({ post }) => {
                                     length = {comments.length}
                                     deleteComment = {deleteComment}
                                     user={user}
+                                    likeComment = {likeComment}
                                 />))
                             } 
             </StyledList>

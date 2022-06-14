@@ -3,7 +3,7 @@ import { ListItem, ListItemText, Typography, Button } from '@mui/material';
 import { DeleteForever } from '@mui/icons-material';
 import moment from 'moment';
 
-const Comment = ({index, comment, length, commentsRef, deleteComment, user }) => {
+const Comment = ({index, comment, length, commentsRef, deleteComment, user, likeComment }) => {
   return (
     <li key={index}>
         <ul>
@@ -21,6 +21,7 @@ const Comment = ({index, comment, length, commentsRef, deleteComment, user }) =>
                  />
                  {comment.username === user?.result?.username && <Button onClick={()=>deleteComment(comment.id)}><DeleteForever/></Button>}
 
+                 <Button onClick={()=>{likeComment(comment.id)}}>{comment.likes.length}Like</Button>
                  <Button onClick={()=>{console.log(comment.id)}}>Test</Button>
 
 
