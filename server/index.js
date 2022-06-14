@@ -9,7 +9,8 @@ import userRoutes from './routes/users.js';
 import FoodDataRoutes from './routes/FoodDataRoutes.js';
 import TMDBRoutes from './routes/TMDBRoutes.js';
 import WgerRoutes from './routes/WgerRoutes.js';
-import { getExerciseData } from './controllers/WgerAPI.js';
+
+import {errorController} from './controllers/errorController.js';
 
 const app = express();
 
@@ -26,6 +27,8 @@ app.use('/posts',postRoutes);
 app.use('/food',FoodDataRoutes);
 app.use('/film', TMDBRoutes);
 app.use('/exercise',WgerRoutes);
+
+app.use(errorController);
 
 
 const PORT = process.env.PORT || 4001;

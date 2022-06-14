@@ -15,6 +15,8 @@ const Auth = () => {
     const [formData,setFormData] = useState(initialState);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [errorSignUp, setErrorSignUp] = useState('');
+    const [errorSignIn, setErrorSignIn] = useState('');
 
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -23,9 +25,9 @@ const Auth = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (isSignup) {
-            dispatch(SignUp(formData,navigate))
+            dispatch(SignUp(formData,navigate, setErrorSignUp))
         } else {
-            dispatch(SignIn(formData,navigate))
+            dispatch(SignIn(formData,navigate, setErrorSignIn))
         }
     }
 
@@ -45,6 +47,8 @@ const Auth = () => {
                 <LockedOutlinedIcon />
             </StyledAvatar>
         <Typography component='h1' variant='h5'>{isSignup? 'Sign Up' : 'Sign In'}</Typography>
+        {errorSignIn && (<Typography sx={{color:'secondary.main'}}>{errorSignIn}</Typography>)}
+        {errorSignUp && (<Typography sx={{color:'secondary.main'}}>Username or email already taken</Typography>)}
         <StyledForm onSubmit={handleSubmit}>
             <Grid container spacing={2}>
                 {isSignup && (

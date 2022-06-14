@@ -6,6 +6,7 @@ import NavBar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
 import Auth from './components/Auth/Auth';
 import PostDetails from './components/PostDetails/PostDetails';
+import UserDetails from './components/UserDetails/UserDetails';
 
 import ListType from './components/PostCreation/ListType';
 import Music from './components/PostCreation/Lists/Genres/Music';
@@ -39,6 +40,9 @@ const App = () => {
             <Route path='/posts/search' element={<Home currentId={currentId} setCurrentId={setCurrentId}/>} />
             <Route path='/posts/:id' element={<PostDetails />} />
             <Route path='/auth' element={user === null ? <Auth /> : <Navigate to='/posts/'/> } />
+
+
+            <Route path='/user/:id' element={<UserDetails />}/>
 
 
             <Route path='/createpost' element={<ListType currentId={currentId} setCurrentId={setCurrentId}/>} />
