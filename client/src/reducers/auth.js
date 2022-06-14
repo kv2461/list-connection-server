@@ -13,11 +13,15 @@ export const authSlice = createSlice({
             localStorage.clear();
 
             return {authData:null};
+        },
+        UPDATE: (state,action) => {
+            console.log(action)
+            return {authData:action?.payload?.data};
         }
     }
 })
 
 
-export const {AUTH, LOGOUT} = authSlice.actions;
+export const {AUTH, LOGOUT, UPDATE} = authSlice.actions;
 
 export default authSlice.reducer;

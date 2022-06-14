@@ -43,7 +43,6 @@ export const GetPostsByUsername = (username) => async (dispatch) => {
     try {
         dispatch(START_LOADING())
         const { data: {data} } = await api.fetchPostsByUsername(username); 
-        console.log(data);
 
         dispatch(FETCH_BY_SEARCH(data));
         dispatch(END_LOADING());

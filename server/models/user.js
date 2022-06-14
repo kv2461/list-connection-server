@@ -22,7 +22,21 @@ const userSchema = new mongoose.Schema({
     id: {
         type:String,
         unique:true
-    }
+    },
+    selectedFile:String,
+    bio:String,
+    friends: {
+        type:[String],
+        default:[],
+    },
+    following: {
+        type:[String],
+        default:[],
+    },
+    followers: {
+        type:[String],
+        default:[],
+    },
 })
 
 
