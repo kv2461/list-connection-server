@@ -1,10 +1,18 @@
-import React, {useState, useEffect} from 'react'
-import { ListItem, ListItemText, Typography, Button } from '@mui/material';
+import React, {useState, useEffect,} from 'react'
+import { ListItem, ListItemText, Typography, Button, TextField } from '@mui/material';
 import { DeleteForever, ThumbUpAlt, ThumbUpAltOutlined } from '@mui/icons-material';
 import moment from 'moment';
 
 
-const Comment = ({index, comment, length, commentsRef, deleteComment, user, likeComment, userId }) => {
+const Comment = ({index, comment, length, commentsRef, deleteComment, user, likeComment, userId, replyComment}) => {
+    const [ replyOn, setReplyOn] = useState(false);
+    const [ reply, setReply] = useState('');
+
+    const sendReply = (reply) => {
+        console.log(reply)
+    }
+
+
     const useViewport = () => {
         const [width, setWidth] = useState(window.innerWidth);
         
@@ -54,9 +62,10 @@ const Comment = ({index, comment, length, commentsRef, deleteComment, user, like
                 }
                  />
                  
-                <div style={width<breakpoint?{position:'relative',left:'100px'}: null}>
+                <div style={width<breakpoint?{position:'relative',left:'60px'}: null}>
                     <Button onClick={()=>{likeComment(comment.id)}}><Likes /></Button>
-                    {comment.username === user?.result?.username && <Button onClick={()=>deleteComment(comment.id)}><DeleteForever fontSize='15px'/></Button>}
+                    <Button fontSize='0.7rem' onClick={()=>{setReplyOn(true)}}>Reply</Button>
+                    {comment.username === user?.result?.username && <Button onClick={()=>deleteComment(comment.id)}><DeleteForever fontSize='0.7rem'/></Button>}
                 </div>
                  {/* <Box sx={{display:'flex', flexDirection:'column'}}>
                      
@@ -64,6 +73,12 @@ const Comment = ({index, comment, length, commentsRef, deleteComment, user, like
                       {index===length ? null : <Button onClick={handleMoveDown}><KeyboardArrowDown/></Button>}
                  </Box> */}
             </ListItem>
+            {replyOn && (
+                <>
+                    <TextField autoFocus sx={{width:'80%'}}value={reply} onChange={(e)=>setReply(e.target.value)}/>
+                    <Button onClick={()=> {setReplyOn(false)}}>cancel</Button>
+                    <Button onClick={()=>{replyComment(reply, comment.id)}}>reply</Button>
+                </>)}
         </ul>
   )
 }

@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { CommentPost } from '../../actions/posts';
 import { DeleteComment } from '../../actions/posts';
 import { LikeComment } from '../../actions/posts';
+import { ReplyComment } from '../../actions/posts';
 import Comment from './Comment';
 
 const CommentSection = ({ post }) => {
@@ -52,6 +53,22 @@ const CommentSection = ({ post }) => {
 
     }
 
+    const replyComment = async (reply, id) => {
+
+        const finalReply = {
+            username:user.result.username,
+            comment:reply,
+            id:`subcomment-${Date.now()}`,
+            createdAt: new Date(),
+            likes:[],
+            };
+
+        const newComments = await dispatch(ReplyComment(finalReply,id,post._id));
+
+        setComments(newComments);
+    }
+
+
   return (
     <div>
         <StyledCommentsOuterContainer>
@@ -71,20 +88,21 @@ const CommentSection = ({ post }) => {
                                     user={user}
                                     likeComment = {likeComment}
                                     userId={userId}
+                                    replyComment={replyComment}
                                 />))
                             } 
             </StyledList>
 
 
 
-            {user?.result.username && (<div style={{width:'90%'}}>
-
-                <Typography gutterBottom variant='h6'>Write a Comment</Typography>
+            {user?.result.username &&  (
+                
+            <div style={{width:'90%', marginTop:'1rem'}}>
                 <TextField 
                     fullWidth
                     rows={4}
                     variant='outlined'
-                    label='Comment'
+                    label='Add a comment'
                     multiline
                     value={comment}
                     onChange={(e)=>setComment(e.target.value)}
@@ -96,6 +114,7 @@ const CommentSection = ({ post }) => {
                 </Button>
 
             </div>)}
+
         </StyledCommentsOuterContainer>
     </div>
   )

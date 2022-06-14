@@ -186,3 +186,33 @@ export const likeComment = async (req, res) => {
     
     res.json(updatedPost);
 }
+
+export const replyComment = async (req, res) => {
+    const { id } = req.params; 
+    const { commentId, value } = req.body;
+
+    const post = await PostList.findById(id);
+
+
+    var updatedComment = post.comments.filter((comment) => comment.id === commentId);
+
+    if (updatedComment[0].replies === undefined) {
+        updatedComment[0].replies = [];
+    }
+    updatedComment[0].replies.push(value);
+
+    const updatedComments = post.comments.filter((comment) => {
+        if (comment.id !== commentId) {
+            return comment
+        } else {
+            return updatedComment
+        }
+    });
+    post.comments = updatedComments;
+
+
+
+    const updatedPost = await PostList.findByIdAndUpdate(id, post, {new:true});
+    
+    res.json(updatedPost);
+}
