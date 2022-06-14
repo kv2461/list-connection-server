@@ -47,14 +47,14 @@ const Comment = ({index, comment, length, commentsRef, deleteComment, user, like
                   <>
                     <div style={{ display: 'flex'}}>
                     <Typography fontSize='0.8rem'><strong>{comment.username}</strong></Typography>
-                    <Typography fontSize='0.7rem' sx={{color:'text.secondary'}}variant="body2">{moment(comment.createdAt).fromNow()}</Typography>
+                    <Typography marginLeft='10px' fontSize='0.7rem' sx={{color:'text.secondary'}}variant="body2">{moment(comment.createdAt).fromNow()}</Typography>
                     </div>
                     <Typography fontSize='0.8rem'>{comment.comment}</Typography>
                   </>
                 }
                  />
                  
-                <div>
+                <div style={width<breakpoint?{position:'relative',left:'100px'}: null}>
                     <Button onClick={()=>{likeComment(comment.id)}}><Likes /></Button>
                     {comment.username === user?.result?.username && <Button onClick={()=>deleteComment(comment.id)}><DeleteForever fontSize='15px'/></Button>}
                 </div>
