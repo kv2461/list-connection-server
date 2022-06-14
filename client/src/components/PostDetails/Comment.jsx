@@ -86,7 +86,7 @@ const Comment = ({index, comment, length, commentsRef, deleteComment, user, like
                     </div>
                     <Typography fontSize='0.8rem'>{comment.comment}</Typography>
 
-                    {comment.replies !== undefined &&  (<div>
+                    {comment.replies !== undefined && comment.replies?.length > 0 &&  (<div>
                         <Button onClick={()=>setCollapseReplies(!collapseReplies)}> {collapseReplies ? 'Hide Replies' : 'Show Replies'} </Button>
                         <Collapse in={collapseReplies} timeout="auto" unmountOnExit>
                         <StyledList subheader={<li />}>{
