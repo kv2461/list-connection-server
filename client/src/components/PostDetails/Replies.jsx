@@ -4,7 +4,7 @@ import { DeleteForever, ThumbUpAlt, ThumbUpAltOutlined } from '@mui/icons-materi
 import moment from 'moment';
 
 
-const Reply = ({index, comment, length, deleteComment, user, likeComment, userId, replyComment, repliesRef}) => {    
+const Reply = ({index, comment, length, deleteComment, user, likeComment, userId, replyComment, repliesRef,}) => {    
     const [ replyOn, setReplyOn] = useState(false);
     const [ reply, setReply] = useState('');
     const [ replies, setReplies ] = useState(comment.replies);
@@ -62,11 +62,11 @@ const Reply = ({index, comment, length, deleteComment, user, likeComment, userId
                  />
                  
 
-                {/* <div style={width<breakpoint?{position:'relative',left:'60px'}: null}>
+                <div style={width<breakpoint?{position:'relative',left:'60px'}: null}>
                     <Button onClick={()=>{likeComment(comment.id)}}><Likes /></Button>
                     <Button fontSize='0.7rem' onClick={()=>{setReplyOn(true)}}>Reply</Button>
                     {comment.username === user?.result?.username && <Button onClick={()=>deleteComment(comment.id)}><DeleteForever fontSize='0.7rem'/></Button>}
-                </div> */}
+                </div>
             </ListItem>
             {/* {replyOn && (
                 <>

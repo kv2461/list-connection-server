@@ -134,3 +134,29 @@ export const ReplyComment = (value, commentId, id) => async (dispatch) => {
         console.log(error);
     }
 }
+
+export const LikeReply = (replyId,commentId, id) => async (dispatch) => {
+    try {
+        const { data } = await api.likeReply(replyId, commentId, id);
+
+        dispatch(COMMENT(data));
+      
+        
+        return data.comments;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const DeleteReply = (replyId,commentId, id) => async (dispatch) => {
+    try {
+        const { data } = await api.deleteReply(replyId, commentId, id);
+
+        dispatch(COMMENT(data));
+      
+        
+        return data.comments;
+    } catch (error) {
+        console.log(error);
+    }
+}

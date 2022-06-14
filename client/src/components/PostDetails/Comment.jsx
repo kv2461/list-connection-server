@@ -1,18 +1,34 @@
 import React, {useState, useEffect, useRef} from 'react'
 import { ListItem, ListItemText, Typography, Button, TextField, Collapse,} from '@mui/material';
+import { useDispatch } from 'react-redux';
 import { StyledList } from './styles';
 import { DeleteForever, ThumbUpAlt, ThumbUpAltOutlined } from '@mui/icons-material';
 import moment from 'moment';
 
 import Replies from './Replies';
+import { LikeReply, DeleteReply } from '../../actions/posts';
 
 
-const Comment = ({index, comment, length, commentsRef, deleteComment, user, likeComment, userId, replyComment}) => {
+const Comment = ({index, comment, length, commentsRef, deleteComment, user, likeComment, userId, replyComment, postId, setComments}) => {
     const [ replyOn, setReplyOn] = useState(false);
     const [ reply, setReply] = useState('');
     const [ replies, setReplies ] = useState(comment?.replies);
     const [ collapseReplies, setCollapseReplies] = useState(false);
+    const dispatch = useDispatch();
     const repliesRef = useRef();
+
+    const likeReply = async (id) => {
+        const newComments = await dispatch(LikeReply(id,comment.id,postId));
+
+        setComments(newComments);
+    }
+
+    const deleteReply = async (id) => {
+        const newComments = await dispatch(DeleteReply(id,comment.id,postId));
+
+        setComments(newComments);
+
+    }
 
     useEffect(()=> {
         setReplies(comment?.replies)
@@ -83,7 +99,8 @@ const Comment = ({index, comment, length, commentsRef, deleteComment, user, like
                                     index={index}
                                     user={user}
                                     userId={userId}
-                                    likeComment={likeComment}
+                                    likeComment={likeReply}
+                                    deleteComment={deleteReply}
                                 />))
                             } 
                         </StyledList>

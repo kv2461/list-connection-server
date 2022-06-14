@@ -36,7 +36,9 @@ export const likeComment = (commentId, id) => API.patch(`/posts/${id}/commentPos
 
 export const replyComment = (value, commentId, id) => API.patch(`/posts/${id}/commentPost/reply`, { value, commentId });
 
+export const likeReply = (replyId, commentId, id) => API.patch(`/posts/${id}/commentPost/likeReply`, {replyId, commentId});
 
+export const deleteReply = (replyId, commentId, id) => API.patch(`/posts/${id}/commentPost/deleteReply`, {replyId, commentId})
 
 
 

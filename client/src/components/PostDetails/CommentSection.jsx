@@ -96,6 +96,8 @@ const CommentSection = ({ post }) => {
                                     likeComment = {likeComment}
                                     userId={userId}
                                     replyComment={replyComment}
+                                    postId={post._id}
+                                    setComments={setComments}
                                 />))
                             } 
             </StyledList>
