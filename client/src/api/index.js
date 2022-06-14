@@ -16,6 +16,8 @@ export const fetchPosts = (page,subgenrename,genrename) => API.get(`/posts?page=
 
 export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`)
 
+export const fetchPostsByUsername = (username) => API.get(`/posts/user/${username}`)
+
 export const createPost = (newPost) => API.post('/posts',newPost);
 
 export const updatePost = (id,updatedPost) => API.patch(`/posts/${id}`,updatedPost);

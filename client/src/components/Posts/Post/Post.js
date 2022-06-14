@@ -37,16 +37,18 @@ const Post = ({post, setCurrentId}) => {
     navigate(`/posts/${post._id}`);
   }
   
-  // const openUser = ()=> {
-  //   navigate(`/posts/${post.creator}`)
-  // }
+  const openUser = ()=> {
+    navigate(`/user/${post.username}`)
+  }
 
 
   return (
     <StyledCard raised elevation={6}>
       <StyledCardMedia image={post.selectedFile} title={post.title}/>
       <StyledOverlay>
-        <Typography variant='h6'>{post.username}</Typography>
+        <StyledButtonBase onClick={openUser}>
+          <Typography variant='h6'>{post.username}</Typography>
+        </StyledButtonBase>
         <Typography variant='body2'>{moment(post.createdAt).fromNow()}</Typography>
       </StyledOverlay>
 
@@ -55,7 +57,7 @@ const Post = ({post, setCurrentId}) => {
           <MoreHorizIcon fontSize='default'/>
         </Button>
       </StyledOverlay2>)} 
-      <StyledButtonBase>
+      <StyledButtonBase onClick={openPost}>
         <StyledTypography align='center' variant='h5' component='h2'>{post.title}</StyledTypography>
       </StyledButtonBase>
       <CardContent>

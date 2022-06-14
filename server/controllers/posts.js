@@ -52,6 +52,22 @@ export const getPostsBySearch = async (req, res) => {
     }
 }
 
+
+export const getPostsByUsername = async (req, res) => {
+    const { username } = req.params;
+    
+    try {
+        const user = new RegExp(username,'i'); //ignore case
+
+        const posts = await PostList.find({username:user}); //$or find me title or tags
+        //$in is one of the tags in the array of tags equal to any of my tags
+
+        res.json({ data: posts }); //will need to destructure twice when recieving in actions
+    } catch (error) {
+        res.status(404).json({message:error.message});
+    }
+}
+
 //so far this and routes is all ive written for getting subgenre as categories
 //don;t know how much of an advanced search i want to make in the future
 // export const getPostsBySubgenre = async (req, res) => {

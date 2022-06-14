@@ -42,7 +42,7 @@ const App = () => {
             <Route path='/auth' element={user === null ? <Auth /> : <Navigate to='/posts/'/> } />
 
 
-            <Route path='/user/:id' element={<UserDetails />}/>
+            <Route path='/user/:username' element={<UserDetails setCurrentId={setCurrentId} />}/>
 
 
             <Route path='/createpost' element={<ListType currentId={currentId} setCurrentId={setCurrentId}/>} />

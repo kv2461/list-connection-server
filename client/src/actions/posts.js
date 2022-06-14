@@ -32,7 +32,19 @@ export const GetPostsBySearch = (searchQuery) => async (dispatch) => {
         dispatch(START_LOADING())
         const { data: {data} } = await api.fetchPostsBySearch(searchQuery); 
         //destructuring required twice due to axios request AND postsearch assigning it to a new object called data
-        
+        dispatch(FETCH_BY_SEARCH(data));
+        dispatch(END_LOADING());
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const GetPostsByUsername = (username) => async (dispatch) => {
+    try {
+        dispatch(START_LOADING())
+        const { data: {data} } = await api.fetchPostsByUsername(username); 
+        console.log(data);
+
         dispatch(FETCH_BY_SEARCH(data));
         dispatch(END_LOADING());
     } catch (error) {
