@@ -13,6 +13,7 @@ const CommentSection = ({ post }) => {
     const [ comment, setComment ] = useState('');
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
+    const userId = user?.result?._id;
     const commentsRef = useRef();
 
     const handleComment = async () => {
@@ -69,6 +70,7 @@ const CommentSection = ({ post }) => {
                                     deleteComment = {deleteComment}
                                     user={user}
                                     likeComment = {likeComment}
+                                    userId={userId}
                                 />))
                             } 
             </StyledList>

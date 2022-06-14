@@ -44,7 +44,6 @@ export const StyledLoadingPaper = styled(Paper,{})({
 export const StyledCommentsOuterContainer = styled('div',{})({
     display:'flex',
     flexDirection:'column',
-    justifyContent:'space-between',
 })
 
 export const StyledCommentsInnerContainer = styled('div',{})({
@@ -55,7 +54,7 @@ export const StyledCommentsInnerContainer = styled('div',{})({
 
 export const StyledList = styled(List, {})({
     width:'100%',
-    backgroundColor:'backround.paper',
+    backgroundColor:'background.paper',
     position:'relative',
     overflow:'auto',
     maxHeight:'300px',
