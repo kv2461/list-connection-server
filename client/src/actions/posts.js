@@ -114,6 +114,7 @@ export const LikeComment = (commentId, id) => async (dispatch) => {
         const { data } = await api.likeComment(commentId, id);
 
         dispatch(COMMENT(data));
+      
         
         return data.comments;
     } catch (error) {
@@ -124,6 +125,7 @@ export const LikeComment = (commentId, id) => async (dispatch) => {
 export const ReplyComment = (value, commentId, id) => async (dispatch) => {
     try {
         const { data } = await api.replyComment(value,commentId,id);
+
 
         dispatch(COMMENT(data));
 

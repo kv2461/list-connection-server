@@ -1,28 +1,16 @@
-import React, {useState, useEffect, useRef} from 'react'
-import { ListItem, ListItemText, Typography, Button, TextField, Collapse,} from '@mui/material';
-import { StyledList } from './styles';
+import React, {useState, useEffect,} from 'react'
+import { ListItem, ListItemText, Typography, Button, TextField, Collapse} from '@mui/material';
 import { DeleteForever, ThumbUpAlt, ThumbUpAltOutlined } from '@mui/icons-material';
 import moment from 'moment';
 
-import Replies from './Replies';
 
-
-const Comment = ({index, comment, length, commentsRef, deleteComment, user, likeComment, userId, replyComment}) => {
+const Reply = ({index, comment, length, deleteComment, user, likeComment, userId, replyComment, repliesRef}) => {    
     const [ replyOn, setReplyOn] = useState(false);
     const [ reply, setReply] = useState('');
-    const [ replies, setReplies ] = useState(comment?.replies);
+    const [ replies, setReplies ] = useState(comment.replies);
     const [ collapseReplies, setCollapseReplies] = useState(false);
-    const repliesRef = useRef();
 
-    useEffect(()=> {
-        setReplies(comment?.replies)
-    }, [comment])
 
-    useEffect(()=> {
-        if (comment?.replies?.length > 0) {
-            repliesRef?.current?.scrollIntoView({ behavior: 'smooth'});
-            }
-    },[replies, collapseReplies])
 
     const useViewport = () => {
         const [width, setWidth] = useState(window.innerWidth);
@@ -58,7 +46,7 @@ const Comment = ({index, comment, length, commentsRef, deleteComment, user, like
 
   return (
         <ul>
-            <ListItem sx={width<breakpoint?{flexDirection:'column', alignItems:'baseline'}:null} key={index} ref={length-1 === index ? commentsRef : null}>
+            <ListItem sx={width<breakpoint?{flexDirection:'column', alignItems:'baseline'}:null} key={index} ref={length-1 === index ? repliesRef : null} >
                   {/* <Box sx={{p:2}} component='img' src={listItem?.thumbnail}/> */}
                 <ListItemText 
                   disableTypography 
@@ -69,45 +57,25 @@ const Comment = ({index, comment, length, commentsRef, deleteComment, user, like
                     <Typography marginLeft='10px' fontSize='0.7rem' sx={{color:'text.secondary'}}variant="body2">{moment(comment.createdAt).fromNow()}</Typography>
                     </div>
                     <Typography fontSize='0.8rem'>{comment.comment}</Typography>
-
-                    {comment.replies !== undefined &&  (<div>
-                        <Button onClick={()=>setCollapseReplies(!collapseReplies)}> {collapseReplies ? 'Hide Replies' : 'Show Replies'} </Button>
-                        <Collapse in={collapseReplies} timeout="auto" unmountOnExit>
-                        <StyledList subheader={<li />}>{
-                            replies?.map((reply,index) => (
-                                <Replies
-                                    length={replies.length}
-                                    repliesRef={repliesRef}
-                                    comment={reply}
-                                    key={index}
-                                    index={index}
-                                    user={user}
-                                    userId={userId}
-                                />))
-                            } 
-                        </StyledList>
-                        </Collapse></div>) }
-
-
                   </>
                 }
                  />
-
-
+                 
+{/* 
                 <div style={width<breakpoint?{position:'relative',left:'60px'}: null}>
                     <Button onClick={()=>{likeComment(comment.id)}}><Likes /></Button>
                     <Button fontSize='0.7rem' onClick={()=>{setReplyOn(true)}}>Reply</Button>
                     {comment.username === user?.result?.username && <Button onClick={()=>deleteComment(comment.id)}><DeleteForever fontSize='0.7rem'/></Button>}
-                </div>
+                </div> */}
             </ListItem>
-            {replyOn && (
+            {/* {replyOn && (
                 <>
                     <TextField autoFocus sx={{width:'80%'}}value={reply} onChange={(e)=>setReply(e.target.value)}/>
                     <Button onClick={()=> {setReplyOn(false)}}>cancel</Button>
-                    <Button onClick={()=>{replyComment(reply, comment.id);setReply('');setReplyOn(false);}}>reply</Button>
-                </>)}
+                    <Button onClick={()=>{replyComment(reply, comment.id)}}>reply</Button>
+                </>)} */}
         </ul>
   )
 }
 
-export default Comment
+export default Reply

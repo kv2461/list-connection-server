@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Typography, TextField, Button } from '@mui/material';
 import { StyledCommentsInnerContainer, StyledCommentsOuterContainer, StyledList} from './styles';
 import { useDispatch } from 'react-redux';
@@ -16,6 +16,12 @@ const CommentSection = ({ post }) => {
     const user = JSON.parse(localStorage.getItem('profile'));
     const userId = user?.result?._id;
     const commentsRef = useRef();
+
+    useEffect(()=> {
+        if (comments.length > 0) {
+            commentsRef.current.scrollIntoView({ behavior: 'smooth'});
+            }
+    },[comments])
 
     const handleComment = async () => {
         const finalComment = {
@@ -66,6 +72,7 @@ const CommentSection = ({ post }) => {
         const newComments = await dispatch(ReplyComment(finalReply,id,post._id));
 
         setComments(newComments);
+        
     }
 
 
