@@ -105,7 +105,7 @@ const Comment = ({index, comment, length, commentsRef, deleteComment, user, like
                 <>
                     <TextField autoFocus sx={{width:'80%'}}value={reply} onChange={(e)=>setReply(e.target.value)}/>
                     <Button onClick={()=> {setReplyOn(false)}}>cancel</Button>
-                    <Button onClick={()=>{replyComment(reply, comment.id);setReply('');setReplyOn(false);}}>reply</Button>
+                    <Button onClick={()=>{replyComment(reply, comment.id);setReply('');setReplyOn(false);setCollapseReplies(true)}}>reply</Button>
                 </>)}
         </ul>
   )
