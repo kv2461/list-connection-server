@@ -57,9 +57,8 @@ export const getPostsByUsername = async (req, res) => {
     const { username } = req.params;
     
     try {
-        const user = new RegExp(username,'i'); //ignore case
 
-        const posts = await PostList.find({username:user}); //$or find me title or tags
+        const posts = await PostList.find({username:username}); //$or find me title or tags
         //$in is one of the tags in the array of tags equal to any of my tags
 
         res.json({ data: posts }); //will need to destructure twice when recieving in actions

@@ -90,9 +90,8 @@ export const getInfoByUsername = async (req,res) => {
 
 
     try {
-        const user = new RegExp(username,'i'); //ignore case
 
-        const data = await User.find({username:user});
+        const data = await User.find({username:username});
 
         res.status(200).json(data);
     } catch (error) {
