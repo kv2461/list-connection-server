@@ -83,6 +83,7 @@ const Comment = ({index, comment, length, commentsRef, deleteComment, user, like
                                     index={index}
                                     user={user}
                                     userId={userId}
+                                    likeComment={likeComment}
                                 />))
                             } 
                         </StyledList>
