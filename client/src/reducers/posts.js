@@ -28,19 +28,26 @@ export const postsSlice = createSlice({
         CREATE: (state,action) => {
             return {...state, posts:[...state.posts, action.payload], createdPost:action.payload};
         },
-        UPDATE: (state,action)=> {
-            return {...state, posts:state.posts.map((post)=> post._id === action.payload._id ? action.payload : post)};
+        UPDATE: (state,action) => {
+            return {...state, posts:state.posts.map((post) => post._id === action.payload._id ? action.payload : post)};
         },
-        DELETE:(state,action)=> {
-            return {...state, posts: state.posts.filter((post)=> post._id !== action.payload)};
+        DELETE:(state,action) => {
+            return {...state, posts: state.posts.filter((post) => post._id !== action.payload)};
         },
-        LIKE:(state,action)=> {
-            return {...state, posts:state.posts.map((post)=> post._id === action.payload._id ? action.payload : post)};
+        LIKE:(state,action) => {
+            return {...state, posts:state.posts.map((post) => post._id === action.payload._id ? action.payload : post)};
+        },
+        COMMENT:(state, action) => {
+            return {...state, posts: state.posts.map((post) => {
+                if (post._id === action.payload._id) return action.payload;
+
+                return post;
+            })};
         },
     }
 })
 
 
-export const {FETCH_ALL, CREATE, UPDATE, DELETE,LIKE,FETCH_BY_SEARCH,START_LOADING,END_LOADING, FETCH_POST} = postsSlice.actions;
+export const { FETCH_ALL, CREATE, UPDATE, DELETE,LIKE,FETCH_BY_SEARCH,START_LOADING,END_LOADING, FETCH_POST, COMMENT } = postsSlice.actions;
 
 export default postsSlice.reducer;

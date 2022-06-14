@@ -1,4 +1,4 @@
-import { FETCH_BY_SEARCH, FETCH_POST, FETCH_ALL, CREATE, UPDATE, DELETE, LIKE, START_LOADING, END_LOADING } from '../reducers/posts';
+import { FETCH_BY_SEARCH, FETCH_POST, FETCH_ALL, CREATE, UPDATE, DELETE, LIKE, START_LOADING, END_LOADING, COMMENT } from '../reducers/posts';
 
 import * as api from '../api';
 
@@ -79,5 +79,44 @@ export const LikePost = (id) => async (dispatch) => {
         dispatch(LIKE(data));
     } catch (error) {
         console.log(error)
+    }
+}
+
+
+
+
+
+export const CommentPost = (value, id) => async (dispatch) => {
+    try {
+        const {data} = await api.comment(value,id);
+        dispatch(COMMENT(data));
+        return data.comments;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const DeleteComment= (commentId, id) => async (dispatch) => {
+    try {
+        const { data } = await api.deleteComment(commentId, id);
+
+        dispatch(COMMENT(data));
+        
+        return data.comments;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export const LikeComment= (commentId, id) => async (dispatch) => {
+    try {
+        const { data } = await api.likeComment(commentId, id);
+
+        dispatch(COMMENT(data));
+        
+        return data.comments;
+    } catch (error) {
+        console.log(error);
     }
 }

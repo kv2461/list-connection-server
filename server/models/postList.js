@@ -20,10 +20,14 @@ const postSchema = new mongoose.Schema({
         type:[Object],
         default:[]
     },  
+    comments: {
+        type:[Object], 
+        default:[]
+    },
     createdAt:{
         type:Date,
         default:new Date()
-    }
+    },
 })
 
 const PostList = mongoose.model('PostList',postSchema);

@@ -1,4 +1,4 @@
-import { Paper } from '@mui/material';
+import { Paper, List } from '@mui/material';
 import { styled } from '@mui/system';
 import { theme } from '../../Theme';
 
@@ -20,7 +20,7 @@ export const StyledDivSection = styled('div',{})({
 export const StyledDivImageSection = styled('div',{})({
     marginLeft:'20px',
     [theme.breakpoints.down('sm')]: {
-        margin:'20px',
+        margin:0,
     },
 });
 
@@ -39,4 +39,24 @@ export const StyledLoadingPaper = styled(Paper,{})({
     padding:'20px',
     borderRadius:'15px',
     height:'39vh'
+})
+
+export const StyledCommentsOuterContainer = styled('div',{})({
+    display:'flex',
+    flexDirection:'column',
+})
+
+export const StyledCommentsInnerContainer = styled('div',{})({
+    height:'200px',
+    overflowY:'auto',
+    marginRight:'30px',
+})
+
+export const StyledList = styled(List, {})({
+    width:'100%',
+    backgroundColor:'background.paper',
+    position:'relative',
+    overflow:'auto',
+    maxHeight:'300px',
+    '& ul':{padding:0},
 })
