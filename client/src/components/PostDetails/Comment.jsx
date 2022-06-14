@@ -39,13 +39,13 @@ const Comment = ({index, comment, length, commentsRef, deleteComment, user, like
 
   return (
         <ul>
-            <ListItem sx={width<breakpoint?{flexDirection:'column'}:null} key={index} ref={length-1 === index ? commentsRef : null}>
+            <ListItem sx={width<breakpoint?{flexDirection:'column', alignItems:'baseline'}:null} key={index} ref={length-1 === index ? commentsRef : null}>
                   {/* <Box sx={{p:2}} component='img' src={listItem?.thumbnail}/> */}
                 <ListItemText 
                   disableTypography 
                   primary={ 
                   <>
-                    <div style={{ display: 'flex',}}>
+                    <div style={{ display: 'flex'}}>
                     <Typography fontSize='0.8rem'><strong>{comment.username}</strong></Typography>
                     <Typography fontSize='0.7rem' sx={{color:'text.secondary'}}variant="body2">{moment(comment.createdAt).fromNow()}</Typography>
                     </div>
