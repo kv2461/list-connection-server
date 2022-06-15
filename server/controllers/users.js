@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 import User from '../models/user.js';
+import UserPrivate from '../models/userPrivate.js';
 
 export const signin = async (req,res) => {
     const {email,password} = req.body
@@ -152,3 +153,65 @@ export const followUser = async (req,res) => {
     }
 
 }
+
+export const messageUser = async (req,res) => {
+    const { messageId } = req.params
+    const { value } = req.body;
+    console.log(value);
+    console.log(messageId);
+    console.log(req.userId);
+
+    
+    if(!req.userId) return res.json({message:'Unauthenticated'});
+
+        try {
+
+            const user1 = { userId: req.userId };
+            const user2 = { userId: messageId };
+            const update = {messages: value};
+
+            await UserPrivate.countDocuments(user1); // 0
+            await UserPrivate.countDocuments(user2); // 0
+
+            let doc1 = await UserPrivate.findOneAndUpdate(user1, update, 
+                {
+                    new: true,
+                    upsert: true // Make this update into an upsert
+                });
+
+            let doc2 = await UserPrivate.findOneAndUpdate(user2, update, 
+                {
+                    new: true,
+                    upsert: true // Make this update into an upsert
+                });
+
+            res.status(200).json(doc1);
+
+            } catch(error) {
+                res.status(404).json({message:error.message});
+            }
+}
+
+    // try {
+    //     const userAccount = await User.findById(req.userId);
+    //     const followAccount = await User.findById(followId);
+
+
+    //     const index = followAccount.followers.findIndex((id)=>id===String(req.userId));
+
+    //     if(index===-1) {
+    //         followAccount.followers.push(req.userId);
+    //         userAccount.following.push(followId);
+    //     } else {
+    //         followAccount.followers = followAccount.followers.filter((id)=>id!==String(req.userId));
+    //         userAccount.following = followAccount.following.filter((id)=>id!==String(followId));
+    //     }
+
+    //     const updatedUserAccount = await User.findByIdAndUpdate(req.userId,userAccount,{new:true});
+    //     const updatedFollowAccount = await User.findByIdAndUpdate(followId,followAccount,{new:true});
+
+    //     res.status(200).json(updatedFollowAccount);
+
+    // } catch (error) {
+    //     res.status(404).json({message:error.message});
+    // }

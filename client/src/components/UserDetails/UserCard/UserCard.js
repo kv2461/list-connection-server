@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import {GetPostsByUsername} from '../../../actions/posts';
 import {FollowUser} from '../../../actions/users';
+import {MessageUser} from '../../../actions/users';
 
 
 const UserCard = ({user, loggedUser,setEditProfile, setUserData}) => {
@@ -15,6 +16,19 @@ const UserCard = ({user, loggedUser,setEditProfile, setUserData}) => {
         const data = await dispatch(FollowUser(user._id))
         await setUserData(data);
 
+    }
+
+    const messageUser = async (user) => {
+        const value =
+        {value:
+            {creator:loggedUser.result.username,
+            message:'Hello World!',
+            id:`message-${Date.now()}`,
+            createdAt: new Date(),
+            }
+        };
+        const data = await dispatch(MessageUser(user._id, value))
+        await console.log(data)
     }
 
     useEffect(() => {
@@ -43,7 +57,7 @@ const UserCard = ({user, loggedUser,setEditProfile, setUserData}) => {
 
         {user.username !== loggedUser?.result?.username ? (<>
             <Button onClick={()=>followUser(user)}>Follow</Button>
-            <Button >Message</Button>
+            <Button onClick={()=>messageUser(user)}>Message</Button>
         </>)
         :
         (<>

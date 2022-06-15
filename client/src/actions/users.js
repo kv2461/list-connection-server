@@ -41,3 +41,15 @@ export const FollowUser = (followId) => async (dispatch) => {
     }
 
 }
+
+export const MessageUser = (messageId, value) => async (dispatch) => {
+
+    try {
+        const { data } = await api.messageUser(messageId, value);
+
+        return data;
+    } catch(error) {
+        console.log(error);
+    }
+
+}

@@ -43,7 +43,7 @@ const Navbar = () => {
             {user ? (
                 <StyledProfile>
                     <StyledCreatePost variant='h2' disabled={!user?.result} align='center' onClick={()=>navigate('/createPost')}><AddIcon/></StyledCreatePost>
-                    <StyledAvatar alt={user.result.username} src={user.result.imageUrl}>{user.result.username.charAt(0)}</StyledAvatar>
+                    <StyledAvatar alt={user.result.username} src={user.result.selectedFile}>{user.result.username.charAt(0)}</StyledAvatar>
                     <StyledUsername variant='h6'>{user.result.username}</StyledUsername>
                     <StyledLogoutButton variant='contained' sx={{backgroundColor:'secondary.main'}} onClick={logout} >Logout</StyledLogoutButton>
                 </StyledProfile>
