@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, Grow, Container,Grid, } from '@mui/material';
+import { Paper, Grow, Container,Grid, Card } from '@mui/material';
 import { StyledGrid } from './styles';
 // import { StyledDivImageSection, StyledDivSection, StyledImgMedia, StyledDivCard, StyledLoadingPaper } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,13 +15,16 @@ import { GetInfoByUsername } from '../../actions/users';
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
 import UserForm from './UserForm/UserForm';
+import UserCard from './UserCard/UserCard';
 
 const UserDetails = ({setCurrentId, currentId}) => {
     // const { post, posts, isLoading, } = useSelector((state)=>state.postsSlice);
     const [userData, setUserData] = useState('');
+    const [editProfile, setEditProfile] = useState(false);
     const dispatch = useDispatch();
     const navigate= useNavigate();
     const { username } = useParams();
+    
     const user = JSON.parse(localStorage.getItem('profile'));
 
     const useViewport = () => {
@@ -52,7 +55,8 @@ const UserDetails = ({setCurrentId, currentId}) => {
 
     fetchData();
 
-    }, [username,dispatch])
+    }, [username,dispatch,editProfile])
+
 
 
     // if (!post) return null;
@@ -78,7 +82,14 @@ const UserDetails = ({setCurrentId, currentId}) => {
                     {tags.map((tag,index)=> <Chip sx={{width:1/2, bgcolor:'primary.light', color:'white'}} key={index} onDelete={handleDelete(tag)} label={tag}/>)}  </Container>: null}
                     <Button sx={{bgcolor:'primary.main',m:'10px 0'}} variant='contained' onClick={searchPost}>Search</Button>
                   </StyledAppBarSearch> */}
-                  {user?.result?.username === username && userData && (<UserForm user={userData}/>)}
+                  
+                  {
+                    userData && !editProfile && (<UserCard user={userData} loggedUser={user} setUserData={setUserData} setEditProfile={setEditProfile}/>)
+                  }
+
+
+
+                  {user?.result?.username === username && userData && editProfile && (<UserForm user={userData} setEditProfile={setEditProfile}/>)}
                   {currentId!==0 && (<Form currentId={currentId} setCurrentId={setCurrentId} />) }
                   {/* {(!searchQuery && !tags.length) && (<Paper elevation={6}>
                     <Pagination page={page} subgenreName={subgenreName} />

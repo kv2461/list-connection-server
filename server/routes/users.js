@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { signin, signup, updateUser, getInfoByUsername } from '../controllers/users.js';
+import { signin, signup, updateUser, getInfoByUsername, followUser } from '../controllers/users.js';
 
 import auth from '../middleware/auth.js';
 
@@ -13,6 +13,7 @@ router.post('/signup',signup);
 
 router.patch('/update/:id', auth, updateUser);
 router.get('/info/:username', getInfoByUsername);
+router.patch('/follow/:followId', auth, followUser);
 
 
 export default router;

@@ -117,3 +117,38 @@ export const getInfoByUsername = async (req,res) => {
     //     res.status(500).json({ message: 'Something went wrong' });
     // }
 }
+
+export const followUser = async (req,res) => {
+    const { followId } = req.params
+
+
+    
+    if(!req.userId) return res.json({message:'Unauthenticated'});
+
+
+    try {
+
+        const userAccount = await User.findById(req.userId);
+        const followAccount = await User.findById(followId);
+
+
+        const index = followAccount.followers.findIndex((id)=>id===String(req.userId));
+
+        if(index===-1) {
+            followAccount.followers.push(req.userId);
+            userAccount.following.push(followId);
+        } else {
+            followAccount.followers = followAccount.followers.filter((id)=>id!==String(req.userId));
+            userAccount.following = followAccount.following.filter((id)=>id!==String(followId));
+        }
+
+        const updatedUserAccount = await User.findByIdAndUpdate(req.userId,userAccount,{new:true});
+        const updatedFollowAccount = await User.findByIdAndUpdate(followId,followAccount,{new:true});
+
+        res.status(200).json(updatedFollowAccount);
+
+    } catch (error) {
+        res.status(404).json({message:error.message});
+    }
+
+}

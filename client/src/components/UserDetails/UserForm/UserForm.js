@@ -9,7 +9,7 @@ import { UpdateUser } from '../../../actions/users';
 // import {CreatePost, UpdatePost} from '../../actions/posts';
 
 
-const UserForm = ({user}) => {
+const UserForm = ({user, setEditProfile}) => {
     const [userData,setUserData] = useState({
       ...user
     });
@@ -29,13 +29,13 @@ const UserForm = ({user}) => {
         } 
     },[firstName, lastName, bio])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        dispatch(UpdateUser(user._id,userData));
+        const data = await dispatch(UpdateUser(user._id,userData));
 
-        console.log(userData);
-    
+  
+        setEditProfile(false);  
       }
 
     const reset = (user) => {
@@ -50,7 +50,9 @@ const UserForm = ({user}) => {
   return (
     <StyledPaper>
       <StyledForm autoComplete='off' noValidate onSubmit={()=>{}}>
-        <Typography variant='h6'>Edit Information</Typography>
+        <Typography variant='h6'>Edit Information
+          <Button onClick={()=>setEditProfile(false)}>Cancel</Button>
+        </Typography>
         <TextField required name='firstname' variant='outlined' label='First Name' fullWidth value={firstName} onChange={(e) =>setFirstName(e.target.value)}/>
         <TextField required name='lastname' variant='outlined' label='Last Name' fullWidth value={lastName} onChange={(e) =>setLastName(e.target.value)}/>
         <TextField  name='bio' variant='outlined' label='Bio' fullWidth multiline rows={6}value={bio} onChange={(e)=>setBio(e.target.value)} />

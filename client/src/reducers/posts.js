@@ -3,13 +3,19 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const postsSlice = createSlice({
     name:'posts',
-    initialState:{posts:[], isLoading:true},
+    initialState:{posts:[], isLoading:true, isLoadingFollow:false},
     reducers: {
         START_LOADING: (state,action) => {
             return {...state, isLoading:true}
         },
         END_LOADING: (state,action) => {
             return {...state, isLoading:false}
+        },
+        START_LOADING_FOLLOW: (state,action) => {
+            return {...state, isLoadingFollow:true}
+        },
+        END_LOADING_FOLLOW: (state,action) => {
+            return {...state, isLoadingFollow:false}
         },
         FETCH_ALL: (state,action) => {
             return {
@@ -48,6 +54,6 @@ export const postsSlice = createSlice({
 })
 
 
-export const { FETCH_ALL, CREATE, UPDATE, DELETE,LIKE,FETCH_BY_SEARCH,START_LOADING,END_LOADING, FETCH_POST, COMMENT } = postsSlice.actions;
+export const { FETCH_ALL, CREATE, UPDATE, DELETE,LIKE,FETCH_BY_SEARCH,START_LOADING,END_LOADING, FETCH_POST, COMMENT, START_LOADING_FOLLOW, END_LOADING_FOLLOW } = postsSlice.actions;
 
 export default postsSlice.reducer;
