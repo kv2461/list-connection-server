@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Paper, Grid, Divider, TextField, Typography, List, ListItem, Fab, Avatar, ListItemIcon, ListItemText, } from '@mui/material';
 import { StyledChatSection, StyledBorderRight500, StyledMessageArea } from './styles';
 import { Send as SendIcon } from '@mui/icons-material';
-import Draggable from 'react-draggable';
+import Draggable from 'react-draggable';// buttons don't work with it for now
 
 import { useDispatch, useSelector } from 'react-redux';
 import {GetAccountInfo} from '../../actions/users';
@@ -13,8 +13,9 @@ import ChatBubble from './ChatSub/ChatBubble';
 
 const Chat = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
-  const { data } = useSelector((state) => state.accountSlice);
+  const { data, chat } = useSelector((state) => state.accountSlice);
   const dispatch = useDispatch();
+
   const messageKeys = data?.messages;
   const participantArray = messageKeys?.map((item)=>item.participants.filter((participant) => participant !== user.result._id));
   const participants = participantArray?.flat(1);
@@ -27,7 +28,7 @@ const Chat = () => {
 
 
   return (
-    <Draggable>
+
       <div style={{position:'fixed', zIndex:2,}}>
         <Grid container >
             <Grid item xs={12} >
@@ -61,7 +62,12 @@ const Chat = () => {
             </StyledBorderRight500>
             <Grid item xs={9}>
                 <StyledMessageArea>
-                    <ChatBubble />
+                { chat?.messages && chat?.messages?.map((message, index) =>(
+                        
+                        <ChatBubble key={message.id} index={index} message={message} account={user}
+                        />
+                        ))
+                    }
                 </StyledMessageArea>
                 <Divider />
                 <Grid container style={{padding: '20px'}}>
@@ -69,13 +75,13 @@ const Chat = () => {
                         <TextField id="outlined-basic-email" label="Type Something" fullWidth />
                     </Grid>
                     <Grid item xs={1} align="right">
-                        <Fab color="primary" aria-label="add"><SendIcon /></Fab>
+                        <Fab color="primary" aria-label="add" onClick={()=>console.log('hi')}><SendIcon /></Fab>
                     </Grid>
                 </Grid>
             </Grid>
         </StyledChatSection>
       </div>
-    </Draggable>
+ 
   );
 }
 

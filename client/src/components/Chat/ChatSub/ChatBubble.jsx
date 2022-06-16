@@ -1,27 +1,23 @@
 import React from 'react'
+import moment from 'moment'
 import {ListItem, Grid, ListItemText} from '@mui/material';
 
-const ChatBubble = () => {
+const ChatBubble = ({message,account}) => {
+    let alignment = 'left'
+
+    if (message.sender === account.result.username) {
+        alignment = 'right';
+    } 
+
   return (
     <>
-        <ListItem key="1">
+        <ListItem>
             <Grid container>
                 <Grid item xs={12}>
-                    <ListItemText align="right" primary="Hey man, What's up ?"></ListItemText>
+                    <ListItemText align={alignment} primary={message.message}></ListItemText>
                 </Grid>
                 <Grid item xs={12}>
-                    <ListItemText align="right" secondary="09:30"></ListItemText>
-                </Grid>
-            </Grid>
-        </ListItem>
-
-        <ListItem key="2">
-            <Grid container>
-                <Grid item xs={12}>
-                    <ListItemText align="left" primary="Hey, Iam Good! What about you ?"></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                    <ListItemText align="left" secondary="09:31"></ListItemText>
+                    <ListItemText align={alignment} secondary={moment(message.createdAt).fromNow()}></ListItemText>
                 </Grid>
             </Grid>
         </ListItem>

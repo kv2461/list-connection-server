@@ -56,6 +56,8 @@ export const getInfoByUsername = (username) => API.get(`/user/info/${username}`)
 
 export const getInfoById = (id) => API.get(`/user/info/id/${id}`);
 
+export const getChatById = (id) => API.get(`/user/chat/${id}`);
+
 export const followUser = (followId) => API.patch(`user/follow/${followId}`);
 
 export const messageUser = (messageId, value) => API.patch(`user/message/${messageId}`,value);

@@ -102,6 +102,21 @@ export const getInfoByUsername = async (req,res) => {
     }
 }
 
+export const getChatById = async (req,res) => {
+    const { id } = req.params
+
+    try {
+        if(!req.userId) return res.json({message:'Unauthenticated'});
+
+        const chatInfo = await Chat.findById(id);
+
+        res.status(200).json(chatInfo);
+
+    } catch (error) {
+        res.status(404).json({message:error.message});
+    }
+}
+
 export const getInfoById = async (req,res) => {
     const { id } = req.params
 
@@ -116,6 +131,8 @@ export const getInfoById = async (req,res) => {
         res.status(404).json({message:error.message});
     }
 }
+
+
 
 export const followUser = async (req,res) => {
     const { followId } = req.params

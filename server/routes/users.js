@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { signin, signup, updateUser, getInfoByUsername, followUser, messageUser, getAccountInfo, getInfoById} from '../controllers/users.js';
+import { signin, signup, updateUser, getInfoByUsername, followUser, messageUser, getAccountInfo, getInfoById, getChatById} from '../controllers/users.js';
 
 import auth from '../middleware/auth.js';
 
@@ -17,5 +17,6 @@ router.get('/info/:username', getInfoByUsername);
 router.patch('/follow/:followId', auth, followUser);
 router.patch('/message/:messageId', auth, messageUser);
 router.get('/account', auth, getAccountInfo);
+router.get('/chat/:id',auth, getChatById);
 
 export default router;

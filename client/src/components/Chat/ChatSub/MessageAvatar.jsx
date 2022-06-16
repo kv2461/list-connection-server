@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { ListItemButton, ListItemIcon, Avatar, ListItemText,} from '@mui/material';
+import { useDispatch, } from 'react-redux';
+
 import { GetInfoById } from '../../../actions/users';
-import { useDispatch, useSelector } from 'react-redux';
+import { GetChatById } from '../../../actions/users';
 
 const MessageAvatar = ({index, userInfo}) => {
   const dispatch = useDispatch();
@@ -20,13 +22,14 @@ const MessageAvatar = ({index, userInfo}) => {
     fetchData();
   }, [])
 
-  const getMessage = () => {
-    console.log('hi')
+  const getChat = () => {
+    dispatch(GetChatById(userInfo.chat_id))
   }
+
   
   
   return (
-    <ListItemButton key={index} onClick={()=>(getMessage())}>
+    <ListItemButton key={index} onClick={()=>getChat()}>
         <ListItemIcon>
         <Avatar alt={user?.username} src={user?.selectedFile}>{user?.username?.charAt(0)}</Avatar>
         </ListItemIcon>
