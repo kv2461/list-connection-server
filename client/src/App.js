@@ -8,6 +8,8 @@ import Auth from './components/Auth/Auth';
 import PostDetails from './components/PostDetails/PostDetails';
 import UserDetails from './components/UserDetails/UserDetails';
 
+import Chat from './components/Chat/Chat';
+
 import ListType from './components/PostCreation/ListType';
 import Music from './components/PostCreation/Lists/Genres/Music';
 import Movies from './components/PostCreation/Lists/Genres/Movies';
@@ -23,17 +25,20 @@ import MusicCustom from './components/PostCreation/Lists/Music/MusicCustom';
 import Recipes from './components/PostCreation/Lists/Food/Recipe';
 import Workout from './components/PostCreation/Lists/Workout/Workout';
 
+
+
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
-
+  const [chat, setChat] = useState(false);
   const [currentId,setCurrentId] = useState(0);
 
 
 
   return (
       <BrowserRouter>
-        <Container maxWidth='xl'>
-          <NavBar />
+        <Container maxWidth='xl' style={{zIndex:1}}>
+          <NavBar setChat={setChat} chat={chat} />
+          {chat && <Chat />}
           <Routes>
             <Route path='/' element={<Navigate to='/posts/'/>}/>
             <Route path='/posts' element={<Home currentId={currentId} setCurrentId={setCurrentId}/>}/>

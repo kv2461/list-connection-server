@@ -59,6 +59,10 @@ export const StyledAppBar = styled(AppBar, {})({
   export const StyledAvatar = styled(Avatar,{})({
     color: '#ffffff',
     backgroundColor: '#rgba(0,183,255, 1)',
+    '&:hover':{
+      cursor:'pointer',
+      backgroundColor: 'rgba(128,128,128,0.1)'
+  }
   })
 
   export const StyledUsername = styled(Typography,{})({

@@ -8,7 +8,7 @@ import {useNavigate} from 'react-router';
 import {LOGOUT} from '../../reducers/auth';
 import decode from 'jwt-decode';
 
-const Navbar = () => {
+const Navbar = ({setChat, chat}) => {
     const navigate = useNavigate();
     const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const location = useLocation();
@@ -43,7 +43,7 @@ const Navbar = () => {
             {user ? (
                 <StyledProfile>
                     <StyledCreatePost variant='h2' disabled={!user?.result} align='center' onClick={()=>navigate('/createPost')}><AddIcon/></StyledCreatePost>
-                    <StyledAvatar alt={user.result.username} src={user.result.selectedFile}>{user.result.username.charAt(0)}</StyledAvatar>
+                    <StyledAvatar onClick={()=>setChat(!chat)}alt={user.result.username} src={user.result.selectedFile}>{user.result.username.charAt(0)}</StyledAvatar>
                     <StyledUsername variant='h6'>{user.result.username}</StyledUsername>
                     <StyledLogoutButton variant='contained' sx={{backgroundColor:'secondary.main'}} onClick={logout} >Logout</StyledLogoutButton>
                 </StyledProfile>
