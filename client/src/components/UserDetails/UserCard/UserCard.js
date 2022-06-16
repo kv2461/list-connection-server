@@ -21,7 +21,7 @@ const UserCard = ({user, loggedUser,setEditProfile, setUserData}) => {
     const messageUser = async (user) => {
         const value =
         {value:
-            {creator:loggedUser.result.username,
+            {sender:loggedUser.result.username,
             message:'Hello World!',
             id:`message-${Date.now()}`,
             createdAt: new Date(),

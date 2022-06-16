@@ -1,9 +1,8 @@
 import mongoose from 'mongoose';
 
 const userPrivateSchema = new mongoose.Schema({
-    userId: {
+    _id: {
         type:String,
-        unique:true
     },
     messages: {
         type:[Object],
