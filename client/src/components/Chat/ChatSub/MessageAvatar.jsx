@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ListItem, ListItemIcon, Avatar, ListItemText } from '@mui/material';
+import { ListItemButton, ListItemIcon, Avatar, ListItemText,} from '@mui/material';
 import { GetInfoById } from '../../../actions/users';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -19,16 +19,20 @@ const MessageAvatar = ({index, userInfo}) => {
     
     fetchData();
   }, [])
+
+  const getMessage = () => {
+    console.log('hi')
+  }
   
   
   return (
-    <ListItem button key={index} onClick={()=>{}}>
+    <ListItemButton key={index} onClick={()=>(getMessage())}>
         <ListItemIcon>
         <Avatar alt={user?.username} src={user?.selectedFile}>{user?.username?.charAt(0)}</Avatar>
         </ListItemIcon>
         <ListItemText primary={user?.username}>{user?.username}</ListItemText>
         {/* <ListItemText secondary="online" align="right"></ListItemText> */}
-    </ListItem>
+    </ListItemButton>
   )
 }
 
