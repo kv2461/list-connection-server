@@ -1,5 +1,5 @@
 import React from 'react';
-import {Paper, Grid, Box, Divider, TextField, Typography, List, ListItem, Fab, Avatar, ListItemIcon, ListItemText, } from '@mui/material';
+import { Paper, Grid, Box, Divider, TextField, Typography, List, ListItem, Fab, Avatar, ListItemIcon, ListItemText, } from '@mui/material';
 import { StyledChatSection, StyledBorderRight500, StyledMessageArea } from './styles';
 import { Send as SendIcon } from '@mui/icons-material';
 import Draggable from 'react-draggable';
