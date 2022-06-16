@@ -42,6 +42,7 @@ export const signup = async (req,res) => {
         const hashedPassword = await bcrypt.hash(password,12);
 
         const result = await User.create({ username, email, password: hashedPassword, name:`${firstName} ${lastName}`});
+        const result2= await UserPrivate.create({_id: result._id});
 
         const token = jwt.sign({email: result.email, id:result._id},'test',{expiresIn:'1h'});
 
@@ -93,32 +94,27 @@ export const getInfoByUsername = async (req,res) => {
 
 
     try {
-
         const data = await User.find({username:username});
 
         res.status(200).json(data);
     } catch (error) {
         res.status(404).json({message:error.message});
     }
-    
+}
 
-    // try {
-    //     const existingUser = await User.findOne({ email });
+export const getInfoById = async (req,res) => {
+    const { id } = req.params
 
-    //     if (existingUser) return res.status(400).json({message:'User already exists'});
+    try {
+        if(!req.userId) return res.json({message:'Unauthenticated'});
 
-    //     if (password !== confirmPassword) return res.status(400).json({message:'Passwords do not match'});
+        const accountInfo = await User.findById(id);
 
-    //     const hashedPassword = await bcrypt.hash(password,12);
+        res.status(200).json(accountInfo);
 
-    //     const result = await User.create({ username, email, password: hashedPassword, name:`${firstName} ${lastName}`});
-
-    //     const token = jwt.sign({email: result.email, id:result._id},'test',{expiresIn:'1h'});
-
-    //     res.status(200).json({result, token})
-    // } catch (error) {
-    //     res.status(500).json({ message: 'Something went wrong' });
-    // }
+    } catch (error) {
+        res.status(404).json({message:error.message});
+    }
 }
 
 export const followUser = async (req,res) => {
@@ -157,7 +153,18 @@ export const followUser = async (req,res) => {
 }
 
 
+export const getAccountInfo = async (req,res) => {
+    try {
+        if(!req.userId) return res.json({message:'Unauthenticated'});
 
+        const accountInfo = await UserPrivate.findById(req.userId);
+
+        res.status(200).json(accountInfo);
+
+    } catch (error) {
+        res.status(404).json({message:error.message});
+    }
+}
 
 
 

@@ -10,6 +10,7 @@ import { configureStore } from '@reduxjs/toolkit';
 // import { postsSlice } from './reducers/posts';
 import postsSlice from './reducers/posts';
 import authSlice from './reducers/auth';
+import accountSlice from './reducers/account';
 
 import App from './App';
 import {theme} from './Theme';
@@ -22,6 +23,7 @@ const store = configureStore({
   reducer:{
     postsSlice:postsSlice,
     authSlice:authSlice,
+    accountSlice:accountSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

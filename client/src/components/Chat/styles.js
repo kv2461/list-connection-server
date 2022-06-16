@@ -12,7 +12,7 @@ export const StyledBorderRight500 = styled(Grid, {})({
 });
 
 export const StyledMessageArea = styled(List, {})({
-    height: '50vh',
+    height: '45vh',
     overflowY: 'auto'
 })
 
