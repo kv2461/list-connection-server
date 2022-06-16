@@ -166,6 +166,7 @@ export const messageUser = async (req,res) => {
     const { messageId } = req.params
     const { value } = req.body;
 
+    //a bit long... maybe condense userprivate logic into another function
     
     if(!req.userId) return res.json({message:'Unauthenticated'});
 
@@ -197,8 +198,6 @@ export const messageUser = async (req,res) => {
 
 
                     if (index1 === -1 && index2 === -1) { //  if chat doesn't exist in messages yet, just push 
-                        console.log('hi')
-                        // console.log(updatedUserPrivate1)
                         updatedUserPrivate1.messages = [...updatedUserPrivate1.messages, {chat_id:chat_id1, new:false, participants:[req.userId, messageId], createdAt:new Date().toISOString()}];
                         var newUpdatedUserPrivate1 = await UserPrivate.findByIdAndUpdate(user1, updatedUserPrivate1, {new:true} ) 
                     } else { //if it does exist, filter it out and replace
@@ -218,20 +217,19 @@ export const messageUser = async (req,res) => {
 
 
 
-                if (userPrivate2 === 1) { //if already has a document for private files .. have to account for not clearing the whole message array
+                if (userPrivate2 === 1) { 
                     const updatedUserPrivate2 =  await UserPrivate.findById(user2);
 
                     const index1 = updatedUserPrivate2.messages.findIndex((message)=>message.chat_id===String(chat_id1));
                     const index2 = updatedUserPrivate2.messages.findIndex((message)=>message.chat_id===String(chat_id2));
 
 
-                    if (index1 === -1 && index2 === -1) { //  if chat doesn't exist in messages yet, just push 
-                        // console.log(updatedUserPrivate1)
+                    if (index1 === -1 && index2 === -1) { 
                         updatedUserPrivate2.messages = [...updatedUserPrivate2.messages, {chat_id:chat_id1, new:true, participants:[req.userId, messageId], createdAt:new Date().toISOString()}];
                         var newUpdatedUserPrivate2 = await UserPrivate.findByIdAndUpdate(user2, updatedUserPrivate2, {new:true} ) 
-                    } else { //if it does exist, filter it out and replace
+                    } else { 
 
-                        const updatedMessage = {chat_id:chat_id1, new:false, participants:[req.userId, messageId], createdAt:new Date().toISOString()};
+                        const updatedMessage = {chat_id:chat_id1, new:true, participants:[req.userId, messageId], createdAt:new Date().toISOString()};
                         
                         const updatedMessages = updatedUserPrivate2.messages.filter((message) => (message.chat_id !== String(chat_id1) && message.chat_id !== String(chat_id2)))
                         updatedMessages.push(updatedMessage);
@@ -239,7 +237,7 @@ export const messageUser = async (req,res) => {
                         var newUpdatedUserPrivate2 = await UserPrivate.findByIdAndUpdate(user2, updatedUserPrivate2, {new:true} ) 
                     }
 
-                } else { //if no document for privatefiles ... 
+                } else { 
                     const newMessageUpdate2 = {'messages': {chat_id:chat_id1, new:true, participants:[req.userId, messageId], createdAt:new Date().toISOString()}}
                     var newUpdatedUserPrivate2 = await UserPrivate.findByIdAndUpdate(user2, newMessageUpdate2, {new: true, upsert:true})
                 }
@@ -250,8 +248,6 @@ export const messageUser = async (req,res) => {
                 
                 res.status(200).json(data);
             
-
-                console.log('zero')
             } 
 
 
@@ -260,77 +256,133 @@ export const messageUser = async (req,res) => {
 
 
             
-            // else if (chatCount1 > 0) {
-            //     const updatedChat =  await Chat.findById(chatId1)
-            //     updatedChat.messages = [...updatedChat.messages, value];
-            //     updatedChat.total_messages++;
+            else if (chatCount1 > 0) {
+                const updatedChat =  await Chat.findById(chatId1)
+                updatedChat.messages = [...updatedChat.messages, value];
+                updatedChat.total_messages++;
 
-            //     if (userPrivate1 === 1) {
-            //         const updatedUserPrivate1 =  await UserPrivate.findById(user1);
+                if (userPrivate1 === 1) {
+                    const updatedUserPrivate1 =  await UserPrivate.findById(user1);
 
-            //         updatedUserPrivate1.messages = [...updatedUserPrivate1.messages, {chatId1, new:false, participants:[req.userId, messageId]}];
-
-            //         var newUpdatedUserPrivate1 = await UserPrivate.findByIdAndUpdate(user1, updatedUserPrivate1, {new:true} ) 
-            //     } else {
-            //         const newMessageUpdate1 = {'messages': {chatId1, new:false, participants:[req.userId, messageId]}}
-            //         var newUpdatedUserPrivate1 = await UserPrivate.findByIdAndUpdate(user1, newMessageUpdate1, {new: true, upsert:true})
-            //     }
-
-            //     if (userPrivate2 === 1) {
-            //         const updatedUserPrivate2 =  await UserPrivate.findById(user2);
-            //         updatedUserPrivate2.messages = [...updatedUserPrivate2.messages, {chatId1, new:true, participants:[req.userId, messageId]}];
-
-            //         var newUpdatedUserPrivate2 = await UserPrivate.findByIdAndUpdate(user1, updatedUserPrivate2, {new:true} ) 
-            //     } else {
-            //         const newMessageUpdate2 = {'messages': {chatId1, new:true, participants:[req.userId, messageId]}}
-            //         var newUpdatedUserPrivate2 = await UserPrivate.findByIdAndUpdate(user2, newMessageUpdate2, {new: true, upsert:true})
-            //     }
-
-            //     console.log('one')
+                    const index1 = updatedUserPrivate1.messages.findIndex((message)=>message.chat_id===String(chat_id1));
+                    const index2 = updatedUserPrivate1.messages.findIndex((message)=>message.chat_id===String(chat_id2));
 
 
+                    if (index1 === -1 && index2 === -1) { 
+                        updatedUserPrivate1.messages = [...updatedUserPrivate1.messages, {chat_id:chat_id1, new:false, participants:[req.userId, messageId], createdAt:new Date().toISOString()}];
+                        var newUpdatedUserPrivate1 = await UserPrivate.findByIdAndUpdate(user1, updatedUserPrivate1, {new:true} ) 
+                    } else { 
 
-            //     let newChat = await Chat.findByIdAndUpdate(chatId1, updatedChat, {new:true} ) 
+                        const updatedMessage = {chat_id:chat_id1, new:false, participants:[req.userId, messageId], createdAt:new Date().toISOString()};
+                        
+                        const updatedMessages = updatedUserPrivate1.messages.filter((message) => (message.chat_id !== String(chat_id1) && message.chat_id !== String(chat_id2)))
+                        updatedMessages.push(updatedMessage);
+                        updatedUserPrivate1.messages = updatedMessages;
+                        var newUpdatedUserPrivate1 = await UserPrivate.findByIdAndUpdate(user1, updatedUserPrivate1, {new:true} ) 
+                    }
 
-            //     const data = await {newChat, newUpdatedUserPrivate1};
+                } else { 
+                    const newMessageUpdate1 = {'messages': {chat_id:chat_id1, new:false, participants:[req.userId, messageId], createdAt:new Date().toISOString()}}
+                    var newUpdatedUserPrivate1 = await UserPrivate.findByIdAndUpdate(user1, newMessageUpdate1, {new: true, upsert:true})
+                }
+
+
+
+                if (userPrivate2 === 1) {
+                    const updatedUserPrivate2 =  await UserPrivate.findById(user2);
+
+                    const index1 = updatedUserPrivate2.messages.findIndex((message)=>message.chat_id===String(chat_id1));
+                    const index2 = updatedUserPrivate2.messages.findIndex((message)=>message.chat_id===String(chat_id2));
+
+
+                    if (index1 === -1 && index2 === -1) { 
+                        updatedUserPrivate2.messages = [...updatedUserPrivate2.messages, {chat_id:chat_id1, new:true, participants:[req.userId, messageId], createdAt:new Date().toISOString()}];
+                        var newUpdatedUserPrivate2 = await UserPrivate.findByIdAndUpdate(user2, updatedUserPrivate2, {new:true} ) 
+                    } else { 
+
+                        const updatedMessage = {chat_id:chat_id1, new:true, participants:[req.userId, messageId], createdAt:new Date().toISOString()};
+                        
+                        const updatedMessages = updatedUserPrivate2.messages.filter((message) => (message.chat_id !== String(chat_id1) && message.chat_id !== String(chat_id2)))
+                        updatedMessages.push(updatedMessage);
+                        updatedUserPrivate2.messages = updatedMessages;
+                        var newUpdatedUserPrivate2 = await UserPrivate.findByIdAndUpdate(user2, updatedUserPrivate2, {new:true} ) 
+                    }
+
+                } else { 
+                    const newMessageUpdate2 = {'messages': {chat_id:chat_id1, new:true, participants:[req.userId, messageId], createdAt:new Date().toISOString()}}
+                    var newUpdatedUserPrivate2 = await UserPrivate.findByIdAndUpdate(user2, newMessageUpdate2, {new: true, upsert:true})
+                }
+               
+
+                let newChat = await Chat.findByIdAndUpdate(chatId1, updatedChat, {new:true} ) 
+
+                const data = await {newChat, newUpdatedUserPrivate1};
                 
-            //     res.status(200).json(data);
-            // }
+                res.status(200).json(data);
+            }
 
-            // else if (chatCount2 > 0) {
-            //     const updatedChat =  await Chat.findById(chatId2)
-            //     updatedChat.messages = [...updatedChat.messages, value];
-            //     updatedChat.total_messages++;
+            else if (chatCount2 > 0) {
+                const updatedChat =  await Chat.findById(chatId2)
+                updatedChat.messages = [...updatedChat.messages, value];
+                updatedChat.total_messages++;
 
-            //     if (userPrivate1 === 1) {
-            //         const updatedUserPrivate1 =  await UserPrivate.findById(user1);
-            //         updatedUserPrivate1.messages = [...updatedUserPrivate1.messages, {chatId1, new:false, participants:[req.userId, messageId]}];
+                if (userPrivate1 === 1) { 
+                    const updatedUserPrivate1 =  await UserPrivate.findById(user1);
 
-            //         var newUpdatedUserPrivate1 = await UserPrivate.findByIdAndUpdate(user1, updatedUserPrivate1, {new:true} ) 
-            //     } else {
-            //         const newMessageUpdate1 = {'messages': {chatId1, new:false, participants:[req.userId, messageId]}}
-            //         var newUpdatedUserPrivate1 = await UserPrivate.findByIdAndUpdate(user1, newMessageUpdate1, {new: true, upsert:true})
-            //     }
+                    const index1 = updatedUserPrivate1.messages.findIndex((message)=>message.chat_id===String(chat_id1));
+                    const index2 = updatedUserPrivate1.messages.findIndex((message)=>message.chat_id===String(chat_id2));
 
-            //     if (userPrivate2 === 1) {
-            //         const updatedUserPrivate2 =  await UserPrivate.findById(user2);
-            //         updatedUserPrivate2.messages = [...updatedUserPrivate2.messages, {chatId1, new:true, participants:[req.userId, messageId]}];
 
-            //         var newUpdatedUserPrivate2 = await UserPrivate.findByIdAndUpdate(user1, updatedUserPrivate2, {new:true} ) 
-            //     } else {
-            //         const newMessageUpdate2 = {'messages': {chatId1, new:true, participants:[req.userId, messageId]}}
-            //         var newUpdatedUserPrivate2 = await UserPrivate.findByIdAndUpdate(user2, newMessageUpdate2, {new: true, upsert:true})
-            //     }
+                    if (index1 === -1 && index2 === -1) { 
+                        updatedUserPrivate1.messages = [...updatedUserPrivate1.messages, {chat_id:chat_id1, new:false, participants:[req.userId, messageId], createdAt:new Date().toISOString()}];
+                        var newUpdatedUserPrivate1 = await UserPrivate.findByIdAndUpdate(user1, updatedUserPrivate1, {new:true} ) 
+                    } else {
+                        const updatedMessage = {chat_id:chat_id1, new:false, participants:[req.userId, messageId], createdAt:new Date().toISOString()};
+                        
+                        const updatedMessages = updatedUserPrivate1.messages.filter((message) => (message.chat_id !== String(chat_id1) && message.chat_id !== String(chat_id2)))
+                        updatedMessages.push(updatedMessage);
+                        updatedUserPrivate1.messages = updatedMessages;
+                        var newUpdatedUserPrivate1 = await UserPrivate.findByIdAndUpdate(user1, updatedUserPrivate1, {new:true} ) 
+                    }
 
-            //     console.log('two')
+                } else { 
+                    const newMessageUpdate1 = {'messages': {chat_id:chat_id1, new:false, participants:[req.userId, messageId], createdAt:new Date().toISOString()}}
+                    var newUpdatedUserPrivate1 = await UserPrivate.findByIdAndUpdate(user1, newMessageUpdate1, {new: true, upsert:true})
+                }
 
-            //     let newChat = await Chat.findByIdAndUpdate(chatId2, updatedChat, {new:true} ) 
 
-            //     const data = await {newChat, newUpdatedUserPrivate1};
+
+                if (userPrivate2 === 1) { 
+                    const updatedUserPrivate2 =  await UserPrivate.findById(user2);
+
+                    const index1 = updatedUserPrivate2.messages.findIndex((message)=>message.chat_id===String(chat_id1));
+                    const index2 = updatedUserPrivate2.messages.findIndex((message)=>message.chat_id===String(chat_id2));
+
+
+                    if (index1 === -1 && index2 === -1) {
+                        updatedUserPrivate2.messages = [...updatedUserPrivate2.messages, {chat_id:chat_id1, new:true, participants:[req.userId, messageId], createdAt:new Date().toISOString()}];
+                        var newUpdatedUserPrivate2 = await UserPrivate.findByIdAndUpdate(user2, updatedUserPrivate2, {new:true} ) 
+                    } else { //if it does exist, filter it out and replace
+
+                        const updatedMessage = {chat_id:chat_id1, new:true, participants:[req.userId, messageId], createdAt:new Date().toISOString()};
+                        
+                        const updatedMessages = updatedUserPrivate2.messages.filter((message) => (message.chat_id !== String(chat_id1) && message.chat_id !== String(chat_id2)))
+                        updatedMessages.push(updatedMessage);
+                        updatedUserPrivate2.messages = updatedMessages;
+                        var newUpdatedUserPrivate2 = await UserPrivate.findByIdAndUpdate(user2, updatedUserPrivate2, {new:true} ) 
+                    }
+
+                } else { 
+                    const newMessageUpdate2 = {'messages': {chat_id:chat_id1, new:true, participants:[req.userId, messageId], createdAt:new Date().toISOString()}}
+                    var newUpdatedUserPrivate2 = await UserPrivate.findByIdAndUpdate(user2, newMessageUpdate2, {new: true, upsert:true})
+                }
+
+                let newChat = await Chat.findByIdAndUpdate(chatId2, updatedChat, {new:true} ) 
+
+                const data = await {newChat, newUpdatedUserPrivate1};
                 
-            //     res.status(200).json(data);
-            // }
-
+                res.status(200).json(data);
+            }
 
             } catch(error) {
                 res.status(404).json({message:error.message});
