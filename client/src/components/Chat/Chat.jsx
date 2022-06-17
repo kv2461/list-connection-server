@@ -1,30 +1,115 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Paper, Grid, Divider, TextField, Typography, List, ListItem, Fab, Avatar, ListItemIcon, ListItemText, } from '@mui/material';
 import { StyledChatSection, StyledBorderRight500, StyledMessageArea } from './styles';
 import { Send as SendIcon } from '@mui/icons-material';
 import Draggable from 'react-draggable';// buttons don't work with it for now
 
 import { useDispatch, useSelector } from 'react-redux';
-import {GetAccountInfo} from '../../actions/users';
+import { GetAccountInfo, MessageUser, GetChatById, GetChatByIdPreview } from '../../actions/users';
 
 import MessageAvatar from './ChatSub/MessageAvatar';
 import ChatBubble from './ChatSub/ChatBubble';
 
 
+
+
 const Chat = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
-  const { data, chat } = useSelector((state) => state.accountSlice);
-  const dispatch = useDispatch();
-
+  const { data, chat, chatLoading, chat_id, chat_participants, preview, messages, } = useSelector((state) => state.accountSlice);
   const messageKeys = data?.messages;
   const participantArray = messageKeys?.map((item)=>item.participants.filter((participant) => participant !== user.result._id));
   const participants = participantArray?.flat(1);
+  const dispatch = useDispatch();
+  const [chatMessage, setChatMessage] = useState('');
+  const [AFK, setAFK] = useState(false);
 
+  const chat_participant = chat_participants?.filter((participant)=>participant !== user.result._id)[0];
+
+  const [chatId, setChatId] = useState(chat_id);
+
+  const chatRef = useRef();
+
+
+  const getChat = async (id) => {
+     dispatch(GetChatById(id))
+  }
+
+  const getChatPreview = async (id) => {
+    if (AFK === false) {
+    dispatch(GetChatByIdPreview(id))
+
+
+    if ((preview?.messages?.length !== undefined) && (preview?.messages?.length !== chat?.messages?.length) && (preview?._id === chatId)) {
+        dispatch(GetChatById(id));
+        } 
+    }
+   }
 
   useEffect(()=> {
     dispatch(GetAccountInfo());
     
   },[])
+
+
+  useEffect(()=> {
+
+
+    if (chatId && AFK === false) {
+    const interval = setInterval(() => { 
+        getChatPreview(chatId) 
+        ; }, 1000); 
+        return () => clearInterval(interval); 
+
+    }
+
+
+  },[chatLoading, dispatch, chatMessage, AFK])
+
+
+
+
+  const messageUser = async (participant) => {
+    if (chat_participants?.includes(participant) ) {
+        const value =
+        { value:
+            {sender:user?.result?.username,
+            message:chatMessage,
+            id:`message-${Date.now()}`,
+            createdAt: new Date(),
+            }
+        };
+        const data = await dispatch(MessageUser(participant, value))
+        setChatMessage('');
+        setAFK(false);
+        if (chat?.messages?.length > 0) {
+            chatRef?.current?.scrollIntoView({ behavior: 'smooth'});
+            }
+
+    }
+}
+    useEffect(()=> {
+        if (chat?.messages?.length > 0) {
+            chatRef?.current?.scrollIntoView({ behavior: 'smooth'});
+            }
+
+
+
+    },[chat])
+    
+    const handleFocus = () => {
+        if (chat?.messages?.length > 0) {
+        chatRef.current.scrollIntoView({ behavior: 'smooth'});
+        }
+        
+        setAFK(false);
+
+
+    };
+
+    useEffect(()=> {
+        setChatId(chat_id);
+    },[AFK])
+
 
 
   return (
@@ -53,7 +138,7 @@ const Chat = () => {
                 <List>
                     { participants && messageKeys.map((message, index) =>(
                         
-                        <MessageAvatar key={message.chat_id} index={index} userInfo={message}
+                        <MessageAvatar key={message.chat_id} index={index} userInfo={message} setChatId={setChatId} setAFK={setAFK}
                         />
                         ))
                     }
@@ -62,9 +147,9 @@ const Chat = () => {
             </StyledBorderRight500>
             <Grid item xs={9}>
                 <StyledMessageArea>
-                { chat?.messages && chat?.messages?.map((message, index) =>(
+                { messages && messages.map((message, index) =>(
                         
-                        <ChatBubble key={message.id} index={index} message={message} account={user}
+                        <ChatBubble key={message.id} index={index} message={message} account={user} length={chat?.messages?.length} chatRef={chatRef}
                         />
                         ))
                     }
@@ -72,10 +157,10 @@ const Chat = () => {
                 <Divider />
                 <Grid container style={{padding: '20px'}}>
                     <Grid item xs={11}>
-                        <TextField id="outlined-basic-email" label="Type Something" fullWidth />
+                        <TextField id="outlined-basic-email" label="Type Something" value={chatMessage} fullWidth onChange={(e)=>setChatMessage(e.target.value)}  onFocus={(e)=>handleFocus(e.target.value)}/>
                     </Grid>
                     <Grid item xs={1} align="right">
-                        <Fab color="primary" aria-label="add" onClick={()=>console.log('hi')}><SendIcon /></Fab>
+                        <Fab color="primary" aria-label="add" onClick={()=>messageUser(chat_participant)}><SendIcon /></Fab>
                     </Grid>
                 </Grid>
             </Grid>
