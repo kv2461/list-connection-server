@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, Typography, CircularProgress, Divider } from '@mui/material';
+import { Paper, Typography, CircularProgress, Divider, ButtonBase } from '@mui/material';
 import { StyledDivImageSection, StyledDivSection, StyledImgMedia, StyledDivCard, StyledLoadingPaper } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
@@ -36,6 +36,10 @@ const PostDetails = () => {
     
     }, [id,dispatch])
 
+    const openUser = ()=> {
+      navigate(`/user/${post.username}`)
+    }
+
 
     if (!post) return null;
 
@@ -55,7 +59,7 @@ const PostDetails = () => {
         </StyledDivImageSection>}
           <Typography align='center' sx={{color:'text.secondary'}} gutterBottom variant={width>breakpoint? 'h6' : 'h12'} component={width>breakpoint? 'h2' : 'h6'}>{post.tags.map((tag)=>`#${tag}`)}</Typography>
           <Typography align='center' gutterBottom variant='body1' component='p'>{post.description}</Typography>
-          <Typography align='center' variant='h6'>Created by: {post.username}</Typography>
+          <Typography align='center' variant='h6'>Created by:<ButtonBase onClick={openUser}><Typography variant='h5'>{post.username}</Typography></ButtonBase> </Typography>
           <Typography align='center' variant='body1'>{moment(post.createdAt).fromNow()}</Typography>
           <Divider sx={{m:'20px 0'}} />
           {post.genre==='music' && <ListDetails post={post} list={post.list}/>}

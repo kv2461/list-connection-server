@@ -3,8 +3,7 @@ import {Card, Avatar, Button, CircularProgress} from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {GetPostsByUsername} from '../../../actions/posts';
-import {FollowUser} from '../../../actions/users';
-import {MessageUser} from '../../../actions/users';
+import {FollowUser, MessageUser, GetChatById} from '../../../actions/users';
 
 
 const UserCard = ({user, loggedUser,setEditProfile, setUserData}) => {
@@ -17,6 +16,17 @@ const UserCard = ({user, loggedUser,setEditProfile, setUserData}) => {
         await setUserData(data);
 
     }
+
+    // right now the messaging only works intuitively if a chat_id exists inside the userprivates object
+    //steps needed
+    //  step 1 - clicking on message -> this should open the chat box and have their avatar and information on the left as
+    //if youve already messaged them
+    // step 2 - if the user wants to look at someone else in their messages, the temporary avatar does not disappear due to state..
+    // step 3 - once the message is sent, then the temporary avatar becomes permanent, so it must be cleared to avoid duplicates
+
+    // const getChat = async () => {
+    //     dispatch(GetChatById(userInfo.chat_id))
+    //   }
 
     const messageUser = async (user) => {
         const value =
