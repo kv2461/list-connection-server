@@ -47,7 +47,7 @@ const Navbar = ({setChat, chat, setNewMessage}) => {
                 <StyledProfile>
                     <StyledCreatePost variant='h2' disabled={!user?.result} align='center' onClick={()=>navigate('/createPost')}><AddIcon/></StyledCreatePost>
                     <StyledAvatar onClick={()=>{setChat(!chat);setNewMessage(false)}}alt={user.result.username} src={user.result.selectedFile}>{user.result.username.charAt(0)}</StyledAvatar>
-                    <StyledUsername variant='h6'>{user.result.username}</StyledUsername>
+                    <StyledUsername onClick={()=>{navigate(`/user/${user.result.username}`)}} variant='h6'>{user.result.username}</StyledUsername>
                     <StyledLogoutButton variant='contained' sx={{backgroundColor:'secondary.main'}} onClick={logout} >Logout</StyledLogoutButton>
                 </StyledProfile>
             ) : (

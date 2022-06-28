@@ -180,7 +180,7 @@ const ListDetails = ({post,list}) => {
                                     key={`${item?.key}`}
                                     listItem={item}
                                     index={index}
-                                    length={listItems.length - 1}
+                                    length={listItems2.length - 1}
                                     subgenre='instructions'
                                     handleMoveUp = {()=>listLogic.handleMoveUp2(item)}
                                     handleMoveDown = {()=>listLogic.handleMoveDown2(item)}

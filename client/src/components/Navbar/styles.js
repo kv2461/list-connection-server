@@ -78,6 +78,10 @@ export const StyledAppBar = styled(AppBar, {})({
     [theme.breakpoints.down('sm')]: {
       fontSize:'1em',
     },
+    '&:hover':{
+      cursor:'pointer',
+      backgroundColor: 'rgba(128,128,128,0.1)'
+  },
   })
 
   export const StyledLogoutButton = styled(Button,{})({

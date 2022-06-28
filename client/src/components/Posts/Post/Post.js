@@ -60,7 +60,7 @@ const Post = ({post, setCurrentId}) => {
       <StyledButtonBase onClick={openPost}>
         <StyledTypography align='center' variant='h5' component='h2'>{post.title}</StyledTypography>
       </StyledButtonBase>
-      <CardContent>
+      <CardContent sx={{display:'flex', flexDirection:'column', alignItems:'center'}}>
         <More message={post.description} limit={25} variant='body2' sx={{fontSize:'0.9rem',color:'text.primary'}} component='p'/>
         <StyledDetails >
           {post.tags?.length > 0 && <More variant='body2'  limit={3} sx={{fontSize:'0.6rem',color:'text.secondary'}} message={post.tags.map((tag)=>`#${tag} `)} />}
