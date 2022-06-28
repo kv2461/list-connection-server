@@ -6,7 +6,7 @@ import {GetPostsByUsername} from '../../../actions/posts';
 import {FollowUser, MessageUser, GetChatById} from '../../../actions/users';
 
 
-const UserCard = ({user, loggedUser,setEditProfile, setUserData}) => {
+const UserCard = ({user, loggedUser,setEditProfile, setUserData, setChat, chat, newMessage, setNewMessage, newMessageParticipant, setNewMessageParticipant}) => {
     const { posts, isLoadingFollow } = useSelector((state) => state.postsSlice)
     const [followers, setFollowers] = useState(user.followers.length);
     const dispatch = useDispatch();
@@ -29,16 +29,21 @@ const UserCard = ({user, loggedUser,setEditProfile, setUserData}) => {
     //   }
 
     const messageUser = async (user) => {
-        const value =
-        {value:
-            {sender:loggedUser.result.username,
-            message:'Hello World!',
-            id:`message-${Date.now()}`,
-            createdAt: new Date(),
-            }
-        };
-        const data = await dispatch(MessageUser(user._id, value))
-        await console.log(data)
+        setChat(true);
+        setNewMessage(true);
+        setNewMessageParticipant(user);
+
+
+        // const value =
+        // {value:
+        //     {sender:loggedUser.result.username,
+        //     message:'Hello World!',
+        //     id:`message-${Date.now()}`,
+        //     createdAt: new Date(),
+        //     }
+        // };
+        // const data = await dispatch(MessageUser(user._id, value))
+        // await console.log(data)
     }
 
     useEffect(() => {

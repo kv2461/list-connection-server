@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Paper, Grid, Divider, TextField, Typography, List, ListItem, Fab, Avatar, ListItemIcon, ListItemText, } from '@mui/material';
+import { Paper, Grid, Divider, TextField, Typography, List, ListItem, Fab, Avatar, ListItemIcon, ListItemText, Button } from '@mui/material';
 import { StyledChatSection, StyledBorderRight500, StyledMessageArea } from './styles';
 import { Send as SendIcon } from '@mui/icons-material';
 import Draggable from 'react-draggable';// buttons don't work with it for now
@@ -13,7 +13,7 @@ import ChatBubble from './ChatSub/ChatBubble';
 
 
 
-const Chat = () => {
+const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNewMessageParticipant }) => {
   const user = JSON.parse(localStorage.getItem('profile'));
   const { data, chat, chatLoading, chat_id, chat_participants, preview, messages, } = useSelector((state) => state.accountSlice);
   const messageKeys = data?.messages;
@@ -48,7 +48,7 @@ const Chat = () => {
   useEffect(()=> {
     dispatch(GetAccountInfo());
     
-  },[])
+  },[newMessage])
 
 
   useEffect(()=> {
@@ -69,7 +69,7 @@ const Chat = () => {
 
 
   const messageUser = async (participant) => {
-    if (chat_participants?.includes(participant) ) {
+    if (chat_participants?.includes(participant)) {
         const value =
         { value:
             {sender:user?.result?.username,
@@ -77,7 +77,8 @@ const Chat = () => {
             id:`message-${Date.now()}`,
             createdAt: new Date(),
             }
-        };
+        }
+
         const data = await dispatch(MessageUser(participant, value))
         setChatMessage('');
         setAFK(false);
@@ -85,7 +86,29 @@ const Chat = () => {
             chatRef?.current?.scrollIntoView({ behavior: 'smooth'});
             }
 
+    } else if (newMessage && participant === newMessageParticipant._id){
+        const value =
+        { value:
+            {sender:user?.result?.username,
+            message:chatMessage,
+            id:`message-${Date.now()}`,
+            createdAt: new Date(),
+            }
+        }
+        const data = await dispatch(MessageUser(participant, value))
+        setChatMessage('');
+        const userItems = [user?.result?._id,newMessageParticipant._id].sort();
+        const userFirst = userItems[0];
+        const userSecond = userItems[1];
+        const tempChatId = `${userFirst}-${userSecond}`
+        dispatch(GetChatById(tempChatId))
+        setAFK(false);
+        setNewMessage(false);
+        setNewMessageParticipant('');
     }
+
+
+
 }
     useEffect(()=> {
         if (chat?.messages?.length > 0) {
@@ -118,6 +141,7 @@ const Chat = () => {
         <Grid container >
             <Grid item xs={12} >
                 <Typography variant="h5" className="header-message">Chat</Typography>
+                <Button onClick={()=>{setChat(false);setNewMessage(false)}}>Exit</Button>
             </Grid>
         </Grid>
         <StyledChatSection container component={Paper} >
@@ -136,6 +160,7 @@ const Chat = () => {
                 </Grid>
                 <Divider />
                 <List>
+                    {newMessage && <MessageAvatar newMessage={newMessage} setNewMessage={setNewMessage} newMessageParticipant={newMessageParticipant} setNewMessageParticipant={setNewMessageParticipant}/>}
                     { participants && messageKeys.map((message, index) =>(
                         
                         <MessageAvatar key={message.chat_id} index={index} userInfo={message} setChatId={setChatId} setAFK={setAFK}
@@ -147,7 +172,7 @@ const Chat = () => {
             </StyledBorderRight500>
             <Grid item xs={9}>
                 <StyledMessageArea>
-                { messages && messages.map((message, index) =>(
+                { !newMessage && messages && messages.map((message, index) =>(
                         
                         <ChatBubble key={message.id} index={index} message={message} account={user} length={chat?.messages?.length} chatRef={chatRef}
                         />
@@ -160,7 +185,7 @@ const Chat = () => {
                         <TextField id="outlined-basic-email" label="Type Something" value={chatMessage} fullWidth onChange={(e)=>setChatMessage(e.target.value)}  onFocus={(e)=>handleFocus(e.target.value)}/>
                     </Grid>
                     <Grid item xs={1} align="right">
-                        <Fab color="primary" aria-label="add" onClick={()=>messageUser(chat_participant)}><SendIcon /></Fab>
+                        <Fab color="primary" aria-label="add" onClick={newMessage? ()=>messageUser(newMessageParticipant._id) : () => messageUser(chat_participant)}><SendIcon /></Fab>
                     </Grid>
                 </Grid>
             </Grid>

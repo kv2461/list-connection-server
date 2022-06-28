@@ -31,14 +31,16 @@ const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
   const [chat, setChat] = useState(false);
   const [currentId,setCurrentId] = useState(0);
+  const [newMessage, setNewMessage] = useState(false);
+  const [newMessageParticipant, setNewMessageParticipant] = useState('');
 
 
 
   return (
       <BrowserRouter>
         <Container maxWidth='xl' style={{zIndex:1}}>
-          <NavBar setChat={setChat} chat={chat} />
-          {chat && <Chat />}
+          <NavBar setChat={setChat} chat={chat} setNewMessage={setNewMessage}/>
+          {chat && <Chat setChat={setChat} newMessage={newMessage} setNewMessage={setNewMessage} newMessageParticipant={newMessageParticipant} setNewMessageParticipant={setNewMessageParticipant} />}
           <Routes>
             <Route path='/' element={<Navigate to='/posts/'/>}/>
             <Route path='/posts' element={<Home currentId={currentId} setCurrentId={setCurrentId}/>}/>
@@ -47,7 +49,7 @@ const App = () => {
             <Route path='/auth' element={<Auth />} />
 
 
-            <Route path='/user/:username' element={<UserDetails setCurrentId={setCurrentId} currentId={currentId} />}/>
+            <Route path='/user/:username' element={<UserDetails setCurrentId={setCurrentId} currentId={currentId} setChat={setChat} chat={chat} newMessage={newMessage} setNewMessage={setNewMessage} newMessageParticipant={newMessageParticipant} setNewMessageParticipant={setNewMessageParticipant}/>}/>
 
 
             <Route path='/createpost' element={<ListType currentId={currentId} setCurrentId={setCurrentId}/>} />

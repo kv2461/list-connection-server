@@ -54,6 +54,10 @@ export const StyledAppBar = styled(AppBar, {})({
   export const StyledContainer = styled('div',{})({
     display: 'flex',
     alignItems: 'center',
+    '&:hover':{
+      cursor:'pointer',
+      backgroundColor: 'rgba(128,128,128,0.1)'
+  },
   })
 
   export const StyledAvatar = styled(Avatar,{})({

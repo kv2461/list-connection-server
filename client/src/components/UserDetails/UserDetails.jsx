@@ -17,7 +17,7 @@ import Form from '../Form/Form';
 import UserForm from './UserForm/UserForm';
 import UserCard from './UserCard/UserCard';
 
-const UserDetails = ({setCurrentId, currentId}) => {
+const UserDetails = ({setCurrentId, currentId, setChat, chat, newMessage, setNewMessage, newMessageParticipant, setNewMessageParticipant}) => {
     // const { post, posts, isLoading, } = useSelector((state)=>state.postsSlice);
     const [userData, setUserData] = useState('');
     const [editProfile, setEditProfile] = useState(false);
@@ -84,7 +84,7 @@ const UserDetails = ({setCurrentId, currentId}) => {
                   </StyledAppBarSearch> */}
                   
                   {
-                    userData && !editProfile && (<UserCard user={userData} loggedUser={user} setUserData={setUserData} setEditProfile={setEditProfile}/>)
+                    userData && !editProfile && (<UserCard user={userData} loggedUser={user} setUserData={setUserData} setEditProfile={setEditProfile} setChat={setChat} chat={chat} newMessage={newMessage} setNewMessage={setNewMessage} newMessageParticipant={newMessageParticipant} setNewMessageParticipant={setNewMessageParticipant}/>)
                   }
 
 
