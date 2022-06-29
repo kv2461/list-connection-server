@@ -1,16 +1,16 @@
 import React, {useState, useEffect} from 'react'
-import { StyledAppBar, StyledAvatar, StyledContainer, StyledLogoutButton, StyledProfile, StyledToolbar, StyledUsername, StyledCreatePost } from './styles';
-import {Button} from '@mui/material';
+import { StyledAppBar, StyledAvatar, StyledContainer, StyledLogoutButton, StyledProfile, StyledToolbar, StyledUsername, StyledCreatePost, StyledTypography } from './styles';
+import { Button, Switch, FormGroup, FormControlLabel } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add'
-import {useLocation} from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import {useNavigate} from 'react-router';
-import {LOGOUT} from '../../reducers/auth';
+import { useNavigate } from 'react-router';
+import { LOGOUT } from '../../reducers/auth';
 import decode from 'jwt-decode';
 
 import listConnectionLogo from './images/listConnectionLogo.png'
 
-const Navbar = ({setChat, chat, setNewMessage}) => {
+const Navbar = ({setChat, chat, setNewMessage, darkMode, setDarkMode}) => {
     const navigate = useNavigate();
     const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const location = useLocation();
@@ -21,6 +21,10 @@ const Navbar = ({setChat, chat, setNewMessage}) => {
 
         navigate('/')
     }
+
+    const changeTheme = () => {
+        setDarkMode(!darkMode);
+      };
 
     useEffect(()=> {
         const token = user?.token;
@@ -39,9 +43,17 @@ const Navbar = ({setChat, chat, setNewMessage}) => {
   return (
     <StyledAppBar position='static' color='inherit'>
         <StyledContainer>
-        <img src={listConnectionLogo} alt='icon' height='70rem' onClick={()=>navigate('/')} />
-            {/* <StyledTypography variant='h2' align='center' onClick={()=>navigate('/')}>List Connection</StyledTypography>  */}
+            <img src={listConnectionLogo} alt='icon' height='70rem' onClick={()=>navigate('/')} />
+            <StyledTypography variant='h2' align='center' onClick={()=>navigate('/')}>List Connection</StyledTypography> 
         </StyledContainer>
+        <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Switch checked={darkMode} onChange={changeTheme} />
+                    }
+                    label="Dark Theme"
+                  />
+        </FormGroup>
         <StyledToolbar>
             {user ? (
                 <StyledProfile>

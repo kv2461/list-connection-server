@@ -1,6 +1,9 @@
-import React, {useState} from 'react';
-import { Container } from '@mui/material';
-import { BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Container, CssBaseline } from '@mui/material';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+
+import { ThemeProvider } from '@mui/material/styles'
+import { theme, darkTheme } from './Theme';
 
 import NavBar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
@@ -29,6 +32,7 @@ import Workout from './components/PostCreation/Lists/Workout/Workout';
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
+  const [darkMode, setDarkMode] = useState(false);
   const [chat, setChat] = useState(false);
   const [currentId,setCurrentId] = useState(0);
   const [newMessage, setNewMessage] = useState(false);
@@ -37,9 +41,11 @@ const App = () => {
 
 
   return (
+    <ThemeProvider theme={!darkMode ? theme : darkTheme}>
+      <CssBaseline />
       <BrowserRouter>
         <Container maxWidth='xl' style={{zIndex:1}}>
-          <NavBar setChat={setChat} chat={chat} setNewMessage={setNewMessage}/>
+          <NavBar setChat={setChat} chat={chat} setNewMessage={setNewMessage} setDarkMode={setDarkMode} darkMode={darkMode}/>
           {chat && <Chat setChat={setChat} newMessage={newMessage} setNewMessage={setNewMessage} newMessageParticipant={newMessageParticipant} setNewMessageParticipant={setNewMessageParticipant} />}
           <Routes>
             <Route path='/' element={<Navigate to='/posts/'/>}/>
@@ -70,6 +76,7 @@ const App = () => {
           </Routes>
         </Container>
       </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

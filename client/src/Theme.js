@@ -29,3 +29,30 @@ export const theme = createTheme({
   },
   });
 
+
+export const darkTheme = createTheme({
+  typography: {
+    fontFamily:acmeFont,
+    button: {
+      textTransform:'none'
+    },
+  },
+  palette: {
+    type:'dark',
+    primary: {
+    main: '#90caf9',
+  },
+  secondary: {
+    main: '#f48fb1',
+  },
+  background: {
+    default: '#212121',
+    paper: '#424242',
+  },
+  text: {
+    primary: '#fff',
+    secondary: 'rgba(255,255,255,0.5)',
+    disabled: 'rgba(255,255,255,0.5)'
+  },
+  }
+})
