@@ -65,7 +65,7 @@ const Post = ({post, setCurrentId}) => {
         <StyledDetails >
           {post.tags?.length > 0 && <More variant='body2'  limit={3} sx={{fontSize:'0.6rem',color:'text.secondary'}} message={post.tags.map((tag)=>`#${tag} `)} />}
         </StyledDetails>
-        <Typography variant='body2' sx={{color:'text.secondary',fontSize:'0.6rem'}} component='p'>
+        <Typography variant='body2' sx={{color:'text.secondary',fontSize:'0.6rem', }} component='p'>
           Genre:{<GenreIcon genre={post.genre}/>} 
           Subgenre:{<GenreIcon subgenre={post.subgenre}/>} 
         </Typography>

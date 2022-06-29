@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { ButtonBase } from '@mui/material'
-import { MusicNote, MovieFilter, MiscellaneousServices, } from '@mui/icons-material'
+import { MusicNote, MovieFilter, MiscellaneousServices, EggAlt, MenuBook } from '@mui/icons-material'
 import { ArtTrack, Album, InterpreterMode, } from '@mui/icons-material'
 import { StyledSvgIcon } from './styles';
 import { useNavigate } from 'react-router-dom';
@@ -18,6 +18,9 @@ const GenreIcon = ({genre, subgenre}) => {
           case 'movie':
             setGenreIcon(MovieFilter);
             break;
+          case 'food':
+            setGenreIcon(EggAlt);
+            break;
           default:
             setGenreIcon(MiscellaneousServices);
             break;
@@ -34,6 +37,9 @@ const GenreIcon = ({genre, subgenre}) => {
             break;
           case 'musicArtists':
             setGenreIcon(InterpreterMode);
+            break;
+          case 'foodRecipe':
+            setGenreIcon(MenuBook)
             break;
           default:
             setGenreIcon(MiscellaneousServices);

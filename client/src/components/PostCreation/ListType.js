@@ -1,7 +1,7 @@
 import React from 'react'
-import {Typography, Container, } from '@mui/material';
-import {StyledGrid} from './styles';
-import {MusicNote, MovieFilter, FitnessCenter, ShoppingBasket, EggAlt} from '@mui/icons-material/';
+import { Typography, Container, } from '@mui/material';
+import { StyledGrid } from './styles';
+import { MusicNote, MovieFilter, FitnessCenter, ShoppingBasket, EggAlt } from '@mui/icons-material/';
 import ListTypeCards from './ListTypeCard/ListTypeCards';
 import { useNavigate } from 'react-router';
 
