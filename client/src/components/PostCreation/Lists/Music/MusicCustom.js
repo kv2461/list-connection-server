@@ -2,7 +2,7 @@ import React from 'react'
 
 const MusicCustom = () => {
   return (
-    <div>MusicCustom</div>
+    <div>In the works!</div>
   )
 }
 

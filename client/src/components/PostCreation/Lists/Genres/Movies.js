@@ -3,7 +3,7 @@ import React from 'react'
 
 const Movies = ({currentId, setCurrentId}) => {
   return (
-    <>Movies</>
+    <>In the works!</>
   )
 }
 

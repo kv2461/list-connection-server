@@ -13,8 +13,8 @@ const ListType = () => {
         <Typography component='h3' variant='h5' align='center' >What kind of music list are you making?</Typography>
         <StyledGrid container alignItems='stretch' spacing={3}>
             <ListTypeCards Icon={MenuBook} genre='Make a Recipe' handleClick={()=>navigate('/createpost/food/recipe')}/>
-            <ListTypeCards Icon={Bookmarks} genre='Favorite Recipes' handleClick={()=>navigate('/createpost/food/recipes')}/>
-            <ListTypeCards Icon={Restaurant} genre='Favorite Restaurants' handleClick={()=>navigate('/createpost/food/restaurants')}/>
+            <ListTypeCards Icon={Bookmarks} genre='Favorite Recipes' handleClick={()=>navigate('/createpost/movies')}/>
+            <ListTypeCards Icon={Restaurant} genre='Favorite Restaurants' handleClick={()=>navigate('/createpost/movies')}/>
         </StyledGrid>
     </Container>
 
