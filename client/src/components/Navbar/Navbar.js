@@ -9,6 +9,7 @@ import { LOGOUT } from '../../reducers/auth';
 import decode from 'jwt-decode';
 
 import listConnectionLogo from './images/listConnectionLogo.png'
+import listConnectionText from './images/listConnectionText.png'
 
 const Navbar = ({setChat, chat, setNewMessage, darkMode, setDarkMode}) => {
     const navigate = useNavigate();
@@ -43,17 +44,10 @@ const Navbar = ({setChat, chat, setNewMessage, darkMode, setDarkMode}) => {
   return (
     <StyledAppBar position='static' color='inherit'>
         <StyledContainer>
-            <img src={listConnectionLogo} alt='icon' height='70rem' onClick={()=>navigate('/')} />
-            <StyledTypography variant='h2' align='center' onClick={()=>navigate('/')}>List Connection</StyledTypography> 
-        </StyledContainer>
-        <FormGroup>
-                  <FormControlLabel
-                    control={
+            <img src={listConnectionLogo} alt='icon' height='45px' onClick={()=>navigate('/')} />
+            <img src={listConnectionText} alt='icon' height='45px' onClick={()=>navigate('/')}/> 
                       <Switch checked={darkMode} onChange={changeTheme} />
-                    }
-                    label="Dark Theme"
-                  />
-        </FormGroup>
+        </StyledContainer>
         <StyledToolbar>
             {user ? (
                 <StyledProfile>

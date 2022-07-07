@@ -58,6 +58,7 @@ export const StyledAppBar = styled(AppBar, {})({
       cursor:'pointer',
       backgroundColor: 'rgba(128,128,128,0.1)'
   },
+    flexDirection:'row',
   })
 
   export const StyledAvatar = styled(Avatar,{})({
