@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import { StyledAppBar, StyledAvatar, StyledContainer, StyledLogoutButton, StyledProfile, StyledToolbar, StyledUsername, StyledCreatePost, StyledTypography } from './styles';
-import { Button, Switch, FormGroup, FormControlLabel } from '@mui/material';
+import { StyledAppBar, StyledAvatar, StyledContainer, StyledLogoutButton, StyledProfile, StyledToolbar, StyledUsername, StyledCreatePost, StyledTypography, StyledGrid } from './styles';
+import { Button, Switch, FormGroup, FormControlLabel, Grid} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add'
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -10,6 +10,8 @@ import decode from 'jwt-decode';
 
 import listConnectionLogo from './images/listConnectionLogo.png'
 import listConnectionText from './images/listConnectionText.png'
+
+import NavBarMenu from './NavbarMenu';
 
 const Navbar = ({setChat, chat, setNewMessage, darkMode, setDarkMode}) => {
     const navigate = useNavigate();
@@ -42,11 +44,17 @@ const Navbar = ({setChat, chat, setNewMessage, darkMode, setDarkMode}) => {
     },[location])
 
   return (
-    <StyledAppBar position='static' color='inherit'>
+    <StyledAppBar position='static' color='inherit'> 
+        <StyledGrid width={'20%'} display='flex' flexDirection='row' container spacing={1}>    
+            <Grid item xs={2} sm={2} md={3}>
+          <NavBarMenu chat={chat} setChat={setChat} setNewMessage={setNewMessage} user={user} logout={logout}/>      
+            </Grid>    
+            <Grid item xs={2} sm={2} md={3}>
+        <Switch checked={darkMode} onChange={changeTheme} />  
+            </Grid>
+        </StyledGrid>
         <StyledContainer>
-            <img src={listConnectionLogo} alt='icon' height='45px' onClick={()=>navigate('/')} />
             <img src={listConnectionText} alt='icon' height='45px' onClick={()=>navigate('/')}/> 
-                      <Switch checked={darkMode} onChange={changeTheme} />
         </StyledContainer>
         <StyledToolbar>
             {user ? (

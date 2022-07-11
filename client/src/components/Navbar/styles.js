@@ -1,4 +1,4 @@
-import { AppBar, Typography, Toolbar, Avatar, Button } from '@mui/material';
+import { AppBar, Typography, Toolbar, Avatar, Button, Grid } from '@mui/material';
 import { fontSize, styled } from '@mui/system';
 import { theme } from '../../Theme';
 
@@ -11,7 +11,7 @@ export const StyledAppBar = styled(AppBar, {})({
     alignItems: 'center',
     padding: '10px 50px',
     [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
+      flexDirection: 'column-reverse',
     },
   });
   
@@ -33,8 +33,9 @@ export const StyledAppBar = styled(AppBar, {})({
     display: 'flex',
     justifyContent: 'flex-end',
     width: '400px',
-    [theme.breakpoints.down('sm')]: {
-      width:'auto'
+    [theme.breakpoints.down('md')]: {
+      width:'auto',
+      display:'none'
     },
   })
 
@@ -97,4 +98,16 @@ export const StyledAppBar = styled(AppBar, {})({
         cursor:'pointer',
         backgroundColor: 'rgba(128,128,128,0.1)'
     }
+  })
+
+  export const StyledGrid = styled(Grid, {})({
+    [theme.breakpoints.down('md')]: {
+      width:'100%',
+      justifyContent:'flex-start'
+    },
+    [theme.breakpoints.down('sm')]: {
+      width:'100%',
+      justifyContent:'space-around'
+    },
+    
   })
