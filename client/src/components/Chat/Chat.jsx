@@ -13,7 +13,7 @@ import ChatBubble from './ChatSub/ChatBubble';
 
 
 
-const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNewMessageParticipant }) => {
+const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNewMessageParticipant, mobile, }) => {
   const user = JSON.parse(localStorage.getItem('profile'));
   const { data, chat, chatLoading, chat_id, chat_participants, preview, messages, } = useSelector((state) => state.accountSlice);
   const messageKeys = data?.messages;
@@ -22,6 +22,13 @@ const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNe
   const dispatch = useDispatch();
   const [chatMessage, setChatMessage] = useState('');
   const [AFK, setAFK] = useState(false);
+  const [hideLeft, setHideLeft] = useState(false);
+
+  useEffect(()=> {
+    setHideLeft(true);
+  }, [AFK])
+
+  
 
   const chat_participant = chat_participants?.filter((participant)=>participant !== user.result._id)[0];
 
@@ -137,15 +144,16 @@ const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNe
 
   return (
 
-      <div style={{position:'fixed', zIndex:2,}}>
+      <div style={!mobile ? {position:'fixed', zIndex:2,} : null}>
         <Grid container >
-            <Grid item xs={12} >
-                <Typography variant="h5" className="header-message">Chat</Typography>
-                <Button onClick={()=>{setChat(false);setNewMessage(false)}}>Exit</Button>
+            <Grid item xs={!mobile ? 12 : 6} >
+                <Typography variant="h5" className="header-message">Chat {newMessageParticipant} </Typography>
+                {!mobile && <Button onClick={()=>{setChat(false);setNewMessage(false)}}>Exit</Button>}
+                {hideLeft && mobile && <Button onClick={()=>setHideLeft(!hideLeft)}>Show</Button>}
             </Grid>
         </Grid>
         <StyledChatSection container component={Paper} >
-            <StyledBorderRight500 item xs={3} >
+            <StyledBorderRight500 item xs={!mobile ? 3 : 5} display={mobile && hideLeft ?'none' : null}>
                 <List>
                     <ListItem button key="user">
                         <ListItemIcon>
@@ -153,14 +161,16 @@ const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNe
                         </ListItemIcon>
                         <ListItemText primary={user.result.username}></ListItemText>
                     </ListItem>
+                    {mobile && <Button onClick={()=>setHideLeft(!hideLeft)}>Hide</Button>}
                 </List>
                 <Divider />
-                <Grid item xs={12} style={{padding: '10px'}}>
+                {/* <Grid item xs={!mobile ? 12 : 10} style={{padding: '10px'}}>
+                    
                     <TextField id="outlined-basic-email" label="Search" variant="outlined" fullWidth />
-                </Grid>
+                </Grid> */}
                 <Divider />
                 <List>
-                    {newMessage && <MessageAvatar newMessage={newMessage} setNewMessage={setNewMessage} newMessageParticipant={newMessageParticipant} setNewMessageParticipant={setNewMessageParticipant}/>}
+                    {newMessage && <MessageAvatar newMessage={newMessage} setNewMessage={setNewMessage} newMessageParticipant={newMessageParticipant} setNewMessageParticipant={setNewMessageParticipant} setHideLeft={setHideLeft}/>}
                     { participants && messageKeys.map((message, index) =>(
                         
                         <MessageAvatar key={message.chat_id} index={index} userInfo={message} setChatId={setChatId} setAFK={setAFK}
@@ -170,7 +180,27 @@ const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNe
                   
                 </List>
             </StyledBorderRight500>
-            <Grid item xs={9}>
+            {hideLeft && !mobile && <Grid item xs={!mobile ? 9 : 12}>
+                <StyledMessageArea>
+                {!newMessage && messages && messages.map((message, index) =>(
+                        
+                        <ChatBubble key={message.id} index={index} message={message} account={user} length={chat?.messages?.length} chatRef={chatRef}
+                        />
+                        ))
+                    }
+                </StyledMessageArea>
+                <Divider />
+                <Grid container style={{padding: '20px'}}>
+                    <Grid item xs={!mobile ? 11 : 10}>
+                        <TextField id="outlined-basic-email" label="Type Something" value={chatMessage} fullWidth onChange={(e)=>setChatMessage(e.target.value)}  onFocus={(e)=>handleFocus(e.target.value)}/>
+                    </Grid>
+                    <Grid item xs={!mobile ? 1 : 1} align="right">
+                        <Fab color="primary" aria-label="add" onClick={newMessage? ()=>messageUser(newMessageParticipant._id) : () => messageUser(chat_participant)}><SendIcon /></Fab>
+                    </Grid>
+                </Grid>
+            </Grid> }
+
+            {hideLeft && mobile && <Grid item xs={!mobile ? 9 : 12}>
                 <StyledMessageArea>
                 { !newMessage && messages && messages.map((message, index) =>(
                         
@@ -181,14 +211,14 @@ const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNe
                 </StyledMessageArea>
                 <Divider />
                 <Grid container style={{padding: '20px'}}>
-                    <Grid item xs={11}>
+                    <Grid item xs={!mobile ? 11 : 10}>
                         <TextField id="outlined-basic-email" label="Type Something" value={chatMessage} fullWidth onChange={(e)=>setChatMessage(e.target.value)}  onFocus={(e)=>handleFocus(e.target.value)}/>
                     </Grid>
-                    <Grid item xs={1} align="right">
+                    <Grid item xs={!mobile ? 1 : 1} align="right">
                         <Fab color="primary" aria-label="add" onClick={newMessage? ()=>messageUser(newMessageParticipant._id) : () => messageUser(chat_participant)}><SendIcon /></Fab>
                     </Grid>
                 </Grid>
-            </Grid>
+            </Grid> }
         </StyledChatSection>
       </div>
  

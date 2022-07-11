@@ -10,8 +10,8 @@ import Home from './components/Home/Home';
 import Auth from './components/Auth/Auth';
 import PostDetails from './components/PostDetails/PostDetails';
 import UserDetails from './components/UserDetails/UserDetails';
-
 import Chat from './components/Chat/Chat';
+
 
 import ListType from './components/PostCreation/ListType';
 import Music from './components/PostCreation/Lists/Genres/Music';
@@ -53,6 +53,7 @@ const App = () => {
             <Route path='/posts/search' element={<Home currentId={currentId} setCurrentId={setCurrentId}/>} />
             <Route path='/posts/:id' element={<PostDetails />} />
             <Route path='/auth' element={<Auth />} />
+            <Route path='/chat' element={<Chat mobile={true} setChat={setChat} newMessage={newMessage} setNewMessage={setNewMessage} newMessageParticipant={newMessageParticipant} setNewMessageParticipant={setNewMessageParticipant}/>} />
 
 
             <Route path='/user/:username' element={<UserDetails setCurrentId={setCurrentId} currentId={currentId} setChat={setChat} chat={chat} newMessage={newMessage} setNewMessage={setNewMessage} newMessageParticipant={newMessageParticipant} setNewMessageParticipant={setNewMessageParticipant}/>}/>

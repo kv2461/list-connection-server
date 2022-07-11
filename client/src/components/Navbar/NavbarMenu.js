@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -15,6 +15,23 @@ const navigate = useNavigate();
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  
+  const useViewport = () => {
+    const [width, setWidth] = useState(window.innerWidth);
+
+    useEffect(()=> {
+        const handleWindowResize = () => setWidth(window.innerWidth);
+        window.addEventListener('resize',handleWindowResize);
+        return () => window.removeEventListener('resize', handleWindowResize);
+    },[])
+
+    return {width};
+    }   
+
+    const {width} = useViewport();
+    const breakpoint = 500;
+
 
   return (
     <div>
@@ -40,7 +57,9 @@ const navigate = useNavigate();
         <div>
             <MenuItem onClick={()=>{handleClose();navigate('/createPost')}}>Create New List</MenuItem>
             <MenuItem onClick={()=>{handleClose();navigate(`/user/${user.result.username}`)}}>Profile</MenuItem>
-            <MenuItem onClick={()=>{handleClose();setChat(!chat);setNewMessage(false)}} >Chat</MenuItem>
+            {width > breakpoint ? <MenuItem onClick={()=>{handleClose();setChat(!chat);setNewMessage(false)}} >Chat</MenuItem> : 
+            <MenuItem onClick={()=>{handleClose();navigate('/chat')}} >Chat</MenuItem>
+            }
             <MenuItem onClick={()=>{handleClose();logout()}}>Logout</MenuItem>
         </div>
         }
