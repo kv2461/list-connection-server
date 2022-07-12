@@ -1,5 +1,5 @@
-import { UPDATE, AUTH } from '../reducers/auth';
-import { ACCOUNT_INFO, USER_INFO, CHAT_INFO, START_CHAT_LOADING, END_CHAT_LOADING, PREVIEW, MESSAGE} from '../reducers/account';
+// import { UPDATE, AUTH } from '../reducers/auth';
+import { ACCOUNT_INFO, CHAT_INFO, START_CHAT_LOADING, END_CHAT_LOADING, PREVIEW, MESSAGE } from '../reducers/account';
 import { START_LOADING_FOLLOW, END_LOADING_FOLLOW } from '../reducers/posts';
 
 import * as api from '../api';
@@ -23,11 +23,13 @@ export const GetChatById = (id) => async (dispatch) => {
         if (id) {
         const { data } = await api.getChatById(id);
        
-        dispatch(CHAT_INFO(data))
+        dispatch(CHAT_INFO(data)) 
+        
+        return data;
         }
-        // return data;
+       
     } catch (error) {
-        console.log(error);
+        return;
     }
 
 }

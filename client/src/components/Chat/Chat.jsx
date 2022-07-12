@@ -178,7 +178,7 @@ const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNe
                     {newMessage && <MessageAvatar newMessage={newMessage} setNewMessage={setNewMessage} newMessageParticipant={newMessageParticipant} setNewMessageParticipant={setNewMessageParticipant} setHideLeft={setHideLeft}/>}
                     { participants && messageKeys.map((message, index) =>(
                         
-                        <MessageAvatar key={message.chat_id} index={index} userInfo={message} setChatId={setChatId} setAFK={setAFK}
+                        <MessageAvatar key={message.chat_id} index={index} userInfo={message} setChatId={setChatId} setAFK={setAFK} setNewMessage={setNewMessage}
                         />
                         ))
                     }

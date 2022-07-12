@@ -17,7 +17,7 @@ import Form from '../Form/Form';
 import UserForm from './UserForm/UserForm';
 import UserCard from './UserCard/UserCard';
 
-const UserDetails = ({setCurrentId, currentId, setChat, chat, newMessage, setNewMessage, newMessageParticipant, setNewMessageParticipant}) => {
+const UserDetails = ({ setCurrentId, currentId, setChat, chat, newMessage, setNewMessage, newMessageParticipant, setNewMessageParticipant }) => {
     // const { post, posts, isLoading, } = useSelector((state)=>state.postsSlice);
     const [userData, setUserData] = useState('');
     const [editProfile, setEditProfile] = useState(false);

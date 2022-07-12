@@ -13,7 +13,7 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const Home = ({currentId, setCurrentId}) => {
+const Home = ({ currentId, setCurrentId }) => {
   const [search, setSearch] = useState('');
   const [tags, setTags] = useState([]);
   const [tagToAdd, setTagToAdd] = useState('');

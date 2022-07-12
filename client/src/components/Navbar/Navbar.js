@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyledAppBar, StyledAvatar, StyledContainer, StyledLogoutButton, StyledProfile, StyledToolbar, StyledUsername, StyledCreatePost, StyledGrid } from './styles';
-import { Button, Switch, Grid} from '@mui/material';
+import { Button, Switch, Grid } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add'
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -13,7 +13,7 @@ import listConnectionText from './images/listConnectionText.png'
 
 import NavBarMenu from './NavbarMenu';
 
-const Navbar = ({setChat, chat, setNewMessage, darkMode, setDarkMode}) => {
+const Navbar = ({ setChat, chat, setNewMessage, darkMode, setDarkMode }) => {
     const navigate = useNavigate();
     const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const location = useLocation();
