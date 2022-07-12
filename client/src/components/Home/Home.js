@@ -24,6 +24,7 @@ const Home = ({currentId, setCurrentId}) => {
 
   const page = query.get('page') || 1;
   const subgenreName = query.get('subgenrename');
+  const genreName = query.get('genrename');
 
   const searchQuery = query.get('searchQuery');
   const tagsQuery = query.get('tags');
@@ -78,7 +79,7 @@ const Home = ({currentId, setCurrentId}) => {
                 </Grid>
             </StyledGrid>
             {(!searchQuery && !tags.length) && (<Paper elevation={6}>
-                    <Pagination page={page} subgenreName={subgenreName} />
+                    <Pagination page={page} subgenreName={subgenreName} genreName={genreName}/>
                   </Paper>)}
           </Container>
     </Grow>
