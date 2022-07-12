@@ -26,7 +26,8 @@ export const StyledTypography = styled(Typography,{})({
 export const StyledCardActions = styled(CardActions,{})({
   padding: '0 16px 8px 16px',
   display: 'flex',
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
+  flexDirection: 'row-reverse'
 })
 
 export const StyledOverlay = styled('div',{})({
@@ -55,7 +56,8 @@ export const StyledButtonBase = styled(ButtonBase,{})({
 })
 
 export const StyledSvgIcon = styled(SvgIcon,{})({
-  fontSize:'15px',
+  fontSize:'20px',
+  margin:'0 5px',
 })
 
 // export default makeStyles({

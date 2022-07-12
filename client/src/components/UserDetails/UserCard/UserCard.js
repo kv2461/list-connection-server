@@ -53,7 +53,7 @@ const UserCard = ({user, loggedUser,setEditProfile, setUserData, setChat, chat, 
    
 
   return (
-    <Card>
+    <Card sx={{padding:'10px'}}>
         <Avatar alt={user.username} src={user.selectedFile}>{user.username.charAt(0)}</Avatar>
         <br/>
         Username: {user.username}

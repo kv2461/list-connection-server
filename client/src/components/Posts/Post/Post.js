@@ -62,10 +62,10 @@ const Post = ({post, setCurrentId}) => {
       </StyledButtonBase>
       <CardContent sx={{display:'flex', flexDirection:'column', alignItems:'center'}}>
         <More message={post.description} limit={25} variant='body2' sx={{fontSize:'0.9rem',color:'text.primary'}} component='p'/>
-        <StyledDetails >
-          {post.tags?.length > 0 && <More variant='body2'  limit={3} sx={{fontSize:'0.6rem',color:'text.secondary'}} message={post.tags.map((tag)=>`#${tag} `)} />}
+        <StyledDetails sx={{m:'10px'}}>
+          {post.tags?.length > 0 && <More variant='body2'  limit={3} sx={{fontSize:'0.9rem',color:'text.secondary'}} message={post.tags.map((tag)=>`#${tag} `)} />}
         </StyledDetails>
-        <Typography variant='body2' sx={{color:'text.secondary',fontSize:'0.6rem', }} component='p'>
+        <Typography variant='body2' sx={{color:'text.secondary',fontSize:'0.8rem', letterSpacing:'2px'}} component='p'>
           Genre:{<GenreIcon genre={post.genre}/>} 
           Subgenre:{<GenreIcon subgenre={post.subgenre}/>} 
         </Typography>
