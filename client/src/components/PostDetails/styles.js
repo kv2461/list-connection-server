@@ -17,6 +17,13 @@ export const StyledDivSection = styled('div',{})({
     flex:1,
 });
 
+export const StyledRecommendedPosts = styled('div',{})({
+    display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
+})
+
 export const StyledDivImageSection = styled('div',{})({
     marginLeft:'20px',
     [theme.breakpoints.down('sm')]: {
