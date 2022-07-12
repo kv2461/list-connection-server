@@ -75,11 +75,11 @@ const Home = ({currentId, setCurrentId}) => {
                     <Button sx={{bgcolor:'primary.main',m:'10px 0'}} variant='contained' onClick={searchPost}>Search</Button>
                   </StyledAppBarSearch>
                   {currentId!==0 && (<Form currentId={currentId} setCurrentId={setCurrentId} />) }
-                  {(!searchQuery && !tags.length) && (<Paper elevation={6}>
-                    <Pagination page={page} subgenreName={subgenreName} />
-                  </Paper>)}
                 </Grid>
             </StyledGrid>
+            {(!searchQuery && !tags.length) && (<Paper elevation={6}>
+                    <Pagination page={page} subgenreName={subgenreName} />
+                  </Paper>)}
           </Container>
     </Grow>
   )
