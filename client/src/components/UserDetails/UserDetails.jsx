@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, Grow, Container,Grid, Card } from '@mui/material';
+import { Grow, Container, Grid, } from '@mui/material';
 import { StyledGrid } from './styles';
 // import { StyledDivImageSection, StyledDivSection, StyledImgMedia, StyledDivCard, StyledLoadingPaper } from './styles';
-import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch, } from 'react-redux';
+// import moment from 'moment';
+import { useParams, } from 'react-router-dom';
 
 // import CommentSection from './CommentSection';
 // import {GetPost} from '../../actions/posts';
@@ -22,27 +22,10 @@ const UserDetails = ({ setCurrentId, currentId, setChat, chat, newMessage, setNe
     const [userData, setUserData] = useState('');
     const [editProfile, setEditProfile] = useState(false);
     const dispatch = useDispatch();
-    const navigate= useNavigate();
+    // const navigate= useNavigate();
     const { username } = useParams();
     
     const user = JSON.parse(localStorage.getItem('profile'));
-
-    const useViewport = () => {
-      const [width, setWidth] = useState(window.innerWidth);
-  
-    
-      useEffect(()=> {
-          const handleWindowResize = () => setWidth(window.innerWidth);
-          window.addEventListener('resize',handleWindowResize);
-          return () => window.removeEventListener('resize', handleWindowResize);
-      },[])
-  
-      return {width};
-      }   
-  
-      const {width} = useViewport();
-      const breakpoint = 500;
-
 
     useEffect(() => {
 
