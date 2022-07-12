@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {Box, FormControl, TextField, Button, Paper, Container, Typography} from '@mui/material';
+import { Box, FormControl, TextField, Button, Paper, Container, Typography } from '@mui/material';
 import { StyledGrid, StyledList } from './styles';
 import { Add } from '@mui/icons-material';
 
@@ -8,7 +8,7 @@ import Form from '../../../../Form/Form';
 import MusicListItem from '../MusicListItem';
 import Suggestions from '../Suggestions';
 
-const MobileTemplate = ({setTrackName, setAlbumName, setArtistName, artistName, albumName, setListItem, listItem, trackName, listItems, listLogic, width, data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre }) => {
+const MobileTemplate = ({ setTrackName, setAlbumName, setArtistName, artistName, albumName, setListItem, listItem, trackName, listItems, listLogic, width, data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre }) => {
 
     const [name,setName] = useState('');
     const [label, setLabel] = useState('');
@@ -23,6 +23,8 @@ const MobileTemplate = ({setTrackName, setAlbumName, setArtistName, artistName, 
                 break;
             case 'musicArtists':
                 setArtistName(e.target.value);
+                break;
+            default:
                 break;
         }
     }
@@ -42,6 +44,8 @@ const MobileTemplate = ({setTrackName, setAlbumName, setArtistName, artistName, 
             setName(artistName);
             setLabel('Search Music Artist');
             break;
+            default:
+                break;
         }
         
 

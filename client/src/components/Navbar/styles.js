@@ -1,5 +1,5 @@
 import { AppBar, Typography, Toolbar, Avatar, Button, Grid } from '@mui/material';
-import { fontSize, styled } from '@mui/system';
+import { styled } from '@mui/system';
 import { theme } from '../../Theme';
 
 export const StyledAppBar = styled(AppBar, {})({

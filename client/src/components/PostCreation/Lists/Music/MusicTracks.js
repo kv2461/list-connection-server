@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, } from '@mui/material';
+import { Container } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
 import DesktopTemplate from './ViewportTemplates/DesktopTemplate';

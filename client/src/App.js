@@ -31,7 +31,7 @@ import Workout from './components/PostCreation/Lists/Workout/Workout';
 
 
 const App = () => {
-  const user = JSON.parse(localStorage.getItem('profile'));
+  // const user = JSON.parse(localStorage.getItem('profile'));
   const [darkMode, setDarkMode] = useState(false);
   const [chat, setChat] = useState(false);
   const [currentId,setCurrentId] = useState(0);

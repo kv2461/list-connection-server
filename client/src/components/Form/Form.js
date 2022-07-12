@@ -1,10 +1,10 @@
-import React, {useState,useEffect} from 'react';
-import {TextField, Button, Typography, Chip, Container} from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, Typography, Chip, Container } from '@mui/material';
 import FileBase from 'react-file-base64';
-import {StyledForm, StyledButton, StyledPaper, StyledFileInput, StyledDivImageSection, StyledImgMedia } from './styles';
-import {useDispatch, useSelector} from 'react-redux';
+import { StyledForm, StyledButton, StyledPaper, StyledFileInput, StyledDivImageSection, StyledImgMedia } from './styles';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {CreatePost, UpdatePost} from '../../actions/posts';
+import { CreatePost, UpdatePost } from '../../actions/posts';
 
 import food from './defaultImages/food.jpg';
 
@@ -66,7 +66,7 @@ const Form = ({ currentId, setCurrentId, genre, subgenre, list }) => {
       if (createdPost) {
         navigate(`/posts/${createdPost._id}`)
       }
-    },[createdPost])
+    },[createdPost, navigate])
 
     
 

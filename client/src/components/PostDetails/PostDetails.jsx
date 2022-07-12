@@ -12,7 +12,7 @@ import ListDetails from './ListDetails/ListDetails';
 const PostDetails = () => {
     const { post, posts, isLoading, } = useSelector((state)=>state.postsSlice);
     const dispatch = useDispatch();
-    const navigate= useNavigate();
+    const navigate = useNavigate();
     const { id } = useParams();
 
     const useViewport = () => {
@@ -40,7 +40,7 @@ const PostDetails = () => {
       if (post) {
         dispatch(GetPostsBySearch({ search: 'none', tags: post?.tags.join(',') }));
       }
-    }, [post]);
+    }, [post, dispatch]);
   
     if (!post) return null;
 
@@ -100,7 +100,7 @@ const PostDetails = () => {
                 <Typography gutterBottom variant="subtitle2">{username}</Typography>
                 <Typography gutterBottom variant="subtitle2">{message}</Typography>
                 <Typography gutterBottom variant="subtitle1">Likes: {likes.length}</Typography>
-                <img src={selectedFile} width="200px" />
+                <img src={selectedFile} alt='list cover art' width="200px" />
               </div>
             ))}
           </StyledRecommendedPosts>

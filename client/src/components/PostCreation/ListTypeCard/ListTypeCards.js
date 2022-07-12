@@ -1,8 +1,8 @@
 import React from 'react'
-import {Typography, Grid} from '@mui/material';
-import {StyledCard,StyledSvgIcon} from './styles'
+import { Typography, Grid } from '@mui/material';
+import { StyledCard,StyledSvgIcon } from './styles'
 
-const ListTypeCards = ({Icon, genre, handleClick}) => {
+const ListTypeCards = ({ Icon, genre, handleClick }) => {
   return (
     <Grid item xs={6} sm={4} md={3}>
         <StyledCard onClick={handleClick}>

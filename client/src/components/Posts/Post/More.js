@@ -1,7 +1,7 @@
 import React,{ useState, useEffect } from 'react';
 import { Typography, ButtonBase } from '@mui/material';
 
-const More = ({message,limit, variant, sx, component}) => {
+const More = ({ message, limit, variant, sx, component }) => {
     const [more,setMore] = useState(`${message.slice(0,limit)}...`)
     const [moreButton, setMoreButton] = useState(false);
 

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import {Box, FormControl, TextField, Button, Paper, Container, Typography} from '@mui/material';
+import { Box, FormControl, TextField, Button, Paper, Container, Typography } from '@mui/material';
 import { StyledGrid, StyledList } from './styles';
 import { Add } from '@mui/icons-material';
 
 import Form from '../../../../Form/Form';
 import WorkoutListItem from '../WorkoutListItems';
 import Suggestions from '../Suggestions';
-const MobileTemplate = ({setWorkoutName, workoutName, setListItem, listItem, listItems, listLogic, setData,  data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre}) => {
+const MobileTemplate = ({ setWorkoutName, workoutName, setListItem, listItem, listItems, listLogic, setData,  data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre }) => {
 
     const [name,setName] = useState('');
     const [label, setLabel] = useState('');

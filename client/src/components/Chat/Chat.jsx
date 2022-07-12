@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Paper, Grid, Divider, TextField, Typography, List, ListItem, Fab, Avatar, ListItemIcon, ListItemText, Button } from '@mui/material';
 import { StyledChatSection, StyledBorderRight500, StyledMessageArea } from './styles';
 import { Send as SendIcon } from '@mui/icons-material';
-import Draggable from 'react-draggable';// buttons don't work with it for now
+// import Draggable from 'react-draggable';// buttons don't work with it for now
 
 import { useDispatch, useSelector } from 'react-redux';
 import { GetAccountInfo, MessageUser, GetChatById, GetChatByIdPreview } from '../../actions/users';
@@ -37,9 +37,9 @@ const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNe
   const chatRef = useRef();
 
 
-  const getChat = async (id) => {
-     dispatch(GetChatById(id))
-  }
+//   const getChat = async (id) => {
+//      dispatch(GetChatById(id))
+//   }
 
   const getChatPreview = async (id) => {
     if (AFK === false) {
@@ -55,6 +55,7 @@ const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNe
   useEffect(()=> {
     dispatch(GetAccountInfo());
     
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[newMessage])
 
 
@@ -70,6 +71,7 @@ const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNe
     }
 
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[chatLoading, dispatch, chatMessage, AFK])
 
 
@@ -86,7 +88,7 @@ const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNe
             }
         }
 
-        const data = await dispatch(MessageUser(participant, value))
+        await dispatch(MessageUser(participant, value))
         setChatMessage('');
         setAFK(false);
         if (chat?.messages?.length > 0) {
@@ -102,7 +104,8 @@ const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNe
             createdAt: new Date(),
             }
         }
-        const data = await dispatch(MessageUser(participant, value))
+        
+        await dispatch(MessageUser(participant, value))
         setChatMessage('');
         const userItems = [user?.result?._id,newMessageParticipant._id].sort();
         const userFirst = userItems[0];
@@ -112,6 +115,7 @@ const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNe
         setAFK(false);
         setNewMessage(false);
         setNewMessageParticipant('');
+    
     }
 
 
@@ -138,6 +142,7 @@ const Chat = ({ setChat, newMessage, setNewMessage, newMessageParticipant, setNe
 
     useEffect(()=> {
         setChatId(chat_id);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[AFK])
 
 

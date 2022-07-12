@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Typography, TextField, Button } from '@mui/material';
-import { StyledCommentsInnerContainer, StyledCommentsOuterContainer, StyledList} from './styles';
+import { StyledCommentsOuterContainer, StyledList } from './styles';
 import { useDispatch } from 'react-redux';
 
 import { CommentPost } from '../../actions/posts';

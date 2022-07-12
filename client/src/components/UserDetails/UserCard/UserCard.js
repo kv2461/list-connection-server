@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react'
-import {Card, Avatar, Button, CircularProgress} from '@mui/material'
+import React, { useState, useEffect } from 'react'
+import { Card, Avatar, Button, CircularProgress } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 
-import {GetPostsByUsername} from '../../../actions/posts';
-import {FollowUser, MessageUser, GetChatById} from '../../../actions/users';
+// import {GetPostsByUsername} from '../../../actions/posts';
+import { FollowUser } from '../../../actions/users';
 
 
-const UserCard = ({user, loggedUser,setEditProfile, setUserData, setChat, chat, newMessage, setNewMessage, newMessageParticipant, setNewMessageParticipant}) => {
+const UserCard = ({ user, loggedUser,setEditProfile, setUserData, setChat, chat, setNewMessage, setNewMessageParticipant }) => {
     const { posts, isLoadingFollow } = useSelector((state) => state.postsSlice)
     const [followers, setFollowers] = useState(user.followers.length);
     const dispatch = useDispatch();

@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useRef} from 'react'
-import { ListItem, ListItemText, Typography, Button, TextField, Collapse,} from '@mui/material';
+import React, { useState, useEffect, useRef } from 'react'
+import { ListItem, ListItemText, Typography, Button, TextField, Collapse } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { StyledList } from './styles';
 import { DeleteForever, ThumbUpAlt, ThumbUpAltOutlined } from '@mui/icons-material';
@@ -9,11 +9,11 @@ import Replies from './Replies';
 import { LikeReply, DeleteReply } from '../../actions/posts';
 
 
-const Comment = ({index, comment, length, commentsRef, deleteComment, user, likeComment, userId, replyComment, postId, setComments}) => {
-    const [ replyOn, setReplyOn] = useState(false);
-    const [ reply, setReply] = useState('');
-    const [ replies, setReplies ] = useState(comment?.replies);
-    const [ collapseReplies, setCollapseReplies] = useState(false);
+const Comment = ({ index, comment, length, commentsRef, deleteComment, user, likeComment, userId, replyComment, postId, setComments }) => {
+    const [replyOn, setReplyOn] = useState(false);
+    const [reply, setReply] = useState('');
+    const [replies, setReplies ] = useState(comment?.replies);
+    const [collapseReplies, setCollapseReplies] = useState(false);
     const dispatch = useDispatch();
     const repliesRef = useRef();
 
@@ -38,7 +38,7 @@ const Comment = ({index, comment, length, commentsRef, deleteComment, user, like
         if (comment?.replies?.length > 0) {
             repliesRef?.current?.scrollIntoView({ behavior: 'smooth'});
             }
-    },[replies, collapseReplies])
+    },[replies, collapseReplies, comment?.replies?.length])
 
     const useViewport = () => {
         const [width, setWidth] = useState(window.innerWidth);

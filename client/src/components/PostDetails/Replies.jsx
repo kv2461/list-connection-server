@@ -1,14 +1,14 @@
-import React, {useState, useEffect,} from 'react'
-import { ListItem, ListItemText, Typography, Button, TextField, Collapse} from '@mui/material';
+import React, { useState, useEffect } from 'react'
+import { ListItem, ListItemText, Typography, Button, TextField } from '@mui/material';
 import { DeleteForever, ThumbUpAlt, ThumbUpAltOutlined } from '@mui/icons-material';
 import moment from 'moment';
 
 
-const Reply = ({index, comment, length, deleteComment, user, likeComment, userId, replyComment, repliesRef, parentComment}) => {    
+const Reply = ({ index, comment, length, deleteComment, user, likeComment, userId, replyComment, repliesRef, parentComment }) => {    
     const [ replyOn, setReplyOn] = useState(false);
     const [ reply, setReply] = useState('');
-    const [ replies, setReplies ] = useState(comment.replies);
-    const [ collapseReplies, setCollapseReplies] = useState(false);
+    // const [ replies, setReplies ] = useState(comment.replies);
+    // const [ collapseReplies, setCollapseReplies] = useState(false);
 
 
 

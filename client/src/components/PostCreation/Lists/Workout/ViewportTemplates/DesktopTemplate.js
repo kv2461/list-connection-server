@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {Box, FormControl, TextField, Button, Paper, Container, Typography} from '@mui/material';
+import {Box, FormControl, TextField, Button, Paper, Container, Typography } from '@mui/material';
 import { StyledGrid, StyledList } from './styles';
 import { Add } from '@mui/icons-material';
 import { Masonry } from '@mui/lab';
@@ -8,9 +8,9 @@ import { Masonry } from '@mui/lab';
 import Form from '../../../../Form/Form';
 import WorkoutListItem from '../WorkoutListItems';
 import Suggestions from '../Suggestions';
-import { StyledAvatar } from '../../../../Navbar/styles';
+// import { StyledAvatar } from '../../../../Navbar/styles';
 
-const DesktopTemplate = ({setWorkoutName, workoutName, setListItem, listItem, listItems, listLogic, setData, data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre}) => {
+const DesktopTemplate = ({ setWorkoutName, workoutName, setListItem, listItem, listItems, listLogic, setData, data, handleSearch, readyToSubmit, currentId, setCurrentId, genre, subgenre }) => {
 
     const [name,setName] = useState('');
     const [label, setLabel] = useState('');

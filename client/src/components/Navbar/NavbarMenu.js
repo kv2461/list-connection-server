@@ -5,7 +5,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 
-export default function NavBarMenu({chat, setChat, setNewMessage, user, logout}) {
+export default function NavBarMenu({ chat, setChat, setNewMessage, user, logout }) {
 const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);

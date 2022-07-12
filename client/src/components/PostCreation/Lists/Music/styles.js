@@ -1,4 +1,4 @@
-import {Card, SvgIcon, Grid, List, Typography} from '@mui/material';
+import { Card, SvgIcon, Grid, List, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import { theme } from '../../../../Theme';
 

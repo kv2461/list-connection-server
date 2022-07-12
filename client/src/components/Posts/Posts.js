@@ -1,5 +1,5 @@
 import React from 'react'
-import {Grid, CircularProgress} from '@mui/material';
+import { Grid, CircularProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
 import Post from './Post/Post';
 import { StyledGrid } from './styles';

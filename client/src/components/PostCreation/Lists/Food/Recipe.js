@@ -20,7 +20,7 @@ const Recipes = ({currentId, setCurrentId}) => {
     const [instructionsItems, setInstructionsItems] = useState([]);
 
     const [listItems, setListItems] = useState([]); //for list to be saved on db
-    const [listItem, setListItem] = useState(0) //for list item to be added on to list
+    // const [listItem, setListItem] = useState(0) //for list item to be added on to list
     const [data,setData] = useState([]);
     const dispatch = useDispatch();
     const subgenre = 'foodRecipe';

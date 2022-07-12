@@ -1,5 +1,5 @@
-import React, {useState, useEffect } from 'react';
-import { Container, } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Container } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
 import DesktopTemplate from './ViewportTemplates/DesktopTemplate';
@@ -10,7 +10,7 @@ import { GetMusicAlbum } from '../../../../actions/itunes';
 
 
 
-const MusicAlbums = ({currentId,setCurrentId}) => {
+const MusicAlbums = ({ currentId,setCurrentId }) => {
     const [albumName, setAlbumName] = useState('')
     const [readyToSubmit, setReadyToSubmit] = useState(false);
     const [listItems, setListItems] = useState([]); //for list to be saved on db

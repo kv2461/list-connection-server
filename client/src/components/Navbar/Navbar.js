@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import { StyledAppBar, StyledAvatar, StyledContainer, StyledLogoutButton, StyledProfile, StyledToolbar, StyledUsername, StyledCreatePost, StyledTypography, StyledGrid } from './styles';
-import { Button, Switch, FormGroup, FormControlLabel, Grid} from '@mui/material';
+import { StyledAppBar, StyledAvatar, StyledContainer, StyledLogoutButton, StyledProfile, StyledToolbar, StyledUsername, StyledCreatePost, StyledGrid } from './styles';
+import { Button, Switch, Grid} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add'
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router';
 import { LOGOUT } from '../../reducers/auth';
 import decode from 'jwt-decode';
 
-import listConnectionLogo from './images/listConnectionLogo.png'
+// import listConnectionLogo from './images/listConnectionLogo.png'
 import listConnectionText from './images/listConnectionText.png'
 
 import NavBarMenu from './NavbarMenu';

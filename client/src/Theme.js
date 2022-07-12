@@ -1,10 +1,10 @@
 import {createTheme} from '@mui/material/styles'
 import './index.css';
 
-const robotoFont = "'Roboto', sans-serif";
+// const robotoFont = "'Roboto', sans-serif";
 const acmeFont = "'Acme', sans-serif";
-const playFont = "'Play', sans-serif";
-const bebasNeueFont = "'Bebas Neue', cursive";
+// const playFont = "'Play', sans-serif";
+// const bebasNeueFont = "'Bebas Neue', cursive";
 
 
 export const theme = createTheme({

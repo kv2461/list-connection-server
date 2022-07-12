@@ -1,19 +1,19 @@
 import React from 'react';
-import {CardContent,Button,Typography} from '@mui/material';
-import { StyledCard,StyledCardMedia,StyledTypography,StyledCardActions,StyledOverlay,StyledOverlay2,StyledDetails,StyledButtonBase, } from './styles';
+import { CardContent,Button,Typography } from '@mui/material';
+import { StyledCard,StyledCardMedia,StyledTypography,StyledCardActions,StyledOverlay,StyledOverlay2,StyledDetails,StyledButtonBase } from './styles';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbUpAltOutlined from '@mui/icons-material/ThumbUpOutlined'
 import DeleteIcon from '@mui/icons-material/Delete';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import moment from 'moment'
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { DeletePost,LikePost } from '../../../actions/posts';
 import More from './More';
 import GenreIcon from './GenreIcon';
 
-const Post = ({post, setCurrentId}) => {
+const Post = ({ post, setCurrentId }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('profile'));

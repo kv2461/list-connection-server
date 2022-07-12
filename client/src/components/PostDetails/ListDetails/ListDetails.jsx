@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import {Paper, Button, Collapse, Typography} from '@mui/material';
-import {StyledList} from './styles';
+import { Paper, Button, Collapse, Typography } from '@mui/material';
+import { StyledList } from './styles';
 import MusicListItem from '../../PostCreation/Lists/Music/MusicListItem';
 import FoodListItem from '../../PostCreation/Lists/Food/FoodListItem';
 import WorkoutListItem from '../../PostCreation/Lists/Workout/WorkoutListItems';
 
-const ListDetails = ({post,list}) => {
+const ListDetails = ({ post,list }) => {
     const [listItems, setListItems] = useState([]);
     const [listItems2, setListItems2] = useState([]);
     const [collapseInstructions, setCollapseInstructions] = useState(true);
@@ -45,7 +45,7 @@ const ListDetails = ({post,list}) => {
           }
     
       
-    }, [post])
+    }, [post, genre, list, subgenre])
     
     const listLogic = {
 

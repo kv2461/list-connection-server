@@ -1,6 +1,6 @@
 import { Grid, AppBar, Paper } from '@mui/material';
 import { styled } from '@mui/system';
-import {theme} from '../../Theme'
+import { theme } from '../../Theme'
 
 
 export const StyledGrid = styled(Grid,{})({

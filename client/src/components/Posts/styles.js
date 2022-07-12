@@ -19,4 +19,4 @@ const StyledGrid = styled(Grid, {})({
 //   },
 // }));
 
-export {StyledGrid}
+export { StyledGrid }

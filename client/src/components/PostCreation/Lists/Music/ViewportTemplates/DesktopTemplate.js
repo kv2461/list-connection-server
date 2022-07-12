@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {Box, FormControl, TextField, Button, Paper, Container, Typography} from '@mui/material';
+import { Box, FormControl, TextField, Button, Paper, Container, Typography } from '@mui/material';
 import { StyledGrid, StyledList } from './styles';
 import { Add } from '@mui/icons-material';
 import { Masonry } from '@mui/lab';
@@ -25,6 +25,8 @@ const DesktopTemplate = ({setTrackName, setAlbumName, setArtistName, artistName,
             case 'musicArtists':
                 setArtistName(e.target.value);
                 break;
+            default:
+                break;
         }
     }
 
@@ -43,6 +45,8 @@ const DesktopTemplate = ({setTrackName, setAlbumName, setArtistName, artistName,
                 setName(artistName);
                 setLabel('Search Music Artist');
                 break;
+                default:
+                    break;
             }
             
 

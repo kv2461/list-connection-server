@@ -5,7 +5,7 @@ import { ArtTrack, Album, InterpreterMode, } from '@mui/icons-material'
 import { StyledSvgIcon } from './styles';
 import { useNavigate } from 'react-router-dom';
 
-const GenreIcon = ({genre, subgenre}) => {
+const GenreIcon = ({ genre, subgenre }) => {
     const [genreIcon, setGenreIcon] = useState();
     const navigate = useNavigate();
   

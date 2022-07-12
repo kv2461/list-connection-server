@@ -1,8 +1,8 @@
 import React, { useState,useEffect } from 'react'
-import {Grid, Box } from '@mui/material';
+import { Grid, Box } from '@mui/material';
 import { StyledCard, StyledTypography } from './styles'
 
-const Suggestions = ({ item, image, ingredientName, subgenre, fetchInfo,handleClick }) => {
+const Suggestions = ({ item, image, ingredientName, subgenre, fetchInfo, handleClick }) => {
   const [name,setName] = useState('');
   const [reactKey, setReactKey] = useState('');
   

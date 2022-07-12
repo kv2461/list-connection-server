@@ -1,15 +1,14 @@
-import React, {useState,useEffect} from 'react';
-import {TextField, Button, Typography, Chip, Container} from '@mui/material';
+import React, { useState,useEffect } from 'react';
+import { TextField, Button, Typography } from '@mui/material';
 import FileBase from 'react-file-base64';
-import {StyledForm, StyledButton, StyledPaper, StyledFileInput, StyledDivImageSection, StyledImgMedia } from './styles';
-import {useDispatch, useSelector} from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { StyledForm, StyledButton, StyledPaper, StyledFileInput, StyledDivImageSection, StyledImgMedia } from './styles';
+import { useDispatch } from 'react-redux';
 
 import { UpdateUser } from '../../../actions/users';
 // import {CreatePost, UpdatePost} from '../../actions/posts';
 
 
-const UserForm = ({user, setEditProfile}) => {
+const UserForm = ({ user, setEditProfile }) => {
     const [userData,setUserData] = useState({
       ...user
     });
@@ -27,7 +26,7 @@ const UserForm = ({user, setEditProfile}) => {
         if (bio !== user.bio) {
             setUserData({...userData, bio:bio})
         } 
-    },[firstName, lastName, bio])
+    },[firstName, lastName, bio, user.bio, userData])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,10 +35,11 @@ const UserForm = ({user, setEditProfile}) => {
 
   
         setEditProfile(false);  
+
+        return data;
       }
 
     const reset = (user) => {
-        console.log(user)
         setUserData({...user});
         setFirstName(userData.name.split(' ')[0]);
         setLastName(userData.name.split(' ')[1]);

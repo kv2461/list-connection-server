@@ -1,5 +1,5 @@
-import {Card, SvgIcon,} from '@mui/material';
-import {styled} from '@mui/system';
+import { Card, SvgIcon } from '@mui/material';
+import { styled } from '@mui/system';
 
 export const StyledCard = styled(Card,{})({
     display:'flex',

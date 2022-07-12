@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { ListSubheader, ListItem, ListItemText, Typography, Box, Divider, Button} from '@mui/material';
+import { ListSubheader, ListItem, ListItemText, Typography, Box, Divider, Button } from '@mui/material';
 import { DeleteForever, KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material';
 
 
-const MusicListItem = ({ listItem, index, handleDelete, length, handleMoveUp, handleMoveDown, subgenre}) => {
-  const [hover, setHover] = useState(false)
+const MusicListItem = ({ listItem, index, handleDelete, length, handleMoveUp, handleMoveDown, subgenre }) => {
   const [name,setName] = useState('');
 
   useEffect(() => {
@@ -19,10 +18,13 @@ const MusicListItem = ({ listItem, index, handleDelete, length, handleMoveUp, ha
       case 'musicArtists':
         setName(listItem?.artistName);
         break;
+      default:
+        setName(listItem?.trackName);
+        break;
     }
 
 
-  },[listItem?.albumName,subgenre,listItem?.trackName])
+  },[listItem?.albumName,subgenre,listItem?.trackName, listItem?.artistName])
 
   return (
     <li key={listItem?.key}>
