@@ -4,7 +4,7 @@ import { DeleteForever, ThumbUpAlt, ThumbUpAltOutlined } from '@mui/icons-materi
 import moment from 'moment';
 
 
-const Reply = ({index, comment, length, deleteComment, user, likeComment, userId, replyComment, repliesRef,}) => {    
+const Reply = ({index, comment, length, deleteComment, user, likeComment, userId, replyComment, repliesRef, parentComment}) => {    
     const [ replyOn, setReplyOn] = useState(false);
     const [ reply, setReply] = useState('');
     const [ replies, setReplies ] = useState(comment.replies);
@@ -68,12 +68,12 @@ const Reply = ({index, comment, length, deleteComment, user, likeComment, userId
                     {comment.username === user?.result?.username && <Button onClick={()=>deleteComment(comment.id)}><DeleteForever fontSize='0.7rem'/></Button>}
                 </div>
             </ListItem>
-            {/* {replyOn && (
+            {replyOn && (
                 <>
-                    <TextField autoFocus sx={{width:'80%'}}value={reply} onChange={(e)=>setReply(e.target.value)}/>
-                    <Button onClick={()=> {setReplyOn(false)}}>cancel</Button>
-                    <Button onClick={()=>{replyComment(reply, comment.id)}}>reply</Button>
-                </>)} */}
+                    <TextField autoFocus sx={{width:'80%'}} value={reply} onChange={(e)=>setReply(e.target.value)}/>
+                    <Button onClick={()=> {setReplyOn(false)}}>Cancel</Button>
+                    <Button onClick={()=>{replyComment(reply, parentComment.id, true, comment.username); setReplyOn(false)}}>Reply</Button>
+                </>)}
         </ul>
   )
 }

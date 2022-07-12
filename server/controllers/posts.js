@@ -40,7 +40,7 @@ export const getPosts = async (req, res) => {
 
 export const getPostsBySearch = async (req, res) => {
     const { searchQuery, tags, } = req.query
-    console.log(tags)
+
     try {
         const title = new RegExp(searchQuery,'i'); //ignore case
 

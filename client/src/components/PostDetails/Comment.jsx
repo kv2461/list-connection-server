@@ -86,12 +86,20 @@ const Comment = ({index, comment, length, commentsRef, deleteComment, user, like
                     </div>
                     <Typography fontSize='0.8rem'>{comment.comment}</Typography>
 
+                    <div style={width<breakpoint?{position:'relative',left:'60px', }: null}>
+                    <Button onClick={()=>{likeComment(comment.id)}}><Likes /></Button>
+                    <Button fontSize='0.7rem' onClick={()=>{setReplyOn(true)}}>Reply</Button>
+                    {comment.username === user?.result?.username && <Button onClick={()=>deleteComment(comment.id)}><DeleteForever fontSize='0.7rem'/></Button>}
+                </div>
+
                     {comment.replies !== undefined && comment.replies?.length > 0 &&  (<div>
                         <Button onClick={()=>setCollapseReplies(!collapseReplies)}> {collapseReplies ? 'Hide Replies' : 'Show Replies'} </Button>
                         <Collapse in={collapseReplies} timeout="auto" unmountOnExit>
-                        <StyledList subheader={<li />}>{
+                        <StyledList sx={{m:'10px 0', p:0}} subheader={<li />}>{
                             replies?.map((reply,index) => (
                                 <Replies
+                                    replyOn={replyOn}
+                                    setReplyOn={setReplyOn}
                                     length={replies.length}
                                     repliesRef={repliesRef}
                                     comment={reply}
@@ -101,6 +109,8 @@ const Comment = ({index, comment, length, commentsRef, deleteComment, user, like
                                     userId={userId}
                                     likeComment={likeReply}
                                     deleteComment={deleteReply}
+                                    replyComment={replyComment}
+                                    parentComment={comment}
                                 />))
                             } 
                         </StyledList>
@@ -111,12 +121,6 @@ const Comment = ({index, comment, length, commentsRef, deleteComment, user, like
                 }
                  />
 
-
-                <div style={width<breakpoint?{position:'relative',left:'60px'}: null}>
-                    <Button onClick={()=>{likeComment(comment.id)}}><Likes /></Button>
-                    <Button fontSize='0.7rem' onClick={()=>{setReplyOn(true)}}>Reply</Button>
-                    {comment.username === user?.result?.username && <Button onClick={()=>deleteComment(comment.id)}><DeleteForever fontSize='0.7rem'/></Button>}
-                </div>
             </ListItem>
             {replyOn && (
                 <>

@@ -59,15 +59,25 @@ const CommentSection = ({ post }) => {
 
     }
 
-    const replyComment = async (reply, id) => {
-
-        const finalReply = {
+    const replyComment = async (reply, id, replyBool, username) => {
+        let finalReply;
+        if (replyBool) {
+             finalReply = {
+                username:user.result.username,
+                comment:`@${username} ${reply}`,
+                id:`subcomment-${Date.now()}`,
+                createdAt: new Date(),
+                likes:[],
+                };
+        } else {
+        finalReply = {
             username:user.result.username,
             comment:reply,
             id:`subcomment-${Date.now()}`,
             createdAt: new Date(),
             likes:[],
             };
+        }
 
         const newComments = await dispatch(ReplyComment(finalReply,id,post._id));
 
