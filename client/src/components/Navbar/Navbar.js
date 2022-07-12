@@ -62,7 +62,7 @@ const Navbar = ({ setChat, chat, setNewMessage, darkMode, setDarkMode }) => {
                     <StyledCreatePost variant='h2' disabled={!user?.result} align='center' onClick={()=>navigate('/createPost')}><AddIcon/></StyledCreatePost>
                     <StyledAvatar onClick={()=>{setChat(!chat);setNewMessage(false)}}alt={user.result.username} src={user.result.selectedFile}>{user.result.username.charAt(0)}</StyledAvatar>
                     <StyledUsername onClick={()=>{navigate(`/user/${user.result.username}`)}} variant='h6'>{user.result.username}</StyledUsername>
-                    <StyledLogoutButton variant='contained' sx={{backgroundColor:'secondary.main'}} onClick={logout} >Logout</StyledLogoutButton>
+                    <StyledLogoutButton variant='contained' sx={{backgroundColor:'secondary.main'}} onClick={logout} >Log Out</StyledLogoutButton>
                 </StyledProfile>
             ) : (
                 <Button  variant='contained' sx={{backgroundColor:'primary.main'}} onClick={()=>navigate('/auth')}>Sign In</Button>

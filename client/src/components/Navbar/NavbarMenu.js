@@ -60,11 +60,11 @@ const navigate = useNavigate();
             {width > breakpoint ? <MenuItem onClick={()=>{handleClose();setChat(!chat);setNewMessage(false)}} >Chat</MenuItem> : 
             <MenuItem onClick={()=>{handleClose();navigate('/chat')}} >Chat</MenuItem>
             }
-            <MenuItem onClick={()=>{handleClose();logout()}}>Logout</MenuItem>
+            <MenuItem onClick={()=>{handleClose();logout()}}>Log Out</MenuItem>
         </div>
         }
 
-        {!user && <MenuItem onClick={()=>{handleClose();navigate('/auth')}}>Sign in</MenuItem> }
+        {!user && <MenuItem onClick={()=>{handleClose();navigate('/auth')}}>Sign In</MenuItem> }
         
       </Menu>
     </div>
