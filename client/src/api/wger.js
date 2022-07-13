@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL : 'http://localhost:4001/exercise/search' });
+const API = axios.create({ baseURL : 'https://list-connection.herokuapp.com/exercise/search' });
 
 // export const getFoodSuggestions = (query) => API.get(`/${query}`);
 
