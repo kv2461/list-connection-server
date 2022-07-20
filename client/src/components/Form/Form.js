@@ -51,6 +51,10 @@ const Form = ({ currentId, setCurrentId, genre, subgenre, list }) => {
               defaultImage = postData.list[0].image;
             } else if (postData.genre === 'food') {
               defaultImage = food;
+            } else if (postData.genre === 'yoga') {
+              defaultImage = postData.list[0].image;
+            } else if (postData.genre === 'workout') {
+              defaultImage = 'https://i.kym-cdn.com/photos/images/newsfeed/001/879/706/244.jpg'
             }
             dispatch(CreatePost({...postData, selectedFile: defaultImage, username: user?.result?.username}));;
         } else if (currentId===0) {
