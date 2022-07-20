@@ -4,6 +4,7 @@ import { StyledList } from './styles';
 import MusicListItem from '../../PostCreation/Lists/Music/MusicListItem';
 import FoodListItem from '../../PostCreation/Lists/Food/FoodListItem';
 import WorkoutListItem from '../../PostCreation/Lists/Workout/WorkoutListItems';
+import YogaListItem from '../../PostCreation/Lists/Yoga/YogaListItems';
 
 const ListDetails = ({ post,list }) => {
     const [listItems, setListItems] = useState([]);
@@ -12,6 +13,7 @@ const ListDetails = ({ post,list }) => {
     const [collapseIngredients, setCollapseIngredients] = useState(true);
     const genre = post?.genre;
     const subgenre = post?.subgenre;
+    console.log(list);
 
     useEffect(() => {
 
@@ -37,6 +39,9 @@ const ListDetails = ({ post,list }) => {
               setListItems2(list[1]);
               break;
             case 'workout':
+              setListItems(list);
+              break;
+            case 'yoga':
               setListItems(list);
               break;
             default:
@@ -139,6 +144,26 @@ const ListDetails = ({ post,list }) => {
                                     index={index}
                                     length={listItems.length - 1}
                                     subgenre={'workout'}
+                                    handleMoveUp = {()=>listLogic.handleMoveUp(item)}
+                                    handleMoveDown = {()=>listLogic.handleMoveDown(item)}
+                                />))
+                            } 
+                        </StyledList>
+                    </Paper> 
+                    
+                }
+
+        {listItems.length && genre==='yoga' && 
+        <Paper sx={{marginTop:5}}>
+             <Typography variant='body1'><strong>Yoga</strong></Typography>
+                        <StyledList subheader={<li />}>{
+                            listItems.map((item,index) => (
+                                <YogaListItem
+                                    key={`${item?.key}-${index}`}
+                                    listItem={item}
+                                    index={index}
+                                    length={listItems.length - 1}
+                                    subgenre={'yoga'}
                                     handleMoveUp = {()=>listLogic.handleMoveUp(item)}
                                     handleMoveDown = {()=>listLogic.handleMoveDown(item)}
                                 />))

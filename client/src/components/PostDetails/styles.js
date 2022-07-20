@@ -8,6 +8,7 @@ export const StyledDivCard = styled('div', {})({
     [theme.breakpoints.down('sm')]: {
         flexWrap:'wrap',
         flexDirection:'column',
+        
     },
 });
 
@@ -37,6 +38,9 @@ export const StyledImgMedia = styled('img',{})({
     width:'100%',
     maxWidth:'500px',
     maxHeight:'600px',
+    [theme.breakpoints.down('sm')]: {
+        maxWidth:'260px',
+    },
 })
 
 export const StyledLoadingPaper = styled(Paper,{})({

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, Typography, CircularProgress, Divider, ButtonBase } from '@mui/material';
+import { Paper, Typography, CircularProgress, Divider, ButtonBase, Container } from '@mui/material';
 import { StyledDivImageSection, StyledDivSection, StyledImgMedia, StyledDivCard, StyledLoadingPaper, StyledRecommendedPosts } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
@@ -66,20 +66,25 @@ const PostDetails = () => {
     <Paper sx={{p:'20px', borderRadius:'15px'}} elevation={6}>
       <StyledDivCard>
         <StyledDivSection>
+          <Container sx={{display:'flex', flexDirection:'column'}}>
           <Typography align='center' variant={width>breakpoint? 'h3' : 'h6'} component={width>breakpoint? 'h2' : 'h6'}>{post.title}</Typography>
           {width<breakpoint && <StyledDivImageSection>
           <StyledImgMedia src={post.selectedFile} alt={post.title}/>
         </StyledDivImageSection>}
-        <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
-          <Typography align='center' sx={{color:'text.secondary'}} gutterBottom variant='h6' component='h2'>{post.description}</Typography>
-          <Typography align='center' gutterBottom variant='body1' component='p'>{post.tags.map((tag)=>`#${tag}`)}</Typography>
-          <Typography align='center' variant='h6' sx={{display:'flex', flexDirection:'row', alignItems:'center'}}>Created by:<ButtonBase onClick={openUser}><Typography variant='h6'>{post.username}</Typography></ButtonBase> </Typography>
+          {/* <Typography align='center' sx={{color:'text.secondary'}} gutterBottom variant={width>breakpoint? 'h6' : 'h12'} component={width>breakpoint? 'h2' : 'h6'}>{post.tags.map((tag)=>`#${tag}`)}</Typography> */}
+          <Typography align='center' gutterBottom variant='body1' component='p'>{post.description}</Typography>
+          <div style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+          <Typography align='center' variant='h6'>Created by:</Typography>
+          <ButtonBase onClick={openUser}><Typography variant='h5'>{post.username}</Typography></ButtonBase> 
+          </div>
           <Typography align='center' variant='body1'>{moment(post.createdAt).fromNow()}</Typography>
-        </div>
+          </Container>
+
           <Divider sx={{m:'20px 0'}} />
           {post.genre==='music' && <ListDetails post={post} list={post.list}/>}
           {post.genre==='food' && <ListDetails post={post} list={post.list}/>}
           {post.genre==='workout' && <ListDetails post={post} list={post.list}/>}
+          {post.genre==='yoga' && <ListDetails post={post} list={post.list}/>}
           <Divider sx={{m:'20px 0'}} />
           
           <CommentSection post={post} />
