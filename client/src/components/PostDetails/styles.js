@@ -8,6 +8,7 @@ export const StyledDivCard = styled('div', {})({
     [theme.breakpoints.down('sm')]: {
         flexWrap:'wrap',
         flexDirection:'column',
+        justifyContent:'center'
         
     },
 });
