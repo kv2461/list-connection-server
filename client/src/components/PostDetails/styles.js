@@ -1,4 +1,4 @@
-import { Paper, List } from '@mui/material';
+import { Paper, List, } from '@mui/material';
 import { styled } from '@mui/system';
 import { theme } from '../../Theme';
 
@@ -29,7 +29,7 @@ export const StyledRecommendedPosts = styled('div',{})({
 export const StyledDivImageSection = styled('div',{})({
     marginLeft:'20px',
     [theme.breakpoints.down('sm')]: {
-        margin:0,
+        margin:'auto'
     },
 });
 

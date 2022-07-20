@@ -66,7 +66,7 @@ const PostDetails = () => {
     <Paper sx={{p:'20px', borderRadius:'15px'}} elevation={6}>
       <StyledDivCard>
         <StyledDivSection>
-          <Container sx={{display:'flex', flexDirection:'column'}}>
+          <Container sx={{display:'flex', flexDirection:'column',}}>
           <Typography align='center' variant={width>breakpoint? 'h3' : 'h6'} component={width>breakpoint? 'h2' : 'h6'}>{post.title}</Typography>
           {width<breakpoint && <StyledDivImageSection>
           <StyledImgMedia src={post.selectedFile} alt={post.title}/>
