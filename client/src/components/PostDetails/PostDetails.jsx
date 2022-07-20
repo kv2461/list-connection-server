@@ -70,10 +70,12 @@ const PostDetails = () => {
           {width<breakpoint && <StyledDivImageSection>
           <StyledImgMedia src={post.selectedFile} alt={post.title}/>
         </StyledDivImageSection>}
+        <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
           <Typography align='center' sx={{color:'text.secondary'}} gutterBottom variant={width>breakpoint? 'h6' : 'h12'} component={width>breakpoint? 'h2' : 'h6'}>{post.tags.map((tag)=>`#${tag}`)}</Typography>
           <Typography align='center' gutterBottom variant='body1' component='p'>{post.description}</Typography>
-          <Typography align='center' variant='h6'>Created by:<ButtonBase onClick={openUser}><Typography variant='h5'>{post.username}</Typography></ButtonBase> </Typography>
+          <Typography align='center' variant='h6' sx={{display:'flex', flexDirection:'row', alignItems:'center'}}>Created by:<ButtonBase onClick={openUser}><Typography variant='h6'>{post.username}</Typography></ButtonBase> </Typography>
           <Typography align='center' variant='body1'>{moment(post.createdAt).fromNow()}</Typography>
+        </div>
           <Divider sx={{m:'20px 0'}} />
           {post.genre==='music' && <ListDetails post={post} list={post.list}/>}
           {post.genre==='food' && <ListDetails post={post} list={post.list}/>}

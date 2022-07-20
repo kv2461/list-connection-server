@@ -52,7 +52,7 @@ const Form = ({ currentId, setCurrentId, genre, subgenre, list }) => {
             } else if (postData.genre === 'food') {
               defaultImage = food;
             } else if (postData.genre === 'yoga') {
-              defaultImage = postData.list[0].image;
+              defaultImage = 'https://thumbs.dreamstime.com/b/young-black-woman-doing-yoga-home-lotus-position-71528451.jpg';
             } else if (postData.genre === 'workout') {
               defaultImage = 'https://i.kym-cdn.com/photos/images/newsfeed/001/879/706/244.jpg'
             }
